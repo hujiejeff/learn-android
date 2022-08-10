@@ -135,7 +135,7 @@ class DiscoverFragment : AbstractLazyLoadFragment<HomeFragmentDiscoverBinding>()
                 } else if (it == 3) {
                     isLoading = false
                 }
-                mBinding.llDiscoverContainer.visibility = if (isLoading) View.GONE else View.VISIBLE
+                mBinding.groupContent.visibility = if (isLoading) View.GONE else View.VISIBLE
                 mBinding.loadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
             }
         }

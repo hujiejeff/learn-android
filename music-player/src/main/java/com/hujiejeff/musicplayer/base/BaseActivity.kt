@@ -3,8 +3,10 @@ package com.hujiejeff.musicplayer.base
 import PermissionReq
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -43,11 +45,10 @@ abstract class BaseActivity: AppCompatActivity() {
 
     private fun addPlayBar() {
 
-        val rl = (findViewById<ViewGroup>(android.R.id.content)).getChildAt(0)
-        if (rl is RelativeLayout) {
-            val lp: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(dp2Px(70), dp2Px(70)).apply {
-                addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+        val rootView = (findViewById<ViewGroup>(android.R.id.content))
+        if (rootView is FrameLayout) {
+            val lp: FrameLayout.LayoutParams = FrameLayout.LayoutParams(dp2Px(70), dp2Px(70)).apply {
+                gravity = Gravity.BOTTOM or Gravity.END
                 rightMargin = dp2Px(10)
                 bottomMargin = dp2Px(100)
             }
@@ -55,7 +56,7 @@ abstract class BaseActivity: AppCompatActivity() {
                 id = R.id.ppv_player
                 layoutParams = lp
             }
-            rl.addView(ppv)
+            rootView.addView(ppv)
         }
 
         ppv.setOnClickListener {

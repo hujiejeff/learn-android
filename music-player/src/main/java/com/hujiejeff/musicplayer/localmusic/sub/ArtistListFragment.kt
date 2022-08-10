@@ -2,6 +2,7 @@ package com.hujiejeff.musicplayer.localmusic.sub
 
 import android.Manifest
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -40,6 +41,10 @@ class ArtistListFragment : AbstractLazyLoadFragment<FragmentListBinding>() {
         super.onAttach(context)
         homeActivity = context as HomeActivity
         viewModel = (parentFragment as LocalMusicFragment).obtainViewModel()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         subscribe()
     }
 

@@ -23,6 +23,8 @@
                 android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:contentScrim="?attr/colorPrimary"
+                app:collapsedTitleGravity="start"
+                app:expandedTitleGravity="top|end"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <include

@@ -68,5 +68,6 @@ dependencies {
 
     /**---------------------UI------------------------**/
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
 }
