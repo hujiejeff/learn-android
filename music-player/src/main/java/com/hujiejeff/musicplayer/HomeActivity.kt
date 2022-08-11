@@ -4,10 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Bundle
 import android.os.IBinder
-import android.view.View
-import androidx.fragment.app.Fragment
 import com.hujiejeff.musicplayer.base.BaseActivity
 import com.hujiejeff.musicplayer.databinding.ActivityHomeBinding
 import com.hujiejeff.musicplayer.discover.DiscoverFragment
@@ -17,31 +14,20 @@ import com.hujiejeff.musicplayer.util.transaction
 import com.hujiejeff.musicplayer.video.VideoFragment
 
 
-class HomeActivity : BaseActivity() {
-    override fun layoutResId(): Int = R.layout.activity_home
+class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     override fun isLightStatusBar(): Boolean = true
-    private lateinit var binding: ActivityHomeBinding
-    override fun getViewBinding(): View {
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        return binding.root
-    }
-
     private val fragments = arrayListOf(
         DiscoverFragment(),
         LocalMusicFragment(), VideoFragment()
     )
     private var preIndex: Int = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initView()
+    override fun ActivityHomeBinding.initView() {
+        loadFragment(0)
         bindService()
         initClickListener()
     }
 
-    private fun initView() {
-        loadFragment(0)
-    }
 
     private fun bindService() {
         val bindIntent = Intent(this, PlayService::class.java)
@@ -57,7 +43,7 @@ class HomeActivity : BaseActivity() {
 
 
     private fun initClickListener() {
-        binding.bnvBottom.setOnNavigationItemSelectedListener {
+        mBinding.bnvBottom.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_bottom_item_discover -> showAndHidFragment(0, preIndex)
                 R.id.menu_bottom_item_my -> showAndHidFragment(1, preIndex)

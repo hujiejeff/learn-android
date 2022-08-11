@@ -11,12 +11,12 @@ import android.text.TextUtils
 import com.hujiejeff.musicplayer.player.AudioPlayer
 import com.hujiejeff.musicplayer.util.logD
 
-class HeadSetReceiver: BroadcastReceiver() {
+class HeadSetReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent == null || TextUtils.isEmpty(intent.action)) {
             return
         }
-        when(intent.action) {
+        when (intent.action) {
             Intent.ACTION_HEADSET_PLUG -> handleNormalHeadSet(intent.extras)
             BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED -> handleBluetoothHeadSet()
         }

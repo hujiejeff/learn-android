@@ -1,16 +1,10 @@
 package com.hujiejeff.musicplayer.player
 
 import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
-import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.App
 import com.hujiejeff.musicplayer.base.BaseFragment
 import com.hujiejeff.musicplayer.data.Preference
@@ -18,7 +12,10 @@ import com.hujiejeff.musicplayer.data.entity.Music
 import com.hujiejeff.musicplayer.data.entity.PlayMode
 import com.hujiejeff.musicplayer.databinding.CardAlbumBinding
 import com.hujiejeff.musicplayer.databinding.FragmentMusicPlayBinding
-import com.hujiejeff.musicplayer.util.*
+import com.hujiejeff.musicplayer.util.getLocalCoverUrl
+import com.hujiejeff.musicplayer.util.getMusicTimeFormatString
+import com.hujiejeff.musicplayer.util.loadPlayListCover
+import com.hujiejeff.musicplayer.util.logD
 
 class MusicPlayFragment : BaseFragment<FragmentMusicPlayBinding>(),
     SeekBar.OnSeekBarChangeListener {

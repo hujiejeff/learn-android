@@ -1,12 +1,9 @@
 package com.hujiejeff.musicplayer.discover
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -18,7 +15,9 @@ import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.AbstractLazyLoadFragment
 import com.hujiejeff.musicplayer.base.BaseRecyclerViewAdapter
 import com.hujiejeff.musicplayer.base.BaseViewHolder
-import com.hujiejeff.musicplayer.data.entity.*
+import com.hujiejeff.musicplayer.data.entity.RecommendNewAlbum
+import com.hujiejeff.musicplayer.data.entity.RecommendNewSong
+import com.hujiejeff.musicplayer.data.entity.RecommendPlayList
 import com.hujiejeff.musicplayer.databinding.HomeFragmentDiscoverBinding
 import com.hujiejeff.musicplayer.databinding.ItemAlbumListBinding
 import com.hujiejeff.musicplayer.databinding.ItemPlaylistListBinding

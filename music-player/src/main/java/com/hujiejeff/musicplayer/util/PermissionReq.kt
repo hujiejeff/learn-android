@@ -87,7 +87,7 @@ class PermissionReq constructor(private val any: Any) {
             context.packageName,
             PackageManager.GET_PERMISSIONS
         )
-        val permissions= packageInfo.requestedPermissions
+        val permissions = packageInfo.requestedPermissions
         sManifestPermissionSet.addAll(permissions)
     }
 

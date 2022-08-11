@@ -249,37 +249,43 @@ class DataRepository(
     ) {
         logD("loadSearchResult2")
 
-        netDataSource.loadSearchResult(keywords, type.value, offset,limit, cls, object : Callback<K> {
-            override fun onLoaded(t: K) {
+        netDataSource.loadSearchResult(
+            keywords,
+            type.value,
+            offset,
+            limit,
+            cls,
+            object : Callback<K> {
+                override fun onLoaded(t: K) {
 
-                when (t) {
-                    is SearchSongResultResponse -> {
-                        callback.onLoaded(t.result.songs as List<T>)
+                    when (t) {
+                        is SearchSongResultResponse -> {
+                            callback.onLoaded(t.result.songs as List<T>)
+                        }
+
+                        is SearchArtistResultResponse -> {
+                            callback.onLoaded(t.result.artists as List<T>)
+                        }
+
+                        is SearchAlbumResultResponse -> {
+                            callback.onLoaded(t.result.albums as List<T>)
+                        }
+
+                        is SearchPlayListResultResponse -> {
+                            callback.onLoaded(t.result.playlists as List<T>)
+                        }
+
+                        is SearchUserResultResponse -> {
+                            callback.onLoaded(t.result.userprofiles as List<T>)
+                        }
+
                     }
-
-                    is SearchArtistResultResponse -> {
-                        callback.onLoaded(t.result.artists as List<T>)
-                    }
-
-                    is SearchAlbumResultResponse -> {
-                        callback.onLoaded(t.result.albums as List<T>)
-                    }
-
-                    is SearchPlayListResultResponse -> {
-                        callback.onLoaded(t.result.playlists as List<T>)
-                    }
-
-                    is SearchUserResultResponse -> {
-                        callback.onLoaded(t.result.userprofiles as List<T>)
-                    }
-
                 }
-            }
 
-            override fun onFailed(mes: String) {
-                callback.onFailed(mes)
-            }
-        })
+                override fun onFailed(mes: String) {
+                    callback.onFailed(mes)
+                }
+            })
     }
 
 

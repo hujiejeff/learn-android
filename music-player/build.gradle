@@ -70,4 +70,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
+    /**--------------------Utils----------------------**/
+    implementation 'com.blankj:utilcodex:1.31.0'
+
 }

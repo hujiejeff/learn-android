@@ -1,22 +1,21 @@
 package com.hujiejeff.musicplayer.util
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 
-fun <V : ViewBinding> setActivityContentView(
-    activity: Activity,
+fun <V : ViewBinding> AppCompatActivity.setActivityContentView(
     layoutInflater: LayoutInflater
 ): V? {
     try {
-        val bindingClazz = getSuperClassGenericClass<V>(activity)
+        val bindingClazz = getSuperClassGenericClass<V>(this)
         val binding: V
         val inflateMethod = bindingClazz.getDeclaredMethod("inflate", LayoutInflater::class.java)
         binding = inflateMethod.invoke(null, layoutInflater) as V
-        activity.setContentView(binding.root)
+        setContentView(binding.root)
         return binding
     } catch (e: Exception) {
         e.printStackTrace()

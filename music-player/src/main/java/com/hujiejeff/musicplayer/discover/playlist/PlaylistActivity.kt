@@ -5,11 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.App
 import com.hujiejeff.musicplayer.base.BaseActivity
 import com.hujiejeff.musicplayer.base.BaseRecyclerViewAdapter
@@ -24,7 +22,7 @@ import com.hujiejeff.musicplayer.util.obtainViewModel
  * Create by hujie on 2020/3/13
  * 歌单详情
  */
-class PlaylistActivity : BaseActivity() {
+class PlaylistActivity : BaseActivity<ActivityPlaylistBinding>() {
     companion object {
         const val EXTRA_PLAYLIST_ID = "extra_playlist_id"
         const val EXTRA_PLAYLIST_COVER_URL = "extra_playlist_cover_url"
@@ -47,12 +45,8 @@ class PlaylistActivity : BaseActivity() {
 
     private lateinit var binding: ActivityPlaylistBinding
     private lateinit var coverUrl: String
-    override fun layoutResId(): Int = R.layout.activity_playlist
+
     override fun isLightStatusBar(): Boolean = false
-    override fun getViewBinding(): View {
-        binding = ActivityPlaylistBinding.inflate(layoutInflater)
-        return binding.root
-    }
 
     override fun getToolbar(): Toolbar = binding.toolbar
 
@@ -63,13 +57,13 @@ class PlaylistActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         id = intent.getLongExtra(EXTRA_PLAYLIST_ID, 0)
         coverUrl = intent.getStringExtra(EXTRA_PLAYLIST_COVER_URL)!!
-        binding.initView()
+
         viewModel = obtainViewModel()
         subscribe()
         viewModel.loadPlaylistDetail(id)
     }
 
-    private fun ActivityPlaylistBinding.initView() {
+    override fun ActivityPlaylistBinding.initView() {
 //        iv_playlist_detail_cover.loadPlayListCover(coverUrl)
 
         rvPlaylistMusicList.apply {

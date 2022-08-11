@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.hujiejeff.musicplayer.util.setFragmentContentView
 
-abstract class BaseFragment<V: ViewBinding> : Fragment() {
+abstract class BaseFragment<V : ViewBinding> : Fragment() {
     protected lateinit var mBinding: V
     override fun onCreateView(
         inflater: LayoutInflater,

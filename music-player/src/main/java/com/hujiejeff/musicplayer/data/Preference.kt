@@ -64,6 +64,7 @@ object Preference {
     private fun setStringSet(key: String, value: Set<String>) {
         sharedPreferences.edit().putStringSet(key, value).apply()
     }
-    private fun getStringSet(key: String, defValue: Set<String>): Set<String>  =
+
+    private fun getStringSet(key: String, defValue: Set<String>): Set<String> =
         sharedPreferences.getStringSet(key, defValue)!!
 }

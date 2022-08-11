@@ -394,7 +394,8 @@ class AudioPlayer private constructor() {
                     onPublish(audioPosition)
                 }
             }
-            mHandler.postDelayed(this,
+            mHandler.postDelayed(
+                this,
                 TIME_UPDATE
             )
         }

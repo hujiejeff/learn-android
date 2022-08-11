@@ -3,8 +3,8 @@
     <item
         android:icon="@drawable/ic_settings"
         android:id="@+id/setting"
-        android:title="@string/setting"/>
+        android:title="@string/setting" />
     <item
         android:id="@+id/about"
-        android:title="@string/about"/>
+        android:title="@string/about" />
 </menu>

@@ -25,7 +25,9 @@ class ViewModelFactory private constructor(private val dataRepository: DataRepos
                     dataRepository
                 )
                 isAssignableFrom(DiscoverViewModel::class.java) -> DiscoverViewModel(dataRepository)
-                isAssignableFrom(LocalMusicViewModel::class.java) -> LocalMusicViewModel(dataRepository)
+                isAssignableFrom(LocalMusicViewModel::class.java) -> LocalMusicViewModel(
+                    dataRepository
+                )
                 isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(dataRepository)
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

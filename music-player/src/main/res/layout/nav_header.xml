@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="180dp">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/icon_image"
         android:src="@drawable/nav_icon"
@@ -17,6 +18,7 @@
         android:layout_below="@+id/icon_image"
         android:layout_centerHorizontal="true"
         android:text="@string/example_date" />
+
     <TextView
         android:layout_below="@+id/date"
         android:layout_centerHorizontal="true"

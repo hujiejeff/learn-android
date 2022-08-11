@@ -2,19 +2,20 @@ package com.hujiejeff.musicplayer.util
 
 import android.os.Build
 import android.util.Log
+
 const val TAG = "Music"
 
 /**
-* Log
-* */
+ * Log
+ * */
 fun logD(mes: String) {
     Log.d(TAG, mes)
 }
 
 
 /**
-* 检查版本操作
-* */
+ * 检查版本操作
+ * */
 fun <T> checkAndroidVersionAction(
     version: Int,
     action: () -> T,

@@ -1,43 +1,39 @@
 package com.hujiejeff.musicplayer.base
 
 import PermissionReq
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
+import androidx.viewbinding.ViewBinding
 import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.customview.PlayerProgressView
 import com.hujiejeff.musicplayer.data.Preference
-import com.hujiejeff.musicplayer.data.entity.Music
 import com.hujiejeff.musicplayer.player.MusicPlayFragment
-import com.hujiejeff.musicplayer.util.*
+import com.hujiejeff.musicplayer.util.dp2Px
+import com.hujiejeff.musicplayer.util.getCover
+import com.hujiejeff.musicplayer.util.setActivityContentView
+import com.hujiejeff.musicplayer.util.transaction
 
 
-abstract class BaseActivity: AppCompatActivity() {
+abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
 
 
+    protected lateinit var mBinding: V
     private val musicPlayFragment by lazy { MusicPlayFragment() }
     private var isAddMusicPlay = false
     private var isShowMusicPlay = false
 
-
-    protected abstract fun layoutResId(): Int
     protected abstract fun isLightStatusBar(): Boolean
-    protected abstract fun getViewBinding(): View
-    open protected fun getToolbar(): Toolbar? = null
+    protected open fun getToolbar(): Toolbar? = null
     private lateinit var ppv: PlayerProgressView
+    protected abstract fun V.initView()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getViewBinding())
-        checkAndroidVersionAction(Build.VERSION_CODES.M, {
-            window.setTransparentStatusBar(isLightStatusBar())
-        })
+        mBinding = setActivityContentView(layoutInflater)!!
+        mBinding.initView()
         setSupportActionBar(getToolbar())
         addPlayBar()
         subscribe()
@@ -47,11 +43,12 @@ abstract class BaseActivity: AppCompatActivity() {
 
         val rootView = (findViewById<ViewGroup>(android.R.id.content))
         if (rootView is FrameLayout) {
-            val lp: FrameLayout.LayoutParams = FrameLayout.LayoutParams(dp2Px(70), dp2Px(70)).apply {
-                gravity = Gravity.BOTTOM or Gravity.END
-                rightMargin = dp2Px(10)
-                bottomMargin = dp2Px(100)
-            }
+            val lp: FrameLayout.LayoutParams =
+                FrameLayout.LayoutParams(dp2Px(70), dp2Px(70)).apply {
+                    gravity = Gravity.BOTTOM or Gravity.END
+                    rightMargin = dp2Px(10)
+                    bottomMargin = dp2Px(100)
+                }
             ppv = PlayerProgressView(this).apply {
                 id = R.id.ppv_player
                 layoutParams = lp
@@ -66,35 +63,28 @@ abstract class BaseActivity: AppCompatActivity() {
 
     private fun subscribe() {
         App.playerViewModel.apply {
-            currentMusic.observe(this@BaseActivity,
-                Observer<Music> { music ->
-                    ppv.max = music.duration.toInt()
-                    ppv.progress = if (!isPlay.value!!) Preference.play_progress else 0
+            currentMusic.observe(this@BaseActivity) { music ->
+                ppv.max = music.duration.toInt()
+                ppv.progress = if (!isPlay.value!!) Preference.play_progress else 0
 
-                    if (music.type == 1) {
-                        ppv.setSrc(music.coverSrc!!)
-                    } else {
-                        ppv.setBitmap(getCover(music.albumID))
-                    }
-                })
+                if (music.type == 1) {
+                    ppv.setSrc(music.coverSrc!!)
+                } else {
+                    ppv.setBitmap(getCover(music.albumID))
+                }
+            }
 
-            playProgress.observe(this@BaseActivity, Observer<Int> { progress ->
+            playProgress.observe(this@BaseActivity) { progress ->
                 ppv.progress = progress
-            })
+            }
 
-            isPlayFragmentShow.observe(this@BaseActivity, Observer {isShow ->
+            isPlayFragmentShow.observe(this@BaseActivity) { isShow ->
                 if (isShow) {
-                    checkAndroidVersionAction(Build.VERSION_CODES.M, {
-                        window.setTransparentStatusBar(true)
-                    })
                     openMusicPlayFragment()
                 } else {
-                    checkAndroidVersionAction(Build.VERSION_CODES.M, {
-                        window.setTransparentStatusBar(isLightStatusBar())
-                    })
                     hideMusicPlayFragment()
                 }
-            })
+            }
         }
     }
 

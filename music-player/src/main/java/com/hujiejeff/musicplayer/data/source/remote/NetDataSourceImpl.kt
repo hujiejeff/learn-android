@@ -151,7 +151,10 @@ class NetDataSourceImpl(
             if (response.isSuccessful) {
 
                 val t =
-                    Gson().fromJson<T>(response.body()!!.string(), cls)//todo 这种方式转对象，new TypeToken<List<T>>直接转list
+                    Gson().fromJson<T>(
+                        response.body()!!.string(),
+                        cls
+                    )//todo 这种方式转对象，new TypeToken<List<T>>直接转list
                 mainThreadExecute {
                     callback.onLoaded(t)
                 }

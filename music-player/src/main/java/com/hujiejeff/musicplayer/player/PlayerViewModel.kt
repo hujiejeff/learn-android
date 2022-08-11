@@ -9,7 +9,8 @@ import com.hujiejeff.musicplayer.data.source.Callback
 import com.hujiejeff.musicplayer.data.source.DataRepository
 import com.hujiejeff.musicplayer.util.logD
 
-class PlayerViewModel(private val dataRepository: DataRepository): ViewModel(), OnPlayerEventListener {
+class PlayerViewModel(private val dataRepository: DataRepository) : ViewModel(),
+    OnPlayerEventListener {
 
     private val player: AudioPlayer = AudioPlayer.INSTANCE
 
@@ -33,7 +34,8 @@ class PlayerViewModel(private val dataRepository: DataRepository): ViewModel(), 
         get() = _bufferProgress
 
     //播放模式
-    private val _playMode = MutableLiveData<PlayMode>().apply { value = Preference.play_mode.toPlayMode() }
+    private val _playMode =
+        MutableLiveData<PlayMode>().apply { value = Preference.play_mode.toPlayMode() }
     val playMode: LiveData<PlayMode>
         get() = _playMode
 
@@ -51,7 +53,6 @@ class PlayerViewModel(private val dataRepository: DataRepository): ViewModel(), 
     val position = MutableLiveData<Int>()
 
 
-
     //当前播放列表模式，网络 or 本地
     private val isPlayNetMusic = false
 
@@ -59,6 +60,7 @@ class PlayerViewModel(private val dataRepository: DataRepository): ViewModel(), 
         //注册播放监听
         registerListener()
     }
+
     fun loadDefaultMusic() {
         logD("loadDefaultMusic---" + player.currentMusic.toString())
         _currentMusic.value = player.currentMusic
@@ -75,7 +77,7 @@ class PlayerViewModel(private val dataRepository: DataRepository): ViewModel(), 
         logD(music.toString())
         if (music?.type == 1) {
             //网络歌曲需要根据ID加载播放url等信息
-            dataRepository.getTrackDetail(music.id, object : Callback<TrackData>{
+            dataRepository.getTrackDetail(music.id, object : Callback<TrackData> {
                 override fun onLoaded(t: TrackData) {
                     music.filePath = t.url
                     music.fileSize = t.size
@@ -155,7 +157,7 @@ class PlayerViewModel(private val dataRepository: DataRepository): ViewModel(), 
             val track = trackList[index]
             val al = track.al
             val ar = track.ar
-            val music = Music(track.id, 1, ar[0].name, "", "", al.id, al.name, track.name, 0L,0L)
+            val music = Music(track.id, 1, ar[0].name, "", "", al.id, al.name, track.name, 0L, 0L)
             music.coverSrc = al.picUrl
             music
         }

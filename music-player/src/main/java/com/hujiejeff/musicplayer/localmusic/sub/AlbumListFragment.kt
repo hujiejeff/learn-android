@@ -18,13 +18,12 @@ import com.hujiejeff.musicplayer.localmusic.LocalMusicFragment
 import com.hujiejeff.musicplayer.localmusic.LocalMusicViewModel
 import com.hujiejeff.musicplayer.util.loadCover
 
-class AlbumListFragment: AbstractLazyLoadFragment<FragmentListBinding>() {
+class AlbumListFragment : AbstractLazyLoadFragment<FragmentListBinding>() {
 
     private val albumList: MutableList<Album> = mutableListOf()
     private val spanCount = 2
     private lateinit var homeActivity: HomeActivity
     private lateinit var viewModel: LocalMusicViewModel
-
 
 
     override fun FragmentListBinding.initView() {
@@ -38,7 +37,7 @@ class AlbumListFragment: AbstractLazyLoadFragment<FragmentListBinding>() {
 
         }
     }
-    
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

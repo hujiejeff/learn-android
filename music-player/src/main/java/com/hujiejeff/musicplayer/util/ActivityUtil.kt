@@ -13,8 +13,12 @@ public inline fun AppCompatActivity.transaction(action: FragmentTransaction.() -
         commit()
     }
 }
- fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
+
+fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) =
     ViewModelProvider(this, ViewModelFactory.getInstance(application))[viewModelClass]
 
 fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>) =
-    ViewModelProvider(this, ViewModelFactory.getInstance(activity!!.application)).get(viewModelClass)
+    ViewModelProvider(
+        this,
+        ViewModelFactory.getInstance(activity!!.application)
+    ).get(viewModelClass)

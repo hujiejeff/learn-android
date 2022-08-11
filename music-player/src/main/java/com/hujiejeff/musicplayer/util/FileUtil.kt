@@ -50,7 +50,7 @@ fun copyByIO(src: String, des: String) {
 
 fun copyByAndorid(src: String, des: String) {
     val srcFd = FileInputStream(src).fd
-    val desFd  = FileOutputStream(des).fd
+    val desFd = FileOutputStream(des).fd
     FileUtils.copy(srcFd, desFd)
     //or
 //    FileUtils.copy(fis, fos)

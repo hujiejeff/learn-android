@@ -3,13 +3,10 @@ package com.hujiejeff.musicplayer.discover.playlistsqure
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.AbstractLazyLoadFragment
 import com.hujiejeff.musicplayer.base.BaseRecyclerViewAdapter
 import com.hujiejeff.musicplayer.base.BaseViewHolder
@@ -38,7 +35,7 @@ class PlaylistListFragment : AbstractLazyLoadFragment<FragmentListBinding>() {
         rvList.apply {
             adapter = Adapter().apply {
                 setOnItemClickListener {
-                    PlaylistActivity.start( playLists[it].id, playLists[it].coverImgUrl, activity)
+                    PlaylistActivity.start(playLists[it].id, playLists[it].coverImgUrl, activity)
                 }
             }
             layoutManager = GridLayoutManager(context, 3)
@@ -89,10 +86,14 @@ class PlaylistListFragment : AbstractLazyLoadFragment<FragmentListBinding>() {
     inner class Adapter :
         BaseRecyclerViewAdapter<ItemPlaylistListBinding, PlayList>(context, playLists) {
         @SuppressLint("SetTextI18n")
-        override fun convert(holder: BaseViewHolder<ItemPlaylistListBinding>, data: PlayList, position: Int) {
+        override fun convert(
+            holder: BaseViewHolder<ItemPlaylistListBinding>,
+            data: PlayList,
+            position: Int
+        ) {
             holder.mBinding.run {
-                tvPlaylistName.text =  data.name
-                tvPlaylistPlayCount.text =  (data.playCount / 10000).toString() + "万"
+                tvPlaylistName.text = data.name
+                tvPlaylistPlayCount.text = (data.playCount / 10000).toString() + "万"
                 ivPlaylistCover.loadPlayListCover(data.coverImgUrl)
             }
         }

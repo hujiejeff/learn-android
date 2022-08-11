@@ -11,7 +11,7 @@ import com.hujiejeff.musicplayer.data.source.Callback
 import com.hujiejeff.musicplayer.data.source.DataRepository
 import com.hujiejeff.musicplayer.player.AudioPlayer
 
-class LocalMusicViewModel(private val dataRepository: DataRepository): ViewModel() {
+class LocalMusicViewModel(private val dataRepository: DataRepository) : ViewModel() {
     private val player: AudioPlayer = AudioPlayer.INSTANCE
 
     //数据加载

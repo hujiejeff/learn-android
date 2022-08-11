@@ -7,6 +7,7 @@ enum class SearchType(private val _value: Int) {
     SONG(1), VIDEO(1004), ARTIST(100), ALBUM(10), PLAYLIST(1000), USER(1002);
 
     val value: Int get() = _value
+
     companion object {
         fun valueOf(value: Int) = when (value) {
             1 -> SONG

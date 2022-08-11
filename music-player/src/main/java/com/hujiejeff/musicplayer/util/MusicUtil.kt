@@ -58,7 +58,20 @@ fun getMusicList(): MutableList<Music> {
             val albumId = getLong(cursor.getColumnIndex(ALBUM_ID))
             val duration = getLong(cursor.getColumnIndex(DURATION))
             val size = getLong(cursor.getColumnIndex(SIZE))
-            musicList.add(Music(id, 0, artist, displayName, path, albumId, album, title, duration, size))
+            musicList.add(
+                Music(
+                    id,
+                    0,
+                    artist,
+                    displayName,
+                    path,
+                    albumId,
+                    album,
+                    title,
+                    duration,
+                    size
+                )
+            )
         }
     }
     cursor.close()
@@ -123,7 +136,7 @@ fun ImageView.loadPlayListCover(url: String) {
 fun getCover(albumID: Long): Bitmap {
     val artUri = Uri.parse("content://media/external/audio/albumart")
     val uri = ContentUris.withAppendedId(artUri, albumID)
-        try {
+    try {
         val bitmap =
             BitmapFactory.decodeStream(App.appContext.contentResolver.openInputStream(uri))//也许没封面
         if (bitmap != null) {

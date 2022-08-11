@@ -14,16 +14,16 @@ import com.hujiejeff.musicplayer.data.source.DataRepository
  */
 class DiscoverViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
-    private val _recomendPlaylists =  MutableLiveData<List<RecommendPlayList>>()
+    private val _recomendPlaylists = MutableLiveData<List<RecommendPlayList>>()
     val recomendPlaylists: LiveData<List<RecommendPlayList>>
         get() = _recomendPlaylists
 
-    private val _newSongs =  MutableLiveData<List<RecommendNewSong>>()
+    private val _newSongs = MutableLiveData<List<RecommendNewSong>>()
     val newSongs: LiveData<List<RecommendNewSong>>
         get() = _newSongs
 
 
-    private val _newAlbums =  MutableLiveData<List<RecommendNewAlbum>>()
+    private val _newAlbums = MutableLiveData<List<RecommendNewAlbum>>()
     val newAlbums: LiveData<List<RecommendNewAlbum>>
         get() = _newAlbums
 

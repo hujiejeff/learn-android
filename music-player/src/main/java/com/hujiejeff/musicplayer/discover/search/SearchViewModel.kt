@@ -36,7 +36,6 @@ class SearchViewModel(private val dataRepository: DataRepository) : ViewModel() 
         get() = _searchLoadingMap
 
 
-
     fun loadHistory() {
         dataRepository.getSearchHistorySet(object : Callback<Set<String>> {
             override fun onLoaded(t: Set<String>) {
@@ -82,9 +81,6 @@ class SearchViewModel(private val dataRepository: DataRepository) : ViewModel() 
             _searchResultMap[type] = MutableLiveData()
         }
     }
-
-
-
 
 
     fun loadSearchResult(type: SearchType, offset: Int, limit: Int) {

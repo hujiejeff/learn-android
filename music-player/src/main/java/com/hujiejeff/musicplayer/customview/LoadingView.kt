@@ -66,7 +66,13 @@ class LoadingView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         //画出四条线
-        canvas?.drawLine(mIntervalWidth, height.toFloat(), mIntervalWidth, (height / 4f) + mY + mDy, mPaint)
+        canvas?.drawLine(
+            mIntervalWidth,
+            height.toFloat(),
+            mIntervalWidth,
+            (height / 4f) + mY + mDy,
+            mPaint
+        )
 
         canvas?.drawLine(
             2 * mIntervalWidth + mStrokeWidth,

@@ -107,7 +107,10 @@ interface Apis {
      *  搜索建议
      * */
     @GET("search/suggest")
-    fun getSearchSuggest(@Query("keywords") keywords: String, @Query("type") type: String = "mobile")
+    fun getSearchSuggest(
+        @Query("keywords") keywords: String,
+        @Query("type") type: String = "mobile"
+    )
 
 
     @GET("personalized")

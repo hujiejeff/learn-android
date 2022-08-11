@@ -8,7 +8,7 @@ import com.hujiejeff.musicplayer.data.source.Callback
 import com.hujiejeff.musicplayer.data.source.DataRepository
 
 
-class PlaylistViewModel(private val dataRepository: DataRepository):ViewModel() {
+class PlaylistViewModel(private val dataRepository: DataRepository) : ViewModel() {
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean>
         get() = _loading

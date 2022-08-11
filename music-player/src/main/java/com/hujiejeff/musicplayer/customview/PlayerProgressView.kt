@@ -44,7 +44,6 @@ class PlayerProgressView(context: Context, attrs: AttributeSet?, defStyleAttr: I
         }
 
 
-
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
@@ -63,7 +62,7 @@ class PlayerProgressView(context: Context, attrs: AttributeSet?, defStyleAttr: I
 
 
         //测试动画
-        mProgressAnimator = ValueAnimator.ofInt(0,1000).apply {
+        mProgressAnimator = ValueAnimator.ofInt(0, 1000).apply {
             duration = 180000
             interpolator = LinearInterpolator()
             addUpdateListener {
@@ -94,7 +93,7 @@ class PlayerProgressView(context: Context, attrs: AttributeSet?, defStyleAttr: I
         canvas?.save()
         //绘制圆形图片
 
-        val scale : Float = width * 1f / mBitmap.width
+        val scale: Float = width * 1f / mBitmap.width
         val half = (width / 2).toFloat()
         canvas?.rotate(mRotate.toFloat(), half, half)
         mMatrix.setScale(scale, scale)
@@ -119,7 +118,6 @@ class PlayerProgressView(context: Context, attrs: AttributeSet?, defStyleAttr: I
             mProcessBarPaint
         )
     }
-
 
 
     fun testAnimator() {

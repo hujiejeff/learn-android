@@ -14,7 +14,7 @@ import com.hujiejeff.musicplayer.util.setFragmentContentView
 /**
  * Create by hujie on 2020/1/2
  */
-abstract class AbstractLazyLoadFragment<V: ViewBinding>: Fragment() {
+abstract class AbstractLazyLoadFragment<V : ViewBinding> : Fragment() {
     protected lateinit var mBinding: V
     private var isViewCreated = false
     private var isLoadedData = false

@@ -1,8 +1,6 @@
 package com.hujiejeff.musicplayer.discover.search
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
@@ -15,54 +13,44 @@ import com.hujiejeff.musicplayer.base.BaseActivity
 import com.hujiejeff.musicplayer.base.BaseRecyclerViewAdapter
 import com.hujiejeff.musicplayer.base.BaseViewHolder
 import com.hujiejeff.musicplayer.data.entity.HotSearchString
-import com.hujiejeff.musicplayer.data.entity.RecommendNewAlbum
-import com.hujiejeff.musicplayer.data.entity.RecommendNewSong
-import com.hujiejeff.musicplayer.data.entity.RecommendPlayList
-import com.hujiejeff.musicplayer.databinding.*
-import com.hujiejeff.musicplayer.util.dp2Px
-import com.hujiejeff.musicplayer.util.loadPlayListCover
+import com.hujiejeff.musicplayer.databinding.ActivitySearchBinding
+import com.hujiejeff.musicplayer.databinding.ItemHotSearchSongBinding
+import com.hujiejeff.musicplayer.databinding.ItemSearchHistoryBinding
 import com.hujiejeff.musicplayer.util.obtainViewModel
 import com.hujiejeff.musicplayer.util.transaction
 
 /**
  * Create by hujie on 2020/3/4
  */
-class SearchActivity : BaseActivity() {
+class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     private val hotSearchStringList = mutableListOf<HotSearchString>()
     private val searchHistoryStringList = mutableListOf<String>()
     private lateinit var viewModel: SearchViewModel
     private val containerFragment = SearchResultContainerFragment()
-    override fun layoutResId(): Int = R.layout.activity_search
-    private lateinit var binding: ActivitySearchBinding
-
     override fun isLightStatusBar(): Boolean = true
-    override fun getViewBinding(): View {
-        binding = ActivitySearchBinding.inflate(layoutInflater)
-        return binding.root
-    }
 
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding.rvHistory.apply {
-            adapter = createAdapter<ItemSearchHistoryBinding, String>(searchHistoryStringList).apply {
-                setOnItemClickListener {
-                    viewModel.startSearch(searchHistoryStringList[it])
+    override fun ActivitySearchBinding.initView() {
+        rvHistory.apply {
+            adapter =
+                createAdapter<ItemSearchHistoryBinding, String>(searchHistoryStringList).apply {
+                    setOnItemClickListener {
+                        viewModel.startSearch(searchHistoryStringList[it])
+                    }
                 }
-            }
             itemAnimator = DefaultItemAnimator()
-            layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@SearchActivity, LinearLayoutManager.HORIZONTAL, false)
         }
 
 
-        binding.rvHotSearch.apply {
-            adapter = createAdapter<ItemHotSearchSongBinding, HotSearchString>( hotSearchStringList).apply {
-                setOnItemClickListener {
-                    viewModel.startSearch(hotSearchStringList[it].first)
+        rvHotSearch.apply {
+            adapter =
+                createAdapter<ItemHotSearchSongBinding, HotSearchString>(hotSearchStringList).apply {
+                    setOnItemClickListener {
+                        viewModel.startSearch(hotSearchStringList[it].first)
+                    }
                 }
-            }
             itemAnimator = DefaultItemAnimator()
             layoutManager =
                 LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
@@ -72,7 +60,7 @@ class SearchActivity : BaseActivity() {
 
         subscribe()
 
-        binding.includeView.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
+        includeView.etSearch.setOnEditorActionListener { textView, i, keyEvent ->
             if (keyEvent != null && KeyEvent.KEYCODE_ENTER == keyEvent.keyCode && KeyEvent.ACTION_DOWN == keyEvent.action) {
                 viewModel.startSearch(textView.text.toString())
 
@@ -81,47 +69,45 @@ class SearchActivity : BaseActivity() {
             false
         }
 
-        binding.includeView.etSearch.setOnClickListener {
+        includeView.etSearch.setOnClickListener {
             (it as EditText).isCursorVisible = true
         }
 
-        binding.ivSearchHistoryClear.setOnClickListener {
+        ivSearchHistoryClear.setOnClickListener {
             viewModel.clearHistory()
         }
 
-       transaction {
-           add(R.id.fl_container, containerFragment)
-           hide(containerFragment)
-       }
+        transaction {
+            add(R.id.fl_container, containerFragment)
+            hide(containerFragment)
+        }
 
         viewModel.loadHistory()
         viewModel.loadHotSearch()
-
     }
-
 
     private fun subscribe() {
         viewModel.apply {
             loading.observe(this@SearchActivity, Observer { isLoading ->
-                binding.lvLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
-                binding.flContainer.visibility = if (isLoading) View.GONE else View.VISIBLE
+                mBinding.lvLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+                mBinding.flContainer.visibility = if (isLoading) View.GONE else View.VISIBLE
             })
 
             hotSearch.observe(this@SearchActivity, Observer {
                 hotSearchStringList.clear()
                 hotSearchStringList.addAll(it)
-                binding.rvHotSearch.adapter?.notifyDataSetChanged()
+                mBinding.rvHotSearch.adapter?.notifyDataSetChanged()
             })
 
             searchHistory.observe(this@SearchActivity, Observer {
                 searchHistoryStringList.clear()
                 searchHistoryStringList.addAll(it)
-                binding.rvHistory.adapter?.notifyDataSetChanged()
+                mBinding.rvHistory.adapter?.notifyDataSetChanged()
             })
 
             currentSearchKey.observe(this@SearchActivity, Observer {
-                binding.includeView.etSearch.setText(it)
-                binding.includeView.etSearch.isCursorVisible = false
+                mBinding.includeView.etSearch.setText(it)
+                mBinding.includeView.etSearch.isCursorVisible = false
                 transaction {
                     show(containerFragment)
                 }

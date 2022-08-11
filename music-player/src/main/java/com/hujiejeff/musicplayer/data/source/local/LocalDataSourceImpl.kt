@@ -14,7 +14,7 @@ import com.hujiejeff.musicplayer.util.getMusicList
 /**
  * Create by hujie on 2020/1/3
  */
-class LocalDataSourceImpl(val appExecutors: AppExecutors): LocalDataSource {
+class LocalDataSourceImpl(val appExecutors: AppExecutors) : LocalDataSource {
 
     override fun getLocalMusicList(callback: Callback<List<Music>>) {
         appExecutors.diskIO.execute {

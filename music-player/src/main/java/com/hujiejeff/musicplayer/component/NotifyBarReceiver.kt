@@ -10,7 +10,7 @@ import com.hujiejeff.musicplayer.player.AudioPlayer
  * 通知栏广播接收器
  * Create by hujie on 2019/12/31
  */
-class NotifyBarReceiver: BroadcastReceiver() {
+class NotifyBarReceiver : BroadcastReceiver() {
     companion object {
         const val ACTION_STATUS_BAR = "com.hujiejeff.receiver.NotifyBarReceiver"
         const val EXTRA = "extra"
@@ -23,7 +23,7 @@ class NotifyBarReceiver: BroadcastReceiver() {
         if (intent == null || TextUtils.isEmpty(intent.action)) {
             return
         }
-        when(intent.getStringExtra(EXTRA)) {
+        when (intent.getStringExtra(EXTRA)) {
             EXTRA_PLAY_PAUSE -> player.playOrPause()
             EXTRA_NEXT -> player.next()
         }

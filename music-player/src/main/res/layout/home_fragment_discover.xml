@@ -4,7 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/include_search_toolbar" android:id="@+id/include_binding"/>
+
+    <include
+        layout="@layout/include_search_toolbar"
+        android:id="@+id/include_binding" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +40,7 @@
                 android:background="@color/white"
                 app:itemBackground="@color/bottomNavBackground"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/menu_discover_top"/>
+                app:menu="@menu/menu_discover_top" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_recommend_playlist"
@@ -44,6 +48,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/bnv_discover_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -55,6 +60,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="推荐歌单"
                     android:textStyle="bold" />
+
                 <TextView
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -146,7 +152,8 @@
                 android:id="@+id/group_content"
                 app:constraint_referenced_ids="tv_banner,bnv_discover_top,cl_recommend_playlist,cl_new_songs,cl_new_albums"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <com.hujiejeff.musicplayer.customview.LoadingView
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -155,7 +162,7 @@
                 android:id="@+id/loading_view"
                 android:visibility="gone"
                 android:layout_width="25dp"
-                android:layout_height="25dp"/>
+                android:layout_height="25dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>

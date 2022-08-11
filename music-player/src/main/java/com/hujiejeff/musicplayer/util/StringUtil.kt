@@ -11,4 +11,4 @@ fun getMusicTimeFormatString(msc: Int): String {
     return getForTenMoreOrLessTen(minute) + ":" + getForTenMoreOrLessTen(sc)
 }
 
-fun getForTenMoreOrLessTen(num : Int)  = if (num < 10) "0$num" else "$num"
+fun getForTenMoreOrLessTen(num: Int) = if (num < 10) "0$num" else "$num"

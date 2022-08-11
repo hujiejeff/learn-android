@@ -1,12 +1,8 @@
 package com.hujiejeff.musicplayer.discover.search
 
 import android.Manifest
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.AbstractLazyLoadFragment
 import com.hujiejeff.musicplayer.data.entity.*
 import com.hujiejeff.musicplayer.databinding.FragmentSearchResultContainerBinding

@@ -100,7 +100,11 @@ class MusicListFragment : AbstractLazyLoadFragment<FragmentListBinding>() {
 
     inner class MusicRecyclerViewAdapter :
         BaseRecyclerViewAdapter<ItemMusicListBinding, Music>(context, musicList) {
-        override fun convert(holder: BaseViewHolder<ItemMusicListBinding>, data: Music, position: Int) {
+        override fun convert(
+            holder: BaseViewHolder<ItemMusicListBinding>,
+            data: Music,
+            position: Int
+        ) {
             holder.mBinding.run {
                 tvMusicTitle.text = data.title
                 tvMusicArtist.text = data.artist

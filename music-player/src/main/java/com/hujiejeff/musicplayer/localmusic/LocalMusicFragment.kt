@@ -1,6 +1,5 @@
 package com.hujiejeff.musicplayer.localmusic
 
-import android.view.View
 import androidx.fragment.app.FragmentPagerAdapter
 import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.BaseFragment
@@ -21,6 +20,7 @@ class LocalMusicFragment : BaseFragment<HomeFragmentMyBinding>() {
             getString(R.string.tab_artist)
         )
     }
+
     override fun HomeFragmentMyBinding.initView() {
         viewPager.adapter = PagerAdapter()
         tabLayout.setupWithViewPager(viewPager)

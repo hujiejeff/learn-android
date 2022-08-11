@@ -12,7 +12,7 @@ import com.hujiejeff.musicplayer.util.logD
 /**
  * Create by hujie on 2020/3/13
  */
-class MainPlaylistViewModel(private val dataRepository: DataRepository): ViewModel() {
+class MainPlaylistViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
     //歌单分类
     private val _subCatList = MutableLiveData<List<SubCat>>().apply { value = mutableListOf() }
@@ -28,8 +28,6 @@ class MainPlaylistViewModel(private val dataRepository: DataRepository): ViewMod
     val loadingMap: MutableMap<SubCat, MutableLiveData<Boolean>> = mutableMapOf()
 
 
-
-
     fun loadSubCat() {
         dataRepository.getSubCat(object : Callback<List<SubCat>> {
             override fun onLoaded(t: List<SubCat>) {
@@ -37,7 +35,7 @@ class MainPlaylistViewModel(private val dataRepository: DataRepository): ViewMod
                     playListMap[subCat] = MutableLiveData()
                     loadingMap[subCat] = MutableLiveData()
                 }
-                _subCatList.value = t.subList(0,10)
+                _subCatList.value = t.subList(0, 10)
             }
 
             override fun onFailed(mes: String) {

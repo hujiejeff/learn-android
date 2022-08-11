@@ -12,7 +12,7 @@ class TestActivity : AppCompatActivity() {
         val binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.ivHook2.setOnClickListener {
-            val drawable =  binding.ivHook2.drawable
+            val drawable = binding.ivHook2.drawable
             (drawable as Animatable).start()
         }
     }

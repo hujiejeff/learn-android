@@ -4,14 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
-import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.AbstractLazyLoadFragment
 import com.hujiejeff.musicplayer.base.BaseRecyclerViewAdapter
 import com.hujiejeff.musicplayer.base.BaseViewHolder
@@ -27,11 +24,12 @@ import com.hujiejeff.musicplayer.util.loadPlayListCover
  * Create by hujie on 2020/3/6
  * 具体类型的搜索结果
  */
-class SearchResultFragment<V: ViewBinding, D> : AbstractLazyLoadFragment<FragmentListBinding>() {
+class SearchResultFragment<V : ViewBinding, D>(val clazz: Class<V>) :
+    AbstractLazyLoadFragment<FragmentListBinding>() {
 
     companion object {
-        fun <V: ViewBinding,D> newInstance(type: SearchType): SearchResultFragment<V, D> {
-            val instance = SearchResultFragment<V,D>()
+        inline fun <reified V : ViewBinding, D> newInstance(type: SearchType): SearchResultFragment<V, D> {
+            val instance = SearchResultFragment<V, D>(V::class.java)
             instance.arguments = Bundle().apply {
                 putInt("type", type.value)
             }
@@ -77,14 +75,14 @@ class SearchResultFragment<V: ViewBinding, D> : AbstractLazyLoadFragment<Fragmen
 
     override fun FragmentListBinding.initView() {
         rvList.apply {
-            adapter = Adapter<V, D>(context, dataList).apply {
-               setOnItemClickListener {i ->
-                   when(val data = dataList[i]) {
-                       is SearchPlayList -> {
-                           PlaylistActivity.start(data.id, data.coverImgUrl, requireActivity())
-                       }
-                   }
-               }
+            adapter = Adapter(context, clazz, dataList).apply {
+                setOnItemClickListener { i ->
+                    when (val data = dataList[i]) {
+                        is SearchPlayList -> {
+                            PlaylistActivity.start(data.id, data.coverImgUrl, requireActivity())
+                        }
+                    }
+                }
             }
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
@@ -109,8 +107,8 @@ class SearchResultFragment<V: ViewBinding, D> : AbstractLazyLoadFragment<Fragmen
     )
 
 
-    class Adapter<V: ViewBinding, D>(context: Context, datas: List<D>) :
-        BaseRecyclerViewAdapter<V, D>(context, datas) {
+    class Adapter<V : ViewBinding, D>(context: Context, clazz: Class<V>, datas: List<D>) :
+        BaseRecyclerViewAdapter<V, D>(context, clazz, datas) {
         @SuppressLint("SetTextI18n")
         override fun convert(holder: BaseViewHolder<V>, data: D, position: Int) {
             when (data) {
@@ -156,7 +154,8 @@ class SearchResultFragment<V: ViewBinding, D> : AbstractLazyLoadFragment<Fragmen
                 is SearchPlayList -> {
                     (holder.mBinding as ItemSearchResultAlbumBinding).run {
                         tvSearchResultItemAlbumName.text = data.name
-                        tvSearchResultItemAlbumArtist.text =  "${data.trackCount}首 by ${data.creator.nickname}, 播放${data.playCount / 10000}万次"
+                        tvSearchResultItemAlbumArtist.text =
+                            "${data.trackCount}首 by ${data.creator.nickname}, 播放${data.playCount / 10000}万次"
                         ivSearchResultItemAlbumPic.loadPlayListCover(data.coverImgUrl)
                     }
                 }

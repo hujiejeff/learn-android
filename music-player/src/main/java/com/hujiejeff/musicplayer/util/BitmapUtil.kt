@@ -45,9 +45,14 @@ fun getVecotorBitmap(context: Context, vectorDrawableId: Int): Bitmap {
 }
 
 /**
-* 加载合适尺寸得bitmap防止浪费内存
-* */
-fun decodeSimpledBitmapFromResource(resources: Resources, redId: Int, reqWidth: Int, reqHeight: Int): Bitmap {
+ * 加载合适尺寸得bitmap防止浪费内存
+ * */
+fun decodeSimpledBitmapFromResource(
+    resources: Resources,
+    redId: Int,
+    reqWidth: Int,
+    reqHeight: Int
+): Bitmap {
     val options = BitmapFactory.Options().apply {
         inJustDecodeBounds = true//只加载尺寸，不加载图片
         BitmapFactory.decodeResource(resources, redId, this)
@@ -58,8 +63,8 @@ fun decodeSimpledBitmapFromResource(resources: Resources, redId: Int, reqWidth: 
 }
 
 /**
-* 计算合适尺寸
-* */
+ * 计算合适尺寸
+ * */
 fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
     var inSampleSize = 1
     val width = options.outWidth
@@ -71,6 +76,6 @@ fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeig
             inSampleSize *= 2
         }
     }
-    return  inSampleSize
+    return inSampleSize
 }
 

@@ -30,6 +30,7 @@ class Notifier {
         private const val NOTIFICATION_ID = 666
         private const val CHANNEL_ID = "channel_1"
         private const val CHANNEL_NAME = "music"
+
         @JvmStatic
         fun getInstance(): Notifier =
             INSTANCE ?: synchronized(Notifier::class.java) {
@@ -106,7 +107,10 @@ class Notifier {
                     override fun onLoadCleared(placeholder: Drawable?) {
                     }
 
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
                         setImageViewBitmap(R.id.iv_status_bar_cover, resource)
                     }
                 })
