@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
 import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.BarUtils
 import com.hujiejeff.musicplayer.R
@@ -29,6 +30,8 @@ abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
     private var isShowMusicPlay = false
 
     protected abstract fun isLightStatusBar(): Boolean
+    protected open var mStatusBarColorId: Int = android.R.color.transparent
+    protected open var mHasStatusBar: Boolean = true
     protected open fun getToolbar(): Toolbar? = null
     private lateinit var ppv: PlayerProgressView
     protected abstract fun V.initView()
@@ -44,12 +47,14 @@ abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
 
     private fun setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent, theme), false)
+            BarUtils.setStatusBarColor(this, resources.getColor(mStatusBarColorId, theme), true)
         } else {
-            BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent), false)
+            BarUtils.setStatusBarColor(this, resources.getColor(mStatusBarColorId), true)
         }
         BarUtils.setStatusBarLightMode(this, isLightStatusBar())
-        BarUtils.addMarginTopEqualStatusBarHeight(mBinding.root)
+        if (mHasStatusBar) {
+            BarUtils.addMarginTopEqualStatusBarHeight(mBinding.root)
+        }
     }
 
     private fun addPlayBar() {
@@ -102,11 +107,14 @@ abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
     }
 
     private fun openMusicPlayFragment() {
+        ViewCompat.setTransitionName(ppv, "MusicPlayFragment")
         transaction {
             if (!isAddMusicPlay) {
                 add(android.R.id.content, musicPlayFragment)
                 isAddMusicPlay = true
             }
+//            addSharedElement(ppv, "MusicPlayFragment")
+//            musicPlayFragment.sharedElementEnterTransition = Explode()
             setCustomAnimations(R.anim.fragment_slide_up, 0)
             show(musicPlayFragment)
             isShowMusicPlay = true

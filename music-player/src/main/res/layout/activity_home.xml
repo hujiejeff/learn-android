@@ -10,9 +10,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bnv_bottom"
         android:layout_width="match_parent"
-        android:layout_height="0dp"></FrameLayout>
+        android:layout_height="0dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +23,6 @@
         android:clickable="true"
         android:focusable="true"
         app:labelVisibilityMode="labeled"
-        app:itemBackground="@color/bottomNavBackground"
         app:itemTextColor="@drawable/nav_btm_color"
-        app:menu="@menu/menu_bottom_nav"></com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/menu_bottom_nav"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

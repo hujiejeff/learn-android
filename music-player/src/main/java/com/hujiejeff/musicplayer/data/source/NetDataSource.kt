@@ -48,4 +48,6 @@ interface NetDataSource {
         callback: Callback<T>
     )
 
+    fun loadBanners(callback: Callback<BannerResponse>)
+
 }

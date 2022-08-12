@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -11,10 +12,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
+import cn.bingoogolapple.bgabanner.BGABanner
 import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.base.AbstractLazyLoadFragment
 import com.hujiejeff.musicplayer.base.BaseRecyclerViewAdapter
 import com.hujiejeff.musicplayer.base.BaseViewHolder
+import com.hujiejeff.musicplayer.data.entity.Banner
 import com.hujiejeff.musicplayer.data.entity.RecommendNewAlbum
 import com.hujiejeff.musicplayer.data.entity.RecommendNewSong
 import com.hujiejeff.musicplayer.data.entity.RecommendPlayList
@@ -84,6 +87,11 @@ class DiscoverFragment : AbstractLazyLoadFragment<HomeFragmentDiscoverBinding>()
                 true
             }
         }
+
+        val adapter: BGABanner.Adapter<ImageView, Banner>  = BGABanner.Adapter { _, image, model, _ ->
+            image.loadPlayListCover(model!!.pic)
+        }
+        banner.setAdapter(adapter)
     }
 
     override fun getTAG(): String = "DiscoverFragment"
@@ -136,6 +144,10 @@ class DiscoverFragment : AbstractLazyLoadFragment<HomeFragmentDiscoverBinding>()
                 }
                 mBinding.groupContent.visibility = if (isLoading) View.GONE else View.VISIBLE
                 mBinding.loadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
+            }
+
+            banners.observe {
+                mBinding.banner.setData(it, null)
             }
         }
     }

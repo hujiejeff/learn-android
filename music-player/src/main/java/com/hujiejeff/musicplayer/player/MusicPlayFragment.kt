@@ -2,6 +2,7 @@ package com.hujiejeff.musicplayer.player
 
 import android.content.Context
 import android.widget.SeekBar
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -28,7 +29,7 @@ class MusicPlayFragment : BaseFragment<FragmentMusicPlayBinding>(),
 
 
     override fun FragmentMusicPlayBinding.initView() {
-
+        ViewCompat.setTransitionName(root, "MusicPlayFragment")
         viewModel.currentMusic.value?.let {
             logD("updateUI")
             updateUI(it)

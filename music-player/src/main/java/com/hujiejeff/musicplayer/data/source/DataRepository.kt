@@ -239,6 +239,18 @@ class DataRepository(
         })
     }
 
+    fun loadBanners(callback: Callback<List<Banner>>) {
+        netDataSource.loadBanners(object : Callback<BannerResponse>{
+            override fun onLoaded(t: BannerResponse) {
+                callback.onLoaded(t.banners)
+            }
+
+            override fun onFailed(mes: String) {
+                callback.onFailed(mes)
+            }
+        })
+    }
+
     fun <T, K> loadSearchResult(
         type: SearchType,
         keywords: String,

@@ -3,6 +3,7 @@ package com.hujiejeff.musicplayer.discover
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.hujiejeff.musicplayer.data.entity.Banner
 import com.hujiejeff.musicplayer.data.entity.RecommendNewAlbum
 import com.hujiejeff.musicplayer.data.entity.RecommendNewSong
 import com.hujiejeff.musicplayer.data.entity.RecommendPlayList
@@ -30,12 +31,16 @@ class DiscoverViewModel(private val dataRepository: DataRepository) : ViewModel(
     private val _loading = MutableLiveData<Int>()
     val loading: LiveData<Int>
         get() = _loading
+    private val _banners = MutableLiveData<List<Banner>>()
+    val banners:LiveData<List<Banner>>
+        get() = _banners
 
     fun start() {
         _loading.value = 0
         loadRecomendPlaylists()
         loadNewAlbums(9)
         loadNewSongs(9)
+        loadBanners()
     }
 
     fun loadRecomendPlaylists(count: Int = 6) {
@@ -75,6 +80,18 @@ class DiscoverViewModel(private val dataRepository: DataRepository) : ViewModel(
             override fun onFailed(mes: String) {
             }
 
+        })
+    }
+
+    fun loadBanners() {
+        dataRepository.loadBanners(object : Callback<List<Banner>>{
+            override fun onLoaded(t: List<Banner>) {
+                _banners.value = t
+            }
+
+            override fun onFailed(mes: String) {
+
+            }
         })
     }
 

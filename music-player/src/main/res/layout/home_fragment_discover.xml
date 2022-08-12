@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -20,17 +21,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_banner"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/banner_parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="150dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="自动滑动栏" />
+                android:layout_margin="5dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp">
+                <cn.bingoogolapple.bgabanner.BGABanner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:banner_pageChangeDuration="1000"
+                    app:banner_pointAutoPlayAble="true"
+                    app:banner_pointContainerBackground="@android:color/transparent"
+                    app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                    app:banner_pointTopBottomMargin="15dp"
+                    app:banner_transitionEffect="alpha" />
+            </androidx.cardview.widget.CardView>
+
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_banner"
+                app:layout_constraintTop_toBottomOf="@+id/banner_parent"
                 android:id="@+id/bnv_discover_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,8 +165,9 @@
 
             <androidx.constraintlayout.widget.Group
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:id="@+id/group_content"
-                app:constraint_referenced_ids="tv_banner,bnv_discover_top,cl_recommend_playlist,cl_new_songs,cl_new_albums"
+                app:constraint_referenced_ids="banner_parent,bnv_discover_top,cl_recommend_playlist,cl_new_songs,cl_new_albums"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

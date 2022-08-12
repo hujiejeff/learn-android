@@ -137,6 +137,20 @@ class NetDataSourceImpl(
         }
     }
 
+
+    override fun loadBanners(callback: Callback<BannerResponse>) {
+        networkIOExecute {
+            val response = apis.getBanners().execute()
+            mainThreadExecute {
+                if (response.isSuccessful && (response.body()?.code ?: 500) == 200) {
+                    callback.onLoaded(response.body()!!)
+                } else {
+                    callback.onFailed(response.errorBody()?.string() ?: "出错了")
+                }
+            }
+        }
+    }
+
     override fun <T> loadSearchResult(
         keywords: String,
         type: Int,

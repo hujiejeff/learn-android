@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBindings
 import com.hujiejeff.musicplayer.base.App
 import com.hujiejeff.musicplayer.base.BaseActivity
 import com.hujiejeff.musicplayer.base.BaseRecyclerViewAdapter
@@ -43,12 +44,9 @@ class PlaylistActivity : BaseActivity<ActivityPlaylistBinding>() {
 
     private var id: Long = 0
 
-    private lateinit var binding: ActivityPlaylistBinding
     private lateinit var coverUrl: String
 
     override fun isLightStatusBar(): Boolean = false
-
-    override fun getToolbar(): Toolbar = binding.toolbar
 
     private fun obtainViewModel(): PlaylistViewModel =
         obtainViewModel(PlaylistViewModel::class.java)
@@ -57,13 +55,12 @@ class PlaylistActivity : BaseActivity<ActivityPlaylistBinding>() {
         super.onCreate(savedInstanceState)
         id = intent.getLongExtra(EXTRA_PLAYLIST_ID, 0)
         coverUrl = intent.getStringExtra(EXTRA_PLAYLIST_COVER_URL)!!
-
-        viewModel = obtainViewModel()
-        subscribe()
-        viewModel.loadPlaylistDetail(id)
     }
 
     override fun ActivityPlaylistBinding.initView() {
+        viewModel = obtainViewModel()
+        subscribe()
+        viewModel.loadPlaylistDetail(id)
 //        iv_playlist_detail_cover.loadPlayListCover(coverUrl)
 
         rvPlaylistMusicList.apply {
@@ -87,18 +84,18 @@ class PlaylistActivity : BaseActivity<ActivityPlaylistBinding>() {
     private fun subscribe() {
         viewModel.apply {
             loading.observe(this@PlaylistActivity) { isLoading ->
-                binding.rvPlaylistMusicList.visibility =
+                mBinding.rvPlaylistMusicList.visibility =
                     if (isLoading) View.INVISIBLE else View.VISIBLE
                 if (isLoading) {
-                    binding.loadingView.show()
+                    mBinding.loadingView.show()
                 } else {
-                    binding.loadingView.hide()
+                    mBinding.loadingView.hide()
                 }
             }
 
             playlistDetail.observe(this@PlaylistActivity) {
                 trackList.addAll(it.tracks)
-                binding.rvPlaylistMusicList.adapter?.notifyDataSetChanged()
+                mBinding.rvPlaylistMusicList.adapter?.notifyDataSetChanged()
                 playListDetail = it
                 updateUI()
             }
@@ -128,4 +125,5 @@ class PlaylistActivity : BaseActivity<ActivityPlaylistBinding>() {
         }
     }
 
+    override var mHasStatusBar: Boolean = false
 }
