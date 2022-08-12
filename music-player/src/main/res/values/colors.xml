@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="whiteTransparent">#10000000</color>
+    <color name="transparent">#00000000</color>
     <color name="bottomNavBackground">#FFFFFF</color>
     <color name="gray">#eee</color>
     <color name="blue">#0078D4</color>

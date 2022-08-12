@@ -1,6 +1,7 @@
 package com.hujiejeff.musicplayer.base
 
 import PermissionReq
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
+import com.blankj.utilcode.util.BarUtils
 import com.hujiejeff.musicplayer.R
 import com.hujiejeff.musicplayer.customview.PlayerProgressView
 import com.hujiejeff.musicplayer.data.Preference
@@ -34,9 +36,20 @@ abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = setActivityContentView(layoutInflater)!!
         mBinding.initView()
+        setStatusBar()
         setSupportActionBar(getToolbar())
         addPlayBar()
         subscribe()
+    }
+
+    private fun setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent, theme), false)
+        } else {
+            BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent), false)
+        }
+        BarUtils.setStatusBarLightMode(this, isLightStatusBar())
+        BarUtils.addMarginTopEqualStatusBarHeight(mBinding.root)
     }
 
     private fun addPlayBar() {
