@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="auto"
         app:itemTextColor="@drawable/nav_btm_color"
         app:menu="@menu/menu_bottom_nav"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

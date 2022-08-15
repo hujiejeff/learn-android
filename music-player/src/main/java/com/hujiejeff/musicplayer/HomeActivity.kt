@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
+import com.google.android.material.navigation.NavigationBarView
 import com.hujiejeff.musicplayer.base.BaseActivity
 import com.hujiejeff.musicplayer.databinding.ActivityHomeBinding
 import com.hujiejeff.musicplayer.discover.DiscoverFragment
@@ -43,7 +44,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
 
     private fun initClickListener() {
-        mBinding.bnvBottom.setOnNavigationItemSelectedListener {
+        mBinding.bnvBottom.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_bottom_item_discover -> showAndHidFragment(0, preIndex)
                 R.id.menu_bottom_item_my -> showAndHidFragment(1, preIndex)
