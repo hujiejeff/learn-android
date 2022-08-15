@@ -20,9 +20,10 @@
         android:id="@+id/bnv_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        app:labelVisibilityMode="auto"
-        app:itemTextColor="@drawable/nav_btm_color"
+        app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActive="@style/bottom_selected_text"
+        app:itemTextAppearanceInactive="@style/bottom_normal_text"
+        app:itemIconTint="@color/color_nagation_item_red"
+        app:itemTextColor="@color/color_nagation_item_red"
         app:menu="@menu/menu_bottom_nav"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

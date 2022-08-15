@@ -5,7 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import com.google.android.material.navigation.NavigationBarView
+import androidx.core.view.forEach
+import com.google.android.material.badge.BadgeDrawable
 import com.hujiejeff.musicplayer.base.BaseActivity
 import com.hujiejeff.musicplayer.databinding.ActivityHomeBinding
 import com.hujiejeff.musicplayer.discover.DiscoverFragment
@@ -51,6 +52,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 R.id.menu_bottom_item_video -> showAndHidFragment(2, preIndex)
             }
             true
+        }
+        setUpBadge()
+    }
+
+    private fun setUpBadge() {
+        mBinding.bnvBottom.run {
+            menu.forEach {
+                getOrCreateBadge(it.itemId).run {
+                    isVisible = true
+                    badgeGravity = BadgeDrawable.TOP_END//定位
+                    badgeTextColor = resources.getColor(R.color.white)//颜色
+                    backgroundColor = resources.getColor(R.color.colorAccent)//背景色
+                    if (it == menu.getItem(2)) {
+                        number = 999//数目
+                    }
+                }
+            }
         }
     }
 
