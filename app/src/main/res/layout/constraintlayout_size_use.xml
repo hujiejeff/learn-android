@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+<!--    <TextView
+        tools:text="测试文本测试文本"
+        tools:textSize="18sp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>-->
+
+    <androidx.constraintlayout.utils.widget.MockView
+        android:id="@+id/mv_open_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mv_logo"
+        android:layout_width="match_parent"
+        app:layout_constraintVertical_weight="0.8"
+        android:layout_height="0dp"/>
+
+    <androidx.constraintlayout.utils.widget.MockView
+        android:id="@+id/mv_logo"
+        app:layout_constraintVertical_weight="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mv_open_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

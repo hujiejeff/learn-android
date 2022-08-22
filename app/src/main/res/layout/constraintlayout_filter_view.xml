@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/ifv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/sample"
+        app:altSrc="@drawable/ic_launcher_foreground"
+        app:crossfade="0"
+        app:imagePanX="0"
+        app:imagePanY="100"
+        app:imageRotate="20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:overlay="true"
+        app:roundPercent="1" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        app:imageZoom="0.5"
+        app:blendSrc="@drawable/ic_launcher_background"
+        android:id="@+id/ifv_2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/sample"
+        app:altSrc="@drawable/ic_launcher_foreground"
+        app:overlay="false"
+        app:crossfade="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/radio_button_brightness"
+        app:layout_constraintBottom_toTopOf="@+id/slider"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <RadioButton
+            android:id="@+id/radio_button_brightness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="brightness亮度" />
+
+        <RadioButton
+            android:id="@+id/radio_button_saturation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="saturation饱和度" />
+
+        <RadioButton
+            android:id="@+id/radio_button_warmth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="warmth色温" />
+
+        <RadioButton
+            android:id="@+id/radio_button_contrast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="contrast对比度" />
+    </RadioGroup>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_label_cross_fade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider"
+        android:text="调正cross_fade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/rb_overlay"
+        android:checked="false"
+        android:text="关闭overlay"
+        app:layout_constraintStart_toEndOf="@id/tv_label_cross_fade"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_label_cross_fade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_cross_fade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_cross_fade" />
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        app:crossfade="1"
+        app:altSrc="@drawable/ic_launcher_foreground"
+        android:src="@android:drawable/btn_star"
+        android:background="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider_cross_fade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

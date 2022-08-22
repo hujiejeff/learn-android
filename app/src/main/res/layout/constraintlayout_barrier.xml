@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="测试文本" />
+
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tv_1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_1"
+        tools:text="测试文本测试问" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:barrierMargin="20dp"
+        app:constraint_referenced_ids="tv_1,tv_2" />
+
+    <TextView
+        android:id="@+id/tv_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/barrier1"
+        app:layout_constraintTop_toTopOf="@+id/tv_1"
+        tools:text="超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_1,tv_2,tv_3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
