@@ -12,12 +12,12 @@ import com.hujiejeff.learn_android.util.startFragmentByShareAnimator
 class MainFragment : BaseFragment<FragmentMainBinding>() {
     override fun FragmentMainBinding.initView() {
         btnConstrainLayoutDemo.clickJump<ConstrainLayoutHomeDemoActivity>()
-        ViewCompat.setTransitionName(mv,"ToolbarDemoFragment")
-        mv.setOnClickListener {
+        ViewCompat.setTransitionName(btnToolbarDemo,"ToolbarDemoFragment")
+        btnToolbarDemo.setOnClickListener {
             requireActivity().startFragmentByShareAnimator(
                 newInstance<ToolbarDemoFragment>(),
                 "Test",
-                mv,
+                btnToolbarDemo,
                 "ToolbarDemoFragment"
             )
         }
