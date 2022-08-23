@@ -14,5 +14,6 @@ class ConstrainLayoutHomeDemoActivity : AppCompatActivity() {
         binding.btn2.clickJump<FilterImageUseActivity>()
         binding.btn3.clickJump<MotionLayoutUseActivity>()
         binding.btn4.clickJump<SpotifyDemoActivity>()
+        binding.btn5.clickJump<FlowLayoutActivity>()
     }
 }

@@ -11,38 +11,48 @@
         android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="约束布局Demo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="约束布局Demo" />
 
     <com.google.android.material.button.MaterialButton
         android:textAllCaps="false"
         android:id="@+id/btn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ImageFilterView Demo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn1" />
+        android:text="ImageFilterView Demo" />
 
     <com.google.android.material.button.MaterialButton
         android:textAllCaps="false"
         android:id="@+id/btn3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MotionLayout Demo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn2" />
+        android:text="MotionLayout Demo" />
 
     <com.google.android.material.button.MaterialButton
         android:textAllCaps="false"
         android:id="@+id/btn4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MotionLayout Demo2"
+        android:text="MotionLayout Demo2" />
+    <com.google.android.material.button.MaterialButton
+        android:textAllCaps="false"
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flow Demo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn3" />
+
     <androidx.constraintlayout.utils.widget.MockView
         android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="100dp"/>
+
+    <androidx.constraintlayout.helper.widget.Flow
+        app:flow_horizontalAlign="start"
+        app:constraint_referenced_ids="btn1, btn2, btn3, btn4, btn5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.297" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_constrain_layout_home_demo.xml" value="0.3523550724637681" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_home.xml" value="0.3578125" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_md_learn.xml" value="0.3567708333333333" />
@@ -21,7 +22,8 @@
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraintlayout_size_use.xml" value="0.25" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/fragment_main.xml" value="0.33605072463768115" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/fragment_play.xml" value="0.25" />
-        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/fragment_tollbar_demo.xml" value="0.3567708333333333" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/fragment_tollbar_demo.xml" value="0.22" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/menu/bottom_nav.xml" value="0.3567708333333333" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/drawable/bg_oval.xml" value="0.29" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/activity_main_playlist.xml" value="0.35280797101449274" />

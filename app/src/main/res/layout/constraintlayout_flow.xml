@@ -10,7 +10,7 @@
         android:layout_height="70dp" />
     <androidx.constraintlayout.utils.widget.MockView
         android:id="@+id/mv_2"
-        android:layout_width="100dp"
+        android:layout_width="20dp"
         android:layout_height="80dp" />
     <androidx.constraintlayout.utils.widget.MockView
         android:id="@+id/mv_3"
@@ -18,13 +18,14 @@
         android:layout_height="50dp" />
     <androidx.constraintlayout.utils.widget.MockView
         android:id="@+id/mv_4"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="90dp" />
     <androidx.constraintlayout.utils.widget.MockView
         android:id="@+id/mv_5"
         android:layout_width="100dp"
         android:layout_height="60dp" />
     <androidx.constraintlayout.utils.widget.MockView
+        app:layout_constraintHorizontal_weight="2"
         android:id="@+id/mv_6"
         android:layout_width="100dp"
         android:layout_height="50dp" />
@@ -33,14 +34,66 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:flow_horizontalGap="30dp"
-        app:flow_maxElementsWrap="3"
-        app:flow_firstHorizontalStyle="packed"
-        app:flow_lastHorizontalStyle="spread"
-        app:flow_horizontalStyle="spread"
-        app:flow_verticalAlign="bottom"
         app:constraint_referenced_ids="mv_1,mv_2,mv_3,mv_4,mv_5,mv_6"
-        app:flow_wrapMode="chain"
+        app:flow_wrapMode="aligned"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_1"
+        app:cornerRadius="100dp"
+        android:text="Tag "
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_2"
+        app:cornerRadius="100dp"
+        android:text="Tag "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_3"
+        app:cornerRadius="100dp"
+        android:text="Tag "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_4"
+        app:cornerRadius="100dp"
+        android:text="Tag "
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_5"
+        app:cornerRadius="100dp"
+        android:text="Tag "
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_6"
+        app:cornerRadius="100dp"
+        android:text="Tag "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow"
+        app:flow_horizontalGap="20dp"
+        app:flow_horizontalStyle="packed"
+        app:flow_horizontalBias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:constraint_referenced_ids="btn_1,btn_2,btn_3,btn_4,btn_5,btn_6"
+        app:flow_wrapMode="chain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:text="ADD TAG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/btn_add_tag_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
