@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/motion_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:showPaths="true"
+    android:background="@mipmap/feature_cr_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".constraintlayout.MotionCardActivity"
+    app:layoutDescription="@xml/activity_motion_card_scene">
+
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="0dp"
+        android:id="@+id/top_4"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        app:layout_constraintDimensionRatio="9:16"
+        android:translationY="50dp"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:layout_height="0dp">
+        <include layout="@layout/item_card"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="2dp"
+        android:id="@+id/top_3"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        app:layout_constraintDimensionRatio="9:16"
+        android:translationY="100dp"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:layout_height="0dp">
+        <include layout="@layout/item_card"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="4dp"
+        android:id="@+id/top_2"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        app:layout_constraintDimensionRatio="9:16"
+        android:translationY="50dp"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:layout_height="0dp">
+        <include layout="@layout/item_card"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="6dp"
+        android:id="@+id/top_1"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        app:layout_constraintDimensionRatio="9:16"
+        android:layout_height="0dp">
+        <include layout="@layout/item_card"/>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="8dp"
+        android:id="@+id/top_0"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        android:layout_width="match_parent"
+        app:layout_constraintDimensionRatio="9:16"
+        android:layout_height="0dp">
+        <include layout="@layout/item_card"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.constraintlayout.helper.widget.Carousel
+        app:cardElevation="10dp"
+        android:id="@+id/carousel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:carousel_backwardTransition="@+id/backward"
+        app:carousel_firstView="@+id/top_1"
+        app:carousel_forwardTransition="@+id/forward"
+        app:carousel_infinite="true"
+        app:carousel_nextState="@+id/next"
+        app:carousel_previousState="@+id/pre"
+        app:constraint_referenced_ids="top_0,top_1,top_2,top_3,top_4" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

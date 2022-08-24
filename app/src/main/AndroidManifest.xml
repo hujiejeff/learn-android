@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hujiejeff.learn_android">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,15 +22,16 @@
             android:exported="false" />
         <activity
             android:name=".constraintlayout.ConstrainLayoutHomeDemoActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".constraintlayout.ConstraintLayoutActivity"
             android:exported="true" />
         <activity
             android:name=".constraintlayout.FilterImageUseActivity"
             android:exported="true" />
-        <activity android:name=".MainActivity" android:exported="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".constraintlayout.FlowLayoutActivity" />
+        <activity android:name=".constraintlayout.MotionCardActivity" />
     </application>
 
 </manifest>

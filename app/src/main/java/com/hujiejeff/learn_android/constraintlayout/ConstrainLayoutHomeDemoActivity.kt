@@ -9,11 +9,15 @@ class ConstrainLayoutHomeDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding =  ActivityConstrainLayoutHomeDemoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.btn1.clickJump<ConstraintLayoutActivity>()
-        binding.btn2.clickJump<FilterImageUseActivity>()
-        binding.btn3.clickJump<MotionLayoutUseActivity>()
-        binding.btn4.clickJump<SpotifyDemoActivity>()
-        binding.btn5.clickJump<FlowLayoutActivity>()
+        binding.run {
+            setContentView(this.root)
+            setContentView(root)
+            btn1.clickJump<ConstraintLayoutActivity>()
+            btn2.clickJump<FilterImageUseActivity>()
+            btn3.clickJump<MotionLayoutUseActivity>()
+            btn4.clickJump<SpotifyDemoActivity>()
+            btn5.clickJump<FlowLayoutActivity>()
+            btn6.clickJump<MotionCardActivity>()
+        }
     }
 }

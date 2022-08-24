@@ -41,6 +41,14 @@
         android:text="Flow Demo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn3" />
+    <com.google.android.material.button.MaterialButton
+        android:textAllCaps="false"
+        android:id="@+id/btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Motion Card demo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn3" />
 
     <androidx.constraintlayout.utils.widget.MockView
         android:layout_width="match_parent"
@@ -49,7 +57,7 @@
 
     <androidx.constraintlayout.helper.widget.Flow
         app:flow_horizontalAlign="start"
-        app:constraint_referenced_ids="btn1, btn2, btn3, btn4, btn5"
+        app:constraint_referenced_ids="btn1, btn2, btn3, btn4, btn5, btn6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
