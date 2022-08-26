@@ -43,7 +43,7 @@ class MotionCardActivity : BaseActivity<ActivityMotionCardBinding>() {
 
             @RequiresApi(Build.VERSION_CODES.M)
             override fun populate(view: View, index: Int) {
-                Log.d("hujie", "populate: " + index)
+                Log.d("TAG", "populate: " + index)
 //                (view as ViewGroup).getChildAt(0).setBackgroundColor(getColor(color[index]))
                 val itemCardBinding = ItemCardBinding.bind((view as ViewGroup).getChildAt(0))
                 itemCardBinding.tvTitle.text = list[index].title
@@ -53,7 +53,7 @@ class MotionCardActivity : BaseActivity<ActivityMotionCardBinding>() {
 
             override fun onNewItem(index: Int) {
                 // called when an item is set
-                Log.d("hujie", "onNewItem: " + index)
+                Log.d("TAG", "onNewItem: " + index)
             }
         })
         mBinding.carousel.refresh()
