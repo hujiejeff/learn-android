@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_motion_layout_use_scene"
     app:showPaths="true"
-    tools:context=".constraintlayout.MotionLayoutUseActivity"
+    tools:context=".materia_design.constraintlayout.MotionLayoutUseActivity"
     tools:showPaths="true">
 
     <View

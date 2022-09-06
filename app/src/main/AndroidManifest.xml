@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hujiejeff.learn_android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,19 +16,26 @@
         android:theme="@style/Theme.Learnandroid"
         tools:targetApi="31">
         <activity
-            android:name=".constraintlayout.SpotifyDemoActivity"
+            android:name=".ViewModelActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".materia_design.constraintlayout.SpotifyDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".constraintlayout.MotionLayoutUseActivity"
+            android:name=".materia_design.constraintlayout.MotionLayoutUseActivity"
             android:exported="false" />
         <activity
-            android:name=".constraintlayout.ConstrainLayoutHomeDemoActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".constraintlayout.ConstraintLayoutActivity"
+            android:name=".materia_design.constraintlayout.ConstrainLayoutHomeDemoActivity"
             android:exported="true" />
         <activity
-            android:name=".constraintlayout.FilterImageUseActivity"
+            android:name=".materia_design.constraintlayout.ConstraintLayoutActivity"
+            android:exported="true" />
+        <activity
+            android:name=".materia_design.constraintlayout.FilterImageUseActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
@@ -38,8 +46,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".constraintlayout.FlowLayoutActivity" />
-        <activity android:name=".constraintlayout.MotionCardActivity" />
+        <activity android:name=".materia_design.constraintlayout.FlowLayoutActivity" />
+        <activity android:name=".materia_design.constraintlayout.MotionCardActivity" />
     </application>
 
 </manifest>
