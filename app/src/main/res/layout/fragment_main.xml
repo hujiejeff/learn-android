@@ -32,12 +32,19 @@
         android:layout_height="wrap_content"
         android:text="MVVM" />
 
+    <com.google.android.material.button.MaterialButton
+        android:textAllCaps="false"
+        android:id="@+id/btn_open_alert_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open AlertDialog" />
+
 
     <androidx.constraintlayout.helper.widget.Flow
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo"
+        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog"
         app:flow_horizontalStyle="spread_inside"
         app:flow_verticalAlign="bottom"
         app:flow_wrapMode="aligned"
