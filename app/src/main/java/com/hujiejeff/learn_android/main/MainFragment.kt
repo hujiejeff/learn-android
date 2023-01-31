@@ -3,6 +3,7 @@ package com.hujiejeff.learn_android.main
 import android.app.AlertDialog
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.activityViewModels
 import com.hujiejeff.learn_android.base.BaseFragment
@@ -41,6 +42,16 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                     .create()
             dialog.window?.setBackgroundDrawableResource(android.R.color.transparent) //消除白块
             dialog.show()
+        }
+        btnSwitchTheme.setOnClickListener {
+            if (AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
+        btnOpenDialogFragment.setOnClickListener {
+            Custom3DialogFragment().show(childFragmentManager, "")
         }
     }
 }

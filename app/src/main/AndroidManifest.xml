@@ -38,6 +38,7 @@
             android:name=".materia_design.constraintlayout.FilterImageUseActivity"
             android:exported="true" />
         <activity
+            android:configChanges="uiMode"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
