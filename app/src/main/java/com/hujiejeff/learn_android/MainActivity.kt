@@ -2,6 +2,7 @@ package com.hujiejeff.learn_android
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.hujiejeff.learn_android.databinding.ActivityMainBinding
 import com.hujiejeff.learn_android.main.MainFragment
@@ -17,5 +18,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
