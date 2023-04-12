@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/btn_create_file"
+        android:textAllCaps="false"
+        android:text="Create File"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_open_file"
+        android:text="Open File"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.helper.widget.Flow
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        app:flow_wrapMode="aligned"
+        app:flow_horizontalStyle="spread_inside"
+        app:constraint_referenced_ids="btn_create_file,btn_open_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

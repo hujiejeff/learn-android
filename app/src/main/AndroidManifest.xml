@@ -50,6 +50,7 @@
         <activity android:name=".materia_design.constraintlayout.FlowLayoutActivity" />
         <activity android:name=".materia_design.constraintlayout.MotionCardActivity" />
         <activity android:name=".jetpack.vm.LoginActivity" />
+        <activity android:name=".saf.NewStorageTestActivity" />
     </application>
 
 </manifest>

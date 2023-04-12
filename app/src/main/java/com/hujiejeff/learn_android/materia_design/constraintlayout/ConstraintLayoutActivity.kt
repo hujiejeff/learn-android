@@ -2,6 +2,7 @@ package com.hujiejeff.learn_android.materia_design.constraintlayout
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.text.StaticLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.transition.TransitionManager
