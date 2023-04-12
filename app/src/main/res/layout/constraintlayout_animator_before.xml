@@ -50,4 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <MultiAutoCompleteTextView
+        android:text="超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本超长文本"
+        app:layout_constraintTop_toBottomOf="@id/md_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
