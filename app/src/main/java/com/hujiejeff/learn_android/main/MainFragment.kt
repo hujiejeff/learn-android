@@ -13,6 +13,7 @@ import com.hujiejeff.learn_android.jetpack.vm.LoginActivity
 import com.hujiejeff.learn_android.jetpack.vm.LoginViewModel
 import com.hujiejeff.learn_android.materia_design.constraintlayout.ConstrainLayoutHomeDemoActivity
 import com.hujiejeff.learn_android.materia_design.toolbar.ToolbarDemoFragment
+import com.hujiejeff.learn_android.picture_selector.PictureSelectorDemoActivity
 import com.hujiejeff.learn_android.saf.NewStorageTestActivity
 import com.hujiejeff.learn_android.util.clickJump
 import com.hujiejeff.learn_android.util.newInstance
@@ -55,5 +56,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             Custom3DialogFragment().show(childFragmentManager, "")
         }
         btnOpenNewStorageApiActivity.clickJump<NewStorageTestActivity>()
+        btnOpenPictureSelectorDemo.clickJump<PictureSelectorDemoActivity>()
     }
 }
