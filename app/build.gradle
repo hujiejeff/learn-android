@@ -90,4 +90,7 @@ dependencies {
 
     // simple camerax library (Not necessary)
     implementation 'io.github.lucksiege:camerax:v3.10.9'
+
+    //The libary
+    implementation 'com.github.iielse:imageviewer:2.1.22'
 }
