@@ -16,12 +16,24 @@
         android:textAllCaps="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_clear_external_file"
+        android:text="clear_external_file"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_clear_external_cache"
+        android:text="clear_external_cache"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <androidx.constraintlayout.helper.widget.Flow
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:flow_wrapMode="aligned"
         app:flow_horizontalStyle="spread_inside"
-        app:constraint_referenced_ids="btn_create_file,btn_open_file"
+        app:constraint_referenced_ids="btn_create_file,btn_open_file,btn_clear_external_file,btn_clear_external_cache"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

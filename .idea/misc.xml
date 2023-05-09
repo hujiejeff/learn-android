@@ -4,12 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.297" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/drawable/bg_dialog.xml" value="0.2685" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/drawable/progress_indicator.xml" value="0.265" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_constrain_layout_home_demo.xml" value="0.3523550724637681" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_home.xml" value="0.3578125" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_md_learn.xml" value="0.3567708333333333" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_motion_card.xml" value="0.25" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_motion_layout_use.xml" value="0.18" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_new_storage_test.xml" value="0.35280797101449274" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_picture_selector_demo.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_spotify_demo.xml" value="0.3578125" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraint_layout_base_use.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraint_layout_circle_flow.xml" value="0.18" />
@@ -23,18 +27,24 @@
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraintlayout_placeholder.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraintlayout_problem.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraintlayout_size_use.xml" value="0.25" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/dialog_sample.xml" value="0.22" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/dialog_sample_by_dialogfragment.xml" value="0.35280797101449274" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/dialog_sample_by_dialogfragment3.xml" value="0.35280797101449274" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/fragment_main.xml" value="0.33605072463768115" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/fragment_play.xml" value="0.25" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/fragment_tollbar_demo.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/item_card.xml" value="0.2" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/menu/bottom_nav.xml" value="0.3567708333333333" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/menu/toolbar_menu.xml" value="0.3567708333333333" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/drawable/bg_oval.xml" value="0.29" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/activity_main_playlist.xml" value="0.35280797101449274" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/activity_playlist.xml" value="0.35280797101449274" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/activity_search.xml" value="0.35280797101449274" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/card_album.xml" value="0.35280797101449274" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/fragment_list.xml" value="0.3269927536231884" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/fragment_music_play.xml" value="0.3578125" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/fragment_search_result_container.xml" value="0.358695652173913" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/home_fragment_discover.xml" value="0.23314606741573032" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/include_playlist_detail.xml" value="0.3385416666666667" />
         <entry key="..\:/hujie/workspace/Android/learn-android/music-player/src/main/res/layout/include_search_toolbar.xml" value="0.35280797101449274" />
@@ -53,7 +63,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

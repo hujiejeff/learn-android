@@ -30,6 +30,9 @@ class PictureSelectorDemoActivity : BaseActivity<ActivityPictureSelectorDemoBind
             dataList.clear()
             dataList.add(clickedData)
         }
+
+        val url ="https://oss-media.dutenews.com/2023/04/25/7cS4UblmCpFdcjIatZ6I1AKppOuIr9wLU2EPyL64VMN0uDbZf6yihNPANHFyqyk0.png"
+//        GlideEngine.get().loadImage(this@PictureSelectorDemoActivity, url, ivTest)
     }
 
     private fun openPictureSelector() {
