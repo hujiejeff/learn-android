@@ -1,9 +1,16 @@
 package com.hujiejeff.learn_android.base
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
+import androidx.window.layout.WindowInfoTracker
 import com.hujiejeff.learn_android.util.setActivityContentView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 abstract class BaseActivity<V: ViewBinding>: AppCompatActivity() {
     protected lateinit var mBinding: V

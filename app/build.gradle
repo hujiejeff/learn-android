@@ -93,4 +93,9 @@ dependencies {
 
     //The libary
     implementation 'com.github.iielse:imageviewer:2.1.22'
+
+
+    ext.windowmanager_version = "1.0.0"
+    implementation "androidx.window:window:$windowmanager_version"
+    androidTestImplementation "androidx.window:window-testing:$windowmanager_version"
 }

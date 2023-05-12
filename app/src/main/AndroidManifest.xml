@@ -56,7 +56,7 @@
             android:name=".materia_design.constraintlayout.FilterImageUseActivity"
             android:exported="true" />
         <activity
-            android:configChanges="uiMode"
+            android:configChanges="uiMode|screenSize|orientation"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -70,6 +70,7 @@
         <activity android:name=".jetpack.vm.LoginActivity" />
         <activity android:name=".saf.NewStorageTestActivity" />
         <activity android:name=".picture_selector.PictureSelectorDemoActivity" />
+        <activity android:name=".transition.TransitionDemoActivity" />
     </application>
 
     <queries package="${applicationId}">
