@@ -15,6 +15,7 @@ import com.hujiejeff.learn_android.materia_design.constraintlayout.ConstrainLayo
 import com.hujiejeff.learn_android.materia_design.toolbar.ToolbarDemoFragment
 import com.hujiejeff.learn_android.picture_selector.PictureSelectorDemoActivity
 import com.hujiejeff.learn_android.saf.NewStorageTestActivity
+import com.hujiejeff.learn_android.transition.TransitionDemoActivity
 import com.hujiejeff.learn_android.util.clickJump
 import com.hujiejeff.learn_android.util.newInstance
 import com.hujiejeff.learn_android.util.startFragmentByShareAnimator
@@ -57,5 +58,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         }
         btnOpenNewStorageApiActivity.clickJump<NewStorageTestActivity>()
         btnOpenPictureSelectorDemo.clickJump<PictureSelectorDemoActivity>()
+        btnOpenTransitionDemo.clickJump<TransitionDemoActivity>()
     }
 }

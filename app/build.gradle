@@ -98,4 +98,6 @@ dependencies {
     ext.windowmanager_version = "1.0.0"
     implementation "androidx.window:window:$windowmanager_version"
     androidTestImplementation "androidx.window:window-testing:$windowmanager_version"
+
+    implementation 'androidx.transition:transition:1.4.0'
 }
