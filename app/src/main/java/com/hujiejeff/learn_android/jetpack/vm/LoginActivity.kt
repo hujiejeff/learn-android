@@ -2,11 +2,14 @@ package com.hujiejeff.learn_android.jetpack.vm
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.hujiejeff.learn_android.base.BaseActivity
 import com.hujiejeff.learn_android.databinding.ActivityLoginBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
@@ -42,5 +45,18 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         })
 
         viewModel3.hello()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.newsList.collect {
+                    Log.d("hujie", "initView: $it")
+                }
+            }
+        }
+
+        mBinding.btnLoadMore.setOnClickListener {
+            viewModel.loadNextPage()
+        }
+
     }
 }

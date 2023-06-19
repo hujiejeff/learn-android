@@ -56,6 +56,7 @@
             android:name=".materia_design.constraintlayout.FilterImageUseActivity"
             android:exported="true" />
         <activity
+            android:immersive="true"
             android:configChanges="uiMode|screenSize|orientation"
             android:name=".MainActivity"
             android:exported="true">
