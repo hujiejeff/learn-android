@@ -7,7 +7,8 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
 //    zipDemo()
-    combineDemo()
+//    combineDemo()
+    transformDemo()
 }
 
 fun foo() = flow {
@@ -77,4 +78,20 @@ fun requestFlow(i: Int): Flow<String> = flow {
     emit("$i: First")
     delay(500) // wait 500 ms
     emit("$i: Second")
+}
+
+
+fun transformDemo() = runBlocking {
+    flow {
+        emit(1)
+        emit(2)
+    } .transform { value ->
+        if (value == 1) {
+            emit("value :$value*2")
+        }
+        emit("transform :$value")
+    }.collect { value->
+        println(value)
+    }
+
 }

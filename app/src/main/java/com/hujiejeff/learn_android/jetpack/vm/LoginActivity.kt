@@ -48,7 +48,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.newsList.collect {
+                viewModel.newsList2.collect {
                     Log.d("hujie", "initView: $it")
                 }
             }

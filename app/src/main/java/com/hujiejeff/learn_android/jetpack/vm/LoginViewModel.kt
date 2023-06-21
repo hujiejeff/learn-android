@@ -16,9 +16,26 @@ class LoginViewModel : ViewModel() {
         emit(getNewsList(it))
     }
 
+    val newsList2: StateFlow<List<String>> = page.map {
+        getNewsList(it)
+    }.stateIn(
+        scope = viewModelScope,
+        initialValue = emptyList(),
+        started = SharingStarted.WhileSubscribed(5_000)
+    )
+
     val newsList: StateFlow<List<String>> = api.stateIn(
         scope = viewModelScope,
         initialValue = emptyList(),
+        started = SharingStarted.WhileSubscribed(5_000),
+    )
+
+    val newsList3: StateFlow<LoginActivityUiState> = page.transform {
+        emit(LoginActivityUiState.DataLoading)
+        emit(LoginActivityUiState.Success(getNewsList(it)))
+    }.stateIn(
+        scope = viewModelScope,
+        initialValue = LoginActivityUiState.FirstLoading,
         started = SharingStarted.WhileSubscribed(5_000),
     )
 
@@ -35,5 +52,11 @@ class LoginViewModel : ViewModel() {
         page.update {
             it + 1
         }
+    }
+
+    sealed class LoginActivityUiState {
+        object FirstLoading : LoginActivityUiState()
+        data class Success(val data: List<String>) : LoginActivityUiState()
+        object DataLoading : LoginActivityUiState()
     }
 }
