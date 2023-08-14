@@ -101,4 +101,7 @@ dependencies {
 
     implementation 'androidx.transition:transition:1.4.0'
     implementation 'io.github.FlyJingFish.OpenImage:OpenImageFullLib:2.0.3'
+
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
 }

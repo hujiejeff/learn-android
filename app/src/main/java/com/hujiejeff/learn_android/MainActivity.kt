@@ -1,5 +1,6 @@
 package com.hujiejeff.learn_android
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +13,10 @@ import androidx.window.layout.WindowInfoTracker
 import com.hujiejeff.learn_android.databinding.ActivityMainBinding
 import com.hujiejeff.learn_android.main.MainFragment
 import com.hujiejeff.learn_android.util.newInstance
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,5 +44,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
     }
 }
