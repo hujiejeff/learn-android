@@ -53,33 +53,46 @@
         android:layout_height="wrap_content"/>
     <com.google.android.material.button.MaterialButton
         android:textAllCaps="false"
-        android:text="Open New Storage API Activity"
+        android:text="New Storage API Activity"
         android:id="@+id/btn_open_new_storage_api_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.button.MaterialButton
         android:textAllCaps="false"
-        android:text="Open PictureSelector Demo"
+        android:text="PictureSelector Demo"
         android:id="@+id/btn_open_picture_selector_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.button.MaterialButton
         android:textAllCaps="false"
-        android:text="Open Transition Demo"
+        android:text="Transition Demo"
         android:id="@+id/btn_open_transition_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:textAllCaps="false"
+        android:text="Shizuku Demo"
+        android:id="@+id/btn_open_shizuku_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.button.MaterialButton
+        android:textAllCaps="false"
+        android:text="Material3 Demo"
+        android:id="@+id/btn_open_material3_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <androidx.constraintlayout.helper.widget.Flow
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo"
-        app:flow_horizontalStyle="spread_inside"
+        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo,btn_open_shizuku_demo,btn_open_material3_demo"
+        app:flow_horizontalStyle="packed"
         app:flow_verticalAlign="bottom"
-        app:flow_wrapMode="aligned"
+        app:flow_horizontalGap="5dp"
+        app:flow_wrapMode="chain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

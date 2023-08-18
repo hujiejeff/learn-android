@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:text="Filled Button"
+        android:id="@+id/filledBtn"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:text="Elevated button"
+        android:id="@+id/elevatedBtn"
+        style="@style/MaterialAlertDialog.Material3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/tonalBtn"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:text="Tonal Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/outlineBtn"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:text="Outline Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/sw_use_material3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Use Material3"/>
+    <androidx.constraintlayout.helper.widget.Flow
+        app:flow_wrapMode="chain2"
+        app:flow_horizontalAlign="start"
+        app:flow_horizontalBias="0"
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:constraint_referenced_ids="filledBtn,elevatedBtn,tonalBtn,outlineBtn,sw_use_material3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

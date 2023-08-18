@@ -1,4 +1,4 @@
-package com.hujiejeff.learn_android
+package com.hujiejeff.learn_android.main
 
 import android.content.Context
 import android.content.res.Configuration
@@ -10,19 +10,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.window.layout.WindowInfoTracker
+import com.hujiejeff.learn_android.R
+import com.hujiejeff.learn_android.base.BaseActivity
 import com.hujiejeff.learn_android.databinding.ActivityMainBinding
-import com.hujiejeff.learn_android.main.MainFragment
 import com.hujiejeff.learn_android.util.newInstance
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+    override fun ActivityMainBinding.initView() {
         supportFragmentManager.beginTransaction().replace(R.id.container, newInstance<MainFragment>()).commit()
         lifecycleScope.launch(Dispatchers.Main) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {

@@ -2,9 +2,12 @@ package com.hujiejeff.learn_android.base
 
 
 import android.app.Application
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.Utils
+import com.hujiejeff.learn_android.R
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
-import io.github.inflationx.calligraphy3.R
+import io.github.inflationx.calligraphy3.R as FontR
 import io.github.inflationx.viewpump.ViewPump
 
 
@@ -14,14 +17,15 @@ class CommonApplication : Application() {
     private val fontReboto = "fonts/RobotoCondensed-Regular.ttf"
 
     companion object {
-        private lateinit var application: Application
+        private lateinit var application: CommonApplication
         fun get() = application
     }
 
     override fun onCreate() {
         super.onCreate()
         application = this
-        changeFont("")
+        changeFont()
+        Utils.init(this)
     }
 
     fun switchFont() {
@@ -41,7 +45,7 @@ class CommonApplication : Application() {
                     CalligraphyInterceptor(
                         CalligraphyConfig.Builder()
                             .setDefaultFontPath(f)
-                            .setFontAttrId(R.attr.fontPath)
+                            .setFontAttrId(FontR.attr.fontPath)
                             .build()
                     )
                 )
@@ -52,4 +56,10 @@ class CommonApplication : Application() {
     fun resetSystemFont() {
         changeFont("")
     }
+
+    fun setMaterial3Theme(useMaterial3: Boolean) {
+        SPUtils.getInstance().put("user_material3", useMaterial3)
+    }
+
+    fun isMaterial3Theme(): Boolean = SPUtils.getInstance().getBoolean("user_material3", false)
 }

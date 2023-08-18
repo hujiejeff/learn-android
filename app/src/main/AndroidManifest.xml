@@ -58,7 +58,7 @@
         <activity
             android:immersive="true"
             android:configChanges="uiMode|screenSize|orientation"
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,6 +72,7 @@
         <activity android:name=".saf.NewStorageTestActivity" />
         <activity android:name=".picture_selector.PictureSelectorDemoActivity" />
         <activity android:name=".transition.TransitionDemoActivity" />
+        <activity android:name=".material3.Material3DemoActivity" android:theme="@style/My_Material3"/>
     </application>
 
     <queries package="${applicationId}">
