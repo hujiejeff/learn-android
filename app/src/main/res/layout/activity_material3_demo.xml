@@ -1,49 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fitsSystemWindows="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".material3.Material3DemoActivity">
 
-    <Button
-        android:text="Filled Button"
-        android:id="@+id/filledBtn"
-        style="@style/Widget.Material3.Button.ElevatedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:text="Elevated button"
-        android:id="@+id/elevatedBtn"
-        style="@style/MaterialAlertDialog.Material3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/tonalBtn"
-        style="@style/Widget.Material3.Button.TonalButton"
-        android:text="Tonal Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/outlineBtn"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:text="Outline Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/sw_use_material3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="Use Material3"/>
-    <androidx.constraintlayout.helper.widget.Flow
-        app:flow_wrapMode="chain2"
-        app:flow_horizontalAlign="start"
-        app:flow_horizontalBias="0"
-        app:flow_horizontalGap="10dp"
-        app:flow_horizontalStyle="packed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:constraint_referenced_ids="filledBtn,elevatedBtn,tonalBtn,outlineBtn,sw_use_material3"
-        android:orientation="horizontal"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLayout"
+        app:liftOnScroll="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            app:layout_scrollFlags="noScroll"
+            app:layout_scrollEffect="compress"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/ic_close_24dp"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Note: A RecyclerView can also be used -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/filledBtn"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filled Button" />
+
+            <Button
+                android:id="@+id/elevatedBtn"
+                style="@style/MaterialAlertDialog.Material3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Elevated button" />
+
+            <Button
+                android:id="@+id/tonalBtn"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tonal Button" />
+
+            <Button
+                android:id="@+id/outlineBtn"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Outline Button" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/sw_use_material3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Use Material3" />
+            <ImageView
+                android:id="@+id/iv"
+                android:src="@color/material_dynamic_primary60"
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"/>
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:constraint_referenced_ids="filledBtn,elevatedBtn,tonalBtn,outlineBtn,sw_use_material3,iv"
+                app:flow_horizontalAlign="start"
+                app:flow_horizontalBias="0"
+                app:flow_horizontalGap="10dp"
+                app:flow_horizontalStyle="packed"
+                app:flow_wrapMode="chain2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
