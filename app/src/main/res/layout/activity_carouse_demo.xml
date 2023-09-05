@@ -5,5 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".material3.CarouseDemoActivity">
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_carouse"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

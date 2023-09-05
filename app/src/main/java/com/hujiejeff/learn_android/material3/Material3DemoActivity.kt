@@ -32,6 +32,7 @@ import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseActivity
 import com.hujiejeff.learn_android.base.CommonApplication
 import com.hujiejeff.learn_android.databinding.ActivityMaterial3DemoBinding
+import com.hujiejeff.learn_android.util.jump
 
 class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
     override fun ActivityMaterial3DemoBinding.initView() {
@@ -102,12 +103,16 @@ class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
                 ToastUtils.showShort("Click")
             }.setMessage("测试").show()
         }
+
         tonalBtn.setOnClickListener {
             Snackbar.make(root, "测试", Snackbar.LENGTH_SHORT).setAction(
                     "CLICK"
                 ) { ToastUtils.showShort("Click Action") }.show()
         }
 
+        outlineBtn.setOnClickListener {
+            jump<CarouseDemoActivity>()
+        }
         cardView0.setOnLongClickListener {
             cardView0.isChecked = !cardView0.isChecked
             TransitionManager.beginDelayedTransition(

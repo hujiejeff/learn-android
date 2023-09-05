@@ -12,9 +12,10 @@ class SimpleTransformer : Transformer {
         fun put(photoId: Long, imageView: ImageView) {
             if (!imageView.isAttachedToWindow) return
             imageView.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener{
-                override fun onViewAttachedToWindow(v: View?) = Unit
 
-                override fun onViewDetachedFromWindow(v: View?) {
+                override fun onViewAttachedToWindow(v: View) = Unit
+
+                override fun onViewDetachedFromWindow(v: View) {
                     transition.remove(imageView)
                     imageView.removeOnAttachStateChangeListener(this)
                 }
