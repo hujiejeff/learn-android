@@ -18,7 +18,7 @@ abstract class BaseActivity<V: ViewBinding>: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (CommonApplication.get().isMaterial3Theme()) {
-            setTheme(R.style.My_Material3)
+            setTheme(R.style.AppTheme)
         }
         mBinding = setActivityContentView<V>(layoutInflater) as V
         mBinding.initView()

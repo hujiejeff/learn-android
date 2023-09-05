@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hujiejeff.learn_android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--    PictureSelector-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- PictureSelector -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
@@ -14,25 +13,35 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-
-    <!--    Android 13版本适配，细化存储权限-->
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Android 13版本适配，细化存储权限 -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
+    <queries package="${applicationId}">
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE"></action>
+        </intent>
+        <intent>
+            <action android:name="android.media.action.ACTION_VIDEO_CAPTURE"></action>
+        </intent>
+    </queries>
+
     <application
-        android:requestLegacyExternalStorage="true"
         android:name=".base.CommonApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Learnandroid"
         tools:targetApi="31">
+        <activity
+            android:name=".material3.CarouseDemoActivity"
+            android:exported="false" />
         <activity
             android:name=".ViewModelActivity"
             android:exported="false">
@@ -56,10 +65,10 @@
             android:name=".materia_design.constraintlayout.FilterImageUseActivity"
             android:exported="true" />
         <activity
-            android:immersive="true"
-            android:configChanges="uiMode|screenSize|orientation"
             android:name=".main.MainActivity"
-            android:exported="true">
+            android:configChanges="uiMode|screenSize|orientation"
+            android:exported="true"
+            android:immersive="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,19 +81,9 @@
         <activity android:name=".saf.NewStorageTestActivity" />
         <activity android:name=".picture_selector.PictureSelectorDemoActivity" />
         <activity android:name=".transition.TransitionDemoActivity" />
-        <activity android:name=".material3.Material3DemoActivity" android:theme="@style/My_Material3"/>
+        <activity
+            android:name=".material3.Material3DemoActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
-    <queries package="${applicationId}">
-        <intent>
-            <action android:name="android.media.action.IMAGE_CAPTURE">
-
-            </action>
-        </intent>
-        <intent>
-            <action android:name="android.media.action.ACTION_VIDEO_CAPTURE">
-
-            </action>
-        </intent>
-    </queries>
 </manifest>

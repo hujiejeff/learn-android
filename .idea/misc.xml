@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -8,6 +7,7 @@
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/drawable/progress_indicator.xml" value="0.265" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_constrain_layout_home_demo.xml" value="0.3523550724637681" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_home.xml" value="0.3578125" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_login.xml" value="0.2937152629328773" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_md_learn.xml" value="0.3567708333333333" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_motion_card.xml" value="0.25" />
@@ -15,6 +15,7 @@
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_new_storage_test.xml" value="0.35280797101449274" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_picture_selector_demo.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_spotify_demo.xml" value="0.3578125" />
+        <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/activity_transition_demo.xml" value="0.2937152629328773" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraint_layout_base_use.xml" value="0.22" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraint_layout_circle_flow.xml" value="0.18" />
         <entry key="..\:/hujie/workspace/Android/learn-android/app/src/main/res/layout/constraintlayout_animator.xml" value="0.22" />
@@ -63,7 +64,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

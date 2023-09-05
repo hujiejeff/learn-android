@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/snackbarCustomTv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/snack_bar_bg"
+    android:drawableLeft="@mipmap/ic_launcher"
+    android:drawablePadding="16dp"
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    android:text="点击"
+    android:textColor="@color/white"
+    android:textSize="24dp" />

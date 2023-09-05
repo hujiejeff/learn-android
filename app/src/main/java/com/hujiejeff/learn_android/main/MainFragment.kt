@@ -5,7 +5,12 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SnackbarUtils
+import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseFragment
 import com.hujiejeff.learn_android.databinding.DialogSampleBinding
 import com.hujiejeff.learn_android.databinding.FragmentMainBinding
@@ -24,7 +29,7 @@ import com.hujiejeff.learn_android.util.startFragmentByShareAnimator
 
 class MainFragment : BaseFragment<FragmentMainBinding>() {
     val viewModel: LoginViewModel by activityViewModels()
-
+    val viewModel2: LoginViewModel by viewModels()
     override fun FragmentMainBinding.initView() {
         btnConstrainLayoutDemo.clickJump<ConstrainLayoutHomeDemoActivity>()
         ViewCompat.setTransitionName(btnToolbarDemo,"ToolbarDemoFragment")
@@ -56,6 +61,11 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         }
         btnOpenDialogFragment.setOnClickListener {
             Custom3DialogFragment().show(childFragmentManager, "")
+        }
+
+        btnOpenShizukuDemo.setOnClickListener {
+//            SnackbarUtils.with(root).setBgColor(0xffff0000.toInt()).show(true)
+            SnackbarUtils.with(root).setBgResource(R.drawable.snack_bar_bg).setMessage("测试").show()
         }
         btnOpenNewStorageApiActivity.clickJump<NewStorageTestActivity>()
         btnOpenPictureSelectorDemo.clickJump<PictureSelectorDemoActivity>()
