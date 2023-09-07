@@ -5,6 +5,7 @@ import android.transition.Transition
 import android.view.SurfaceControl
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.constraintlayout.widget.ConstraintProperties
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.graphics.toColor
@@ -21,6 +22,7 @@ import androidx.transition.TransitionSet
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.SnackbarUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -32,9 +34,12 @@ import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseActivity
 import com.hujiejeff.learn_android.base.CommonApplication
 import com.hujiejeff.learn_android.databinding.ActivityMaterial3DemoBinding
+import com.hujiejeff.learn_android.util.clickJump
 import com.hujiejeff.learn_android.util.jump
 
 class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
+    private var dialogFragment: DialogDemoFragment? = null
+
     override fun ActivityMaterial3DemoBinding.initView() {
         swUseMaterial3.isChecked = CommonApplication.get().isMaterial3Theme()
         swUseMaterial3.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -83,6 +88,7 @@ class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
             }
         }
 
+        btnToMdButton.clickJump<ButtonDemoActivity>()
         filledBtn.setOnClickListener {
             val color = SurfaceColors.SURFACE_0.getColor(this@Material3DemoActivity)
             SnackbarUtils.with(root).setAction("fdafd") {
@@ -106,8 +112,8 @@ class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
 
         tonalBtn.setOnClickListener {
             Snackbar.make(root, "测试", Snackbar.LENGTH_SHORT).setAction(
-                    "CLICK"
-                ) { ToastUtils.showShort("Click Action") }.show()
+                "CLICK"
+            ) { ToastUtils.showShort("Click Action") }.show()
         }
 
         outlineBtn.setOnClickListener {
@@ -121,20 +127,41 @@ class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
                 obtainTransitionSet()
             )//自动记录当前帧为起始Scene，下一步的UI改为结束Scene
             cardView0.layoutParams = cardView0.layoutParams.apply {
-                width = if (width == SizeUtils.dp2px(200f)) SizeUtils.dp2px(100f) else SizeUtils.dp2px(200f)
+                width =
+                    if (width == SizeUtils.dp2px(200f)) SizeUtils.dp2px(100f) else SizeUtils.dp2px(
+                        200f
+                    )
             }
 
             //修改约束
-/*            val list = mBinding.groupCard.referencedIds.toMutableList().apply { remove(cardView0.id) }
-            mBinding.groupCard.referencedIds =  list.toIntArray()
-            val properties = ConstraintProperties(cardView0)
-            properties.connect(ConstraintProperties.TOP, ConstraintProperties.PARENT_ID, ConstraintProperties.TOP, 0)
-            properties.connect(ConstraintProperties.START, ConstraintProperties.PARENT_ID, ConstraintProperties.START, 0)
-            properties.connect(ConstraintProperties.END, ConstraintProperties.PARENT_ID, ConstraintProperties.END, 0)
-            properties.connect(ConstraintProperties.BOTTOM, ConstraintProperties.PARENT_ID, ConstraintProperties.BOTTOM, 0)
-            properties.apply()*/
+            /*            val list = mBinding.groupCard.referencedIds.toMutableList().apply { remove(cardView0.id) }
+                        mBinding.groupCard.referencedIds =  list.toIntArray()
+                        val properties = ConstraintProperties(cardView0)
+                        properties.connect(ConstraintProperties.TOP, ConstraintProperties.PARENT_ID, ConstraintProperties.TOP, 0)
+                        properties.connect(ConstraintProperties.START, ConstraintProperties.PARENT_ID, ConstraintProperties.START, 0)
+                        properties.connect(ConstraintProperties.END, ConstraintProperties.PARENT_ID, ConstraintProperties.END, 0)
+                        properties.connect(ConstraintProperties.BOTTOM, ConstraintProperties.PARENT_ID, ConstraintProperties.BOTTOM, 0)
+                        properties.apply()*/
             true
         }
+
+        btnToMdDialog.transitionName = "Test"
+        btnToMdDialog.setOnClickListener {
+            dialogFragment = (dialogFragment ?: DialogDemoFragment().also {
+                FragmentUtils.add(
+                    supportFragmentManager,
+                    it,
+                    android.R.id.content,
+                    btnToMdDialog
+                )
+            }).also {
+                FragmentUtils.show(it)
+            }
+        }
+
+        /*        onBackPressedDispatcher.addCallback {
+                    FragmentUtils.pop(supportFragmentManager)
+                }*/
     }
 
     private fun obtainTransitionSet(): TransitionSet {
@@ -153,5 +180,10 @@ class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
             transitionSet.addTransition(transitionSetX.getTransitionAt(i) as Transition)
         }
         return transitionSet
+    }
+
+    override fun onBackPressed() {
+        dialogFragment?.takeIf { it.isVisible }?.run { FragmentUtils.hide(this) }
+            ?: super.onBackPressed()
     }
 }

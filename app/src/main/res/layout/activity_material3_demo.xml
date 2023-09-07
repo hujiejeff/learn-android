@@ -38,6 +38,12 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.button.MaterialButton
+                android:text="Button Demo"
+                android:id="@+id/btn_to_md_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/filledBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,12 +76,18 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Use Material3" />
+            <com.google.android.material.button.MaterialButton
+                android:text="Dialog Demo"
+                android:id="@+id/btn_to_md_dialog"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/group_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:constraint_referenced_ids="filledBtn,elevatedBtn,tonalBtn,outlineBtn,sw_use_material3"
+                app:constraint_referenced_ids="btn_to_md_button,filledBtn,elevatedBtn,tonalBtn,outlineBtn,sw_use_material3,btn_to_md_dialog"
                 app:flow_horizontalAlign="start"
                 app:flow_horizontalBias="0"
                 app:flow_horizontalGap="10dp"

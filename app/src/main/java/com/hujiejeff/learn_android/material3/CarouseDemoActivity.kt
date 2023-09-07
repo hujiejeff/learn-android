@@ -16,11 +16,15 @@ import com.hujiejeff.learn_android.databinding.ItemCarouseSampleBinding
 class CarouseDemoActivity : BaseActivity<ActivityCarouseDemoBinding>() {
     override fun ActivityCarouseDemoBinding.initView() {
         rvCarouse.apply {
-            layoutManager = CarouselLayoutManager()
+            layoutManager = CarouselLayoutManager().apply {
+
+            }
             adapter = TestAdapter().apply {
                 submitList(listOf(0,1,2,3,4,5))
             }
         }
+
+
     }
 
 
