@@ -71,12 +71,40 @@
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_icon_0"
+                app:icon="@drawable/ic_vector_heart"
+                style="?attr/materialIconButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_icon_1"
+                app:icon="@drawable/ic_vector_heart"
+                style="?attr/materialIconButtonFilledStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_icon_2"
+                app:icon="@drawable/ic_vector_heart"
+                style="?attr/materialIconButtonFilledTonalStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_icon_3"
+                app:icon="@drawable/ic_vector_heart"
+                style="?attr/materialIconButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/group_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:constraint_referenced_ids="filledBtn,elevatedBtn,tonalBtn,outlineBtn,btn_text,btn_group"
+                app:constraint_referenced_ids="filledBtn,elevatedBtn,tonalBtn,outlineBtn,btn_text,btn_group,btn_icon_0,btn_icon_1,btn_icon_2,btn_icon_3"
                 app:flow_horizontalAlign="center"
                 app:flow_horizontalBias="0"
                 app:flow_horizontalGap="10dp"
@@ -102,6 +130,15 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="plus"
+        app:srcCompat="@drawable/baseline_add_24"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="?attr/floatingActionButtonSmallStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="120dp"
         android:contentDescription="plus"
         app:srcCompat="@drawable/baseline_add_24"/>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
