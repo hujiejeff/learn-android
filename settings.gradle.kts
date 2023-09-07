@@ -3,7 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven("https://jitpack.io")
     }
 }
 dependencyResolutionManagement {
@@ -11,7 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven("https://jitpack.io")
 /*        maven {
             url 'http://code.szpgm.com/api/v4/projects/99/packages/maven'
             allowInsecureProtocol = true
@@ -26,4 +26,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "learn-android"
-include ':app'
+include(":app")
