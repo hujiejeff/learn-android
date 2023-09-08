@@ -1,0 +1,27 @@
+[versions]
+#plugis
+agp_version = "8.0.2"
+ksp_vserion = "1.9.0-1.0.11"
+kt_version = "1.8.20"
+
+#libraries
+ktx_version = "1.9.0"
+appcompat_version = "1.6.1"
+constraintlayout_version = "2.1.4"
+material3_version = "1.9.0"
+
+[libraries]
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx_version" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat_version" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout_version" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material3_version" }
+
+
+[bundles]
+foundation = ["androidx-ktx", "androidx-appcompat", "androidx-constraintlayout", "material"]
+
+[plugins]
+kt = { id = "org.jetbrains.kotlin.android", version.ref = "kt_version" }
+android-application = { id = "com.android.application", version.ref = "agp_version" }
+android-library = { id = "com.android.library", version.ref = "agp_version" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp_vserion" }
