@@ -46,3 +46,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "learn-android"
 include(":app")
+include(":basic")
