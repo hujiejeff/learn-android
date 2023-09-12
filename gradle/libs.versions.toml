@@ -5,20 +5,62 @@ ksp_vserion = "1.9.0-1.0.11"
 kt_version = "1.8.20"
 
 #libraries
-ktx_version = "1.9.0"
+#Android Offical Libraries
+core_ktx_version = "1.9.0"
 appcompat_version = "1.6.1"
 constraintlayout_version = "2.1.4"
 material3_version = "1.9.0"
+activity_ktx_version = "1.5.1"
+fragment_ktx_version = "1.5.2"
+mvvm_version = "2.5.1"
+
+#test
+junit_version = "4.13.2"
+androidx_junit_version = "1.1.4"
+espresso_version = "3.5.0"
+
+#glide
+glide_version = "4.16.0"
+#Retrofit2
+retrofit_version = "2.9.0"
+#PictureSelector
+pictureSelector_version = "v3.11.0"
+pictureSelector_helper_version = "v3.10.9"
+
 
 [libraries]
-androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx_version" }
+androidx-core_ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core_ktx_version" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat_version" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout_version" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material3_version" }
+#arch
+androidx-activity_ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity_ktx_version" }
+androidx-fragment_ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment_ktx_version" }
+#mvvm
+mvvm-viewmodel = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "mvvm_version"}
+mvvm-livedata = {group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "mvvm_version"}
+mvvm-common = {group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "mvvm_version"}
 
+junit = { group = "junit", name = "junit", version.ref = "junit_version" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx_junit_version" }
+androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso_version" }
+
+glide-core = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide_version" }
+glide-ksp = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide_version" }
+
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit_version" }
+retrofit-converter_gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit_version" }
+
+pictureSelector-core = {group = "io.github.lucksiege", name = "pictureselector", version.ref = "pictureSelector_version"}
+pictureSelector-compress = {group = "io.github.lucksiege", name = "compress", version.ref = "pictureSelector_helper_version"}
+pictureSelector-ucrop = {group = "io.github.lucksiege", name = "ucrop", version.ref = "pictureSelector_helper_version"}
+pictureSelector-camerax = {group = "io.github.lucksiege", name = "camerax", version.ref = "pictureSelector_helper_version"}
 
 [bundles]
-foundation = ["androidx-ktx", "androidx-appcompat", "androidx-constraintlayout", "material"]
+foundation = ["androidx-core_ktx", "androidx-appcompat", "androidx-constraintlayout", "material", "androidx-activity_ktx", "androidx-fragment_ktx"]
+retrofit = ["retrofit-core", "retrofit-converter_gson"]
+pictureSelector = ["pictureSelector-core", "pictureSelector-compress", "pictureSelector-ucrop", "pictureSelector-camerax"]
+mvvm = ["mvvm-viewmodel", "mvvm-livedata", "mvvm-common"]
 
 [plugins]
 kt = { id = "org.jetbrains.kotlin.android", version.ref = "kt_version" }

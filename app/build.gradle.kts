@@ -50,57 +50,22 @@ android {
 dependencies {
 //    api 'com.szpgm:commonlib:0.0.6'
     implementation(libs.bundles.foundation)
-    implementation("androidx.privacysandbox.tools:tools-core:+")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.4")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+//    implementation("androidx.privacysandbox.tools:tools-core:+")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso)
 
-
-    val glide_version = "4.16.0"
     /**----------------------Glide----------------------*/
-    implementation("com.github.bumptech.glide:glide:$glide_version")
-    ksp("com.github.bumptech.glide:ksp:$glide_version")
-
+    implementation(libs.glide.core)
+    ksp(libs.glide.ksp)
     /**---------------------Network--------------------**/
-    val retrofit_version = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
-
+    implementation(libs.bundles.retrofit)
 
     /**---------------------ViewModel------------------**/
     //Jetpack
-    val lifecycle_version = "2.5.1"
-    val arch_version = "2.1.0"
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    // Annotation processor
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
-
-
-    /**-------------------activity---------------------**/
-    val activity_version = "1.5.1"
-    implementation("androidx.activity:activity-ktx:$activity_version")
-    val fragment_version = "1.5.2"
-    // Kotlin
-    implementation("androidx.fragment:fragment-ktx:$fragment_version")
-
-
+    implementation(libs.bundles.mvvm)
     //PictureSelector
-
-    // PictureSelector basic (Necessary)
-    implementation("io.github.lucksiege:pictureselector:v3.11.0")
-
-    // image compress library (Not necessary)
-    implementation("io.github.lucksiege:compress:v3.10.9")
-
-    // uCrop library (Not necessary)
-    implementation("io.github.lucksiege:ucrop:v3.10.9")
-
-    // simple camerax library (Not necessary)
-    implementation("io.github.lucksiege:camerax:v3.10.9")
-
+    implementation(libs.bundles.pictureSelector)
     //The libary
     implementation("com.github.iielse:imageviewer:2.1.23")
 
@@ -121,4 +86,6 @@ dependencies {
 
     //RecycleView
     implementation("io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.1")
+//    implementation("com.github.hujiejeff:android-base-lib:0.0.2-alpha")
+//    api("com.github.getActivity:ShapeView:8.3")
 }
