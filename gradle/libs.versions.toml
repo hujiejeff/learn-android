@@ -26,7 +26,13 @@ retrofit_version = "2.9.0"
 #PictureSelector
 pictureSelector_version = "v3.11.0"
 pictureSelector_helper_version = "v3.10.9"
-
+#imageviewer
+imageviewer_version = "2.1.23"
+#change font
+calligraphy3_version = "3.1.1"
+viewpump_version = "2.0.3"
+#utilcodex
+utilcodex_version = "1.31.1"
 
 [libraries]
 androidx-core_ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core_ktx_version" }
@@ -56,11 +62,19 @@ pictureSelector-compress = {group = "io.github.lucksiege", name = "compress", ve
 pictureSelector-ucrop = {group = "io.github.lucksiege", name = "ucrop", version.ref = "pictureSelector_helper_version"}
 pictureSelector-camerax = {group = "io.github.lucksiege", name = "camerax", version.ref = "pictureSelector_helper_version"}
 
+imageviewer = {group = "com.github.iielse", name = "imageviewer", version.ref = "imageviewer_version"}
+
+calligraphy3 = {group = "io.github.inflationx", name = "calligraphy3", version.ref = "calligraphy3_version"}
+viewpump = {group = "io.github.inflationx", name = "viewpump", version.ref = "viewpump_version"}
+
+utilcodex = {group = "com.blankj", name = "utilcodex", version.ref = "utilcodex_version"}
+
 [bundles]
 foundation = ["androidx-core_ktx", "androidx-appcompat", "androidx-constraintlayout", "material", "androidx-activity_ktx", "androidx-fragment_ktx"]
 retrofit = ["retrofit-core", "retrofit-converter_gson"]
 pictureSelector = ["pictureSelector-core", "pictureSelector-compress", "pictureSelector-ucrop", "pictureSelector-camerax"]
 mvvm = ["mvvm-viewmodel", "mvvm-livedata", "mvvm-common"]
+calligraphy = ["calligraphy3", "viewpump"]
 
 [plugins]
 kt = { id = "org.jetbrains.kotlin.android", version.ref = "kt_version" }

@@ -84,11 +84,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <com.hjq.shape.view.ShapeButton
+        android:text="按钮ssssssssss"
+        android:id="@+id/shape_btn"
+        android:layout_width="200dp"
+        android:layout_height="40dp"/>
+
     <androidx.constraintlayout.helper.widget.Flow
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo,btn_open_shizuku_demo,btn_open_material3_demo"
+        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo,btn_open_shizuku_demo,btn_open_material3_demo,shape_btn"
         app:flow_horizontalStyle="packed"
         app:flow_verticalAlign="bottom"
         app:flow_horizontalGap="5dp"

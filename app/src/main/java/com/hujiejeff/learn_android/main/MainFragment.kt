@@ -71,5 +71,16 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         btnOpenPictureSelectorDemo.clickJump<PictureSelectorDemoActivity>()
         btnOpenTransitionDemo.clickJump<TransitionDemoActivity>()
         btnOpenMaterial3Demo.clickJump<Material3DemoActivity>()
+
+        shapeBtn.setOnClickListener {
+            shapeBtn.shapeDrawableBuilder
+                .setSolidColor(-0x1000000)
+                .setStrokeColor(-0xa57221) // 注意：最后需要调用一下 intoBackground 方法才能生效
+                .intoBackground()
+            shapeBtn.textColorBuilder
+                .setTextColor(-0x1) // 注意：最后需要调用一下 intoTextColor 方法才能生效
+                .intoTextColor()
+            shapeBtn.text = "颜色已经2222改变啦22222"
+        }
     }
 }

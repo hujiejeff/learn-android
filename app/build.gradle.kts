@@ -29,13 +29,6 @@ android {
             //            signingConfig = signConfig
         }
     }
-    /*compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }*/
     compileOptions {
         sourceCompatibility =  JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -67,7 +60,7 @@ dependencies {
     //PictureSelector
     implementation(libs.bundles.pictureSelector)
     //The libary
-    implementation("com.github.iielse:imageviewer:2.1.23")
+    implementation(libs.imageviewer)
 
 
     val windowmanager_version = "1.0.0"
@@ -78,14 +71,13 @@ dependencies {
     implementation("io.github.FlyJingFish.OpenImage:OpenImageFullLib:2.0.3")
 
     //字体
-    implementation("io.github.inflationx:calligraphy3:3.1.1")
-    implementation("io.github.inflationx:viewpump:2.0.3")
+    implementation(libs.bundles.calligraphy)
 
     //utils
-    implementation("com.blankj:utilcodex:1.31.1")
+    implementation(libs.utilcodex)
 
     //RecycleView
     implementation("io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.1")
 //    implementation("com.github.hujiejeff:android-base-lib:0.0.2-alpha")
-//    api("com.github.getActivity:ShapeView:8.3")
+    api("com.github.getActivity:ShapeView:8.3")
 }
