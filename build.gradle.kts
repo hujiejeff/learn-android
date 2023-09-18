@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.ksp) apply false
-    id("org.jetbrains.kotlin.android") version "1.8.20" apply false //kt in android
+    id("org.jetbrains.kotlin.android") version "1.8.10" apply false //kt in android
 }
 
 //classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"

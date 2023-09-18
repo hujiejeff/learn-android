@@ -14,7 +14,6 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner =  "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,8 +35,14 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    viewBinding.isEnabled = true
     namespace = "com.hujiejeff.learn_android"
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
 }
 
 dependencies {
@@ -57,6 +62,12 @@ dependencies {
     /**---------------------ViewModel------------------**/
     //Jetpack
     implementation(libs.bundles.mvvm)
+    /**----------------compose-------------------------**/
+    val composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+    debugImplementation(libs.compose.bom)
+    implementation(libs.bundles.compose)
+    debugImplementation(libs.compose.preview.debug)
     //PictureSelector
     implementation(libs.bundles.pictureSelector)
     //The libary

@@ -1,8 +1,8 @@
 [versions]
 #plugis
 agp_version = "8.0.2"
-ksp_vserion = "1.9.0-1.0.11"
-kt_version = "1.8.20"
+ksp_vserion = "1.8.10-1.0.9"
+kt_version = "1.8.10"
 
 #libraries
 #Android Offical Libraries
@@ -13,6 +13,12 @@ material3_version = "1.9.0"
 activity_ktx_version = "1.5.1"
 fragment_ktx_version = "1.5.2"
 mvvm_version = "2.5.1"
+#jetpack compose
+compose_bom_version = "2023.01.00"
+compose_activity_version = "1.6.1"
+compose_viewmodel_version = "2.5.1"
+
+
 
 #test
 junit_version = "4.13.2"
@@ -47,6 +53,14 @@ mvvm-viewmodel = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx"
 mvvm-livedata = {group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "mvvm_version"}
 mvvm-common = {group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "mvvm_version"}
 
+#jetpack compose
+compose-bom =  {group = "androidx.compose", name = "compose-bom", version.ref = "compose_bom_version"}
+compose-material3 = {group = "androidx.compose.material3", name = "material3"}
+compose-preview = {group = "androidx.compose.ui", name = "ui-tooling-preview"}
+compose-preview-debug = {group = "androidx.compose.ui", name = "ui-tooling"}
+compose-activity = {group = "androidx.activity", name = "activity-compose", version.ref = "compose_activity_version"}
+compose-viewmodel = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "compose_viewmodel_version"}
+
 junit = { group = "junit", name = "junit", version.ref = "junit_version" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx_junit_version" }
 androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso_version" }
@@ -75,6 +89,7 @@ retrofit = ["retrofit-core", "retrofit-converter_gson"]
 pictureSelector = ["pictureSelector-core", "pictureSelector-compress", "pictureSelector-ucrop", "pictureSelector-camerax"]
 mvvm = ["mvvm-viewmodel", "mvvm-livedata", "mvvm-common"]
 calligraphy = ["calligraphy3", "viewpump"]
+compose = ["compose-material3", "compose-preview", "compose-activity", "compose-viewmodel"]
 
 [plugins]
 kt = { id = "org.jetbrains.kotlin.android", version.ref = "kt_version" }
