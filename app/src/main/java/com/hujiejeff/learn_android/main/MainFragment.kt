@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SnackbarUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseFragment
+import com.hujiejeff.learn_android.compose.ComposeDemoActivity
 import com.hujiejeff.learn_android.databinding.DialogSampleBinding
 import com.hujiejeff.learn_android.databinding.FragmentMainBinding
 import com.hujiejeff.learn_android.jetpack.vm.LoginActivity
@@ -82,5 +83,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 .intoTextColor()
             shapeBtn.text = "颜色已经2222改变啦22222"
         }
+        btnOpenComposeDemo.clickJump<ComposeDemoActivity>()
     }
 }

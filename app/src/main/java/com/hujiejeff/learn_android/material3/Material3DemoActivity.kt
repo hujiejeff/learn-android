@@ -5,6 +5,7 @@ import android.transition.Transition
 import android.view.SurfaceControl
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.constraintlayout.widget.ConstraintProperties
 import androidx.constraintlayout.widget.ConstraintSet
@@ -162,6 +163,10 @@ class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
         /*        onBackPressedDispatcher.addCallback {
                     FragmentUtils.pop(supportFragmentManager)
                 }*/
+        cardView1.setOnClickListener {
+//            ToastUtils.showShort("Click")
+            Toast.makeText(CommonApplication.get(), "Click", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun obtainTransitionSet(): TransitionSet {
