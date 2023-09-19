@@ -1,6 +1,7 @@
 package com.hujiejeff.learn_android.compose
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,11 +33,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.blankj.utilcode.util.ToastUtils
 import com.hujiejeff.learn_android.R
-import com.hujiejeff.learn_android.base.CommonApplication
 import com.hujiejeff.learn_android.compose.ui.theme.AppTheme
-import com.hujiejeff.learn_android.compose.ui.theme.ComposeTutorialTheme
 import com.hujiejeff.learn_android.compose.ui.theme.Message
 import com.hujiejeff.learn_android.compose.ui.theme.SampleData
 

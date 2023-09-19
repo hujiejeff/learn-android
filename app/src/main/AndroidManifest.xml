@@ -89,6 +89,7 @@
             android:name=".material3.Material3DemoActivity"
             android:theme="@style/AppTheme" />
         <activity android:name="com.hujiejeff.learn_android.compose.ComposeDemoActivity" />
+        <activity android:name="com.hujiejeff.learn_android.compose.ComposeDemo2Activity" />
     </application>
 
 </manifest>

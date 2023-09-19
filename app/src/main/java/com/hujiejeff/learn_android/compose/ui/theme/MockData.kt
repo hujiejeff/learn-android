@@ -1,6 +1,6 @@
 package com.hujiejeff.learn_android.compose.ui.theme
 
-data class Message(val name: String, val message: String)
+data class Message(var name: String, val message: String)
 object SampleData {
     // Sample conversation data
     val conversationSample = listOf(
