@@ -7,6 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.widget.ConstraintProperties
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.graphics.toColor
@@ -42,6 +48,12 @@ class Material3DemoActivity : BaseActivity<ActivityMaterial3DemoBinding>() {
     private var dialogFragment: DialogDemoFragment? = null
 
     override fun ActivityMaterial3DemoBinding.initView() {
+        composeView.setContent {
+            ElevatedCard(modifier = Modifier.size(100.dp, 200.dp)) {
+                Text("A composable view in Android View")
+            }
+        }
+
         swUseMaterial3.isChecked = CommonApplication.get().isMaterial3Theme()
         swUseMaterial3.setOnCheckedChangeListener { buttonView, isChecked ->
             CommonApplication.get().setMaterial3Theme(isChecked)

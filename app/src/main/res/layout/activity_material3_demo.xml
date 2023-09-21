@@ -175,13 +175,17 @@
                 android:id="@+id/card_view_3"
                 android:layout_width="100dp"
                 android:layout_height="0dp"/>
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/compose_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/group_card"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
-                app:constraint_referenced_ids="card_view_0, card_view_1, card_view_2,card_view_3"
+                app:constraint_referenced_ids="card_view_0, card_view_1, card_view_2,card_view_3, compose_view"
                 app:flow_horizontalAlign="start"
                 app:flow_horizontalBias="0"
                 app:flow_horizontalGap="10dp"
