@@ -1,19 +1,17 @@
 package com.hujiejeff.learn_android.main
 
 import android.app.AlertDialog
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SnackbarUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseFragment
-import com.hujiejeff.learn_android.compose.ComposeDemo2Activity
-import com.hujiejeff.learn_android.compose.ComposeDemoActivity
+import com.hujiejeff.learn_android.compose.codelab_basic.ComposeDemo2Activity
+import com.hujiejeff.learn_android.compose.codelab_basic_layout.CodeLabActivity
+import com.hujiejeff.learn_android.compose.codelab_quickuse.ComposeDemoActivity
 import com.hujiejeff.learn_android.databinding.DialogSampleBinding
 import com.hujiejeff.learn_android.databinding.FragmentMainBinding
 import com.hujiejeff.learn_android.jetpack.vm.LoginActivity
@@ -86,5 +84,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         }
         btnOpenComposeDemo.clickJump<ComposeDemoActivity>()
         btnOpenComposeDemo2.clickJump<ComposeDemo2Activity>()
+        btnOpenComposeDemo3.clickJump<CodeLabActivity>()
     }
 }

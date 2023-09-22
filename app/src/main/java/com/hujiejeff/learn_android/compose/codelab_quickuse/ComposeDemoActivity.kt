@@ -1,8 +1,6 @@
-package com.hujiejeff.learn_android.compose
+package com.hujiejeff.learn_android.compose.codelab_quickuse
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -35,8 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.compose.ui.theme.AppTheme
-import com.hujiejeff.learn_android.compose.ui.theme.Message
-import com.hujiejeff.learn_android.compose.ui.theme.SampleData
 
 
 class ComposeDemoActivity : ComponentActivity() {

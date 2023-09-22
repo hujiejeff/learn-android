@@ -88,8 +88,9 @@
         <activity
             android:name=".material3.Material3DemoActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.hujiejeff.learn_android.compose.ComposeDemoActivity" />
-        <activity android:name="com.hujiejeff.learn_android.compose.ComposeDemo2Activity" />
+        <activity android:name="com.hujiejeff.learn_android.compose.codelab_quickuse.ComposeDemoActivity" />
+        <activity android:name="com.hujiejeff.learn_android.compose.codelab_basic.ComposeDemo2Activity" />
+        <activity android:name="com.hujiejeff.learn_android.compose.codelab_basic_layout.CodeLabActivity" />
     </application>
 
 </manifest>

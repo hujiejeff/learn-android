@@ -1,4 +1,4 @@
-package com.hujiejeff.learn_android.compose.ui.theme
+package com.hujiejeff.learn_android.compose.codelab_quickuse
 
 data class Message(var name: String, val message: String)
 object SampleData {
