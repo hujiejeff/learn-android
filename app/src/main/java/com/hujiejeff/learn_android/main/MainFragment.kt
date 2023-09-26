@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.blankj.utilcode.util.SnackbarUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseFragment
+import com.hujiejeff.learn_android.compose.codelab_animation.DemoActivity
 import com.hujiejeff.learn_android.compose.codelab_basic.ComposeDemo2Activity
 import com.hujiejeff.learn_android.compose.codelab_basic_layout.CodeLabActivity
 import com.hujiejeff.learn_android.compose.codelab_quickuse.ComposeDemoActivity
@@ -85,5 +86,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         btnOpenComposeDemo.clickJump<ComposeDemoActivity>()
         btnOpenComposeDemo2.clickJump<ComposeDemo2Activity>()
         btnOpenComposeDemo3.clickJump<CodeLabActivity>()
+        btnOpenComposeDemo4.clickJump<DemoActivity>()
     }
 }

@@ -6,115 +6,130 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_constrain_layout_demo"
-        android:textAllCaps="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ConstrainLayout" />
+        android:text="ConstrainLayout"
+        android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
         android:id="@+id/btn_toolbar_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Toolbar" />
+        android:text="Toolbar"
+        android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
         android:id="@+id/btn_bottom_appbar_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bottom AppBar" />
+        android:text="Bottom AppBar"
+        android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
         android:id="@+id/btn_mvvm_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MVVM" />
+        android:text="MVVM"
+        android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
         android:id="@+id/btn_open_alert_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open AlertDialog" />
+        android:text="Open AlertDialog"
+        android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
         android:id="@+id/btn_switch_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Switch Theme" />
+        android:text="Switch Theme"
+        android:textAllCaps="false" />
+
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="Open Dialog by DialogFragment"
         android:id="@+id/btn_open_dialog_fragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Open Dialog by DialogFragment"
+        android:textAllCaps="false" />
+
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="New Storage API Activity"
         android:id="@+id/btn_open_new_storage_api_activity"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="New Storage API Activity"
+        android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="PictureSelector Demo"
         android:id="@+id/btn_open_picture_selector_demo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="PictureSelector Demo"
+        android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="Transition Demo"
         android:id="@+id/btn_open_transition_demo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Transition Demo"
+        android:textAllCaps="false" />
+
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="Shizuku Demo"
         android:id="@+id/btn_open_shizuku_demo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Shizuku Demo"
+        android:textAllCaps="false" />
+
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="Material3 Demo"
         android:id="@+id/btn_open_material3_demo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Material3 Demo"
+        android:textAllCaps="false" />
 
     <com.hjq.shape.view.ShapeButton
-        android:text="按钮ssssssssss"
         android:id="@+id/shape_btn"
         android:layout_width="200dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp"
+        android:text="按钮ssssssssss" />
+
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="Compose Demo"
         android:id="@+id/btn_open_compose_demo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Compose Demo"
+        android:textAllCaps="false" />
+
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="Compose Demo2"
         android:id="@+id/btn_open_compose_demo_2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Compose Demo2"
+        android:textAllCaps="false" />
+
     <com.google.android.material.button.MaterialButton
-        android:textAllCaps="false"
-        android:text="Compose Demo3"
         android:id="@+id/btn_open_compose_demo_3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Compose Demo of basic layout"
+        android:textAllCaps="false" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_open_compose_demo_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Compose Demo of Animation"
+        android:textAllCaps="false" />
+
     <androidx.constraintlayout.helper.widget.Flow
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo,btn_open_shizuku_demo,btn_open_material3_demo,shape_btn,btn_open_compose_demo,btn_open_compose_demo_2,btn_open_compose_demo_3"
+        android:orientation="horizontal"
+        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo,btn_open_shizuku_demo,btn_open_material3_demo,shape_btn,btn_open_compose_demo,btn_open_compose_demo_2,btn_open_compose_demo_3,btn_open_compose_demo_4"
+        app:flow_horizontalGap="5dp"
         app:flow_horizontalStyle="packed"
         app:flow_verticalAlign="bottom"
-        app:flow_horizontalGap="5dp"
         app:flow_wrapMode="chain"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
