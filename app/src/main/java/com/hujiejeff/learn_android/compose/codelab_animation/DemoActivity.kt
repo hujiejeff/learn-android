@@ -4,17 +4,32 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.calculateTargetValue
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.splineBasedDecay
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.horizontalDrag
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,17 +68,28 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
+import androidx.compose.ui.input.pointer.positionChanged
+import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -71,6 +97,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hujiejeff.learn_android.R
@@ -80,8 +107,11 @@ import com.hujiejeff.learn_android.compose.ui.theme.Green300
 import com.hujiejeff.learn_android.compose.ui.theme.Green800
 import com.hujiejeff.learn_android.compose.ui.theme.Purple100
 import com.hujiejeff.learn_android.compose.ui.theme.Purple700
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
 class DemoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,6 +136,8 @@ fun AnimationDemo() {
         mutableStateOf<String?>(null)
     }
 
+    val tasks = remember { mutableStateListOf(*allTasks) }
+
     suspend fun showEditMessage() {
         if (!editMessageShown) {
             editMessageShown = true
@@ -114,7 +146,23 @@ fun AnimationDemo() {
         }
     }
 
+    var weatherLoading by remember {
+        mutableStateOf(false)
+    }
+
+    suspend fun loadingWeather() {
+        if (!weatherLoading) {
+            weatherLoading = true
+            delay(3000L)
+            weatherLoading = false
+        }
+    }
+
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        loadingWeather()
+    }
 
     MaterialTheme {
         Scaffold(
@@ -143,7 +191,15 @@ fun AnimationDemo() {
                     //Weather
                     item {
                         Surface(shadowElevation = 2.dp) {
-                            WeatherRow()
+                            if (weatherLoading) {
+                                WeatherRowLoading()
+                            } else {
+                                WeatherRow(onRefreshWeather = {
+                                    coroutineScope.launch {
+                                        loadingWeather()
+                                    }
+                                })
+                            }
                         }
                     }
                     item { Spacer(modifier = Modifier.height(32.dp)) }
@@ -164,8 +220,24 @@ fun AnimationDemo() {
                     //Tasks
                     item { Header(title = stringResource(R.string.tasks)) }
                     item { Spacer(modifier = Modifier.height(16.dp)) }
-                    items(allTasks) { task ->
-                        TaskRow(task = task)
+
+                    if (tasks.isEmpty()) {
+                        item {
+                            TextButton(onClick = { tasks.clear(); tasks.addAll(allTasks) }) {
+                                Text(stringResource(R.string.add_tasks))
+                            }
+                        }
+                    }
+                    items(count = tasks.size) { i ->
+                        val task = tasks.getOrNull(i)
+                        if (task != null) {
+                            key(task) {
+                                TaskRow(task = task, onRemove = {
+                                    tasks.remove(task)
+                                })
+                            }
+                        }
+
                     }
                 }
                 Box(modifier = Modifier.padding(padding)) {
@@ -244,9 +316,31 @@ private fun HomeTabIndicator(
     tabPosition: List<TabPosition>,
     tabPage: TabPage
 ) {
-    val indicatorLeft = tabPosition[tabPage.ordinal].left
-    val indicatorRight = tabPosition[tabPage.ordinal].right
-    val color = if (tabPage == TabPage.Home) Purple700 else Green800
+    val transition = updateTransition(targetState = tabPage, label = "Tab indicator")
+    val indicatorLeft by transition.animateDp(label = "Indicator left", transitionSpec = {
+        if (TabPage.Home isTransitioningTo TabPage.Work) {
+            spring(stiffness = Spring.StiffnessVeryLow)
+        } else {
+            spring(stiffness = Spring.StiffnessMedium)
+        }
+    }) { page ->
+        tabPosition[page.ordinal].left
+    }
+    val indicatorRight by transition.animateDp(label = "Indicator right", transitionSpec = {
+        if (TabPage.Home isTransitioningTo TabPage.Work) {
+            spring(stiffness = Spring.StiffnessMedium)
+        } else {
+            spring(stiffness = Spring.StiffnessVeryLow)
+        }
+    }) { page ->
+        tabPosition[page.ordinal].right
+    }
+
+    val color by transition.animateColor(label = "Indicator color") { page ->
+        if (page == TabPage.Home) Purple700 else Green800
+    }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -272,7 +366,8 @@ fun WeatherRow(onRefreshWeather: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .heightIn(min = 64.dp)
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
@@ -286,6 +381,42 @@ fun WeatherRow(onRefreshWeather: () -> Unit = {}) {
         IconButton(onClick = onRefreshWeather) {
             Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WeatherRowLoading(onRefreshWeather: () -> Unit = {}) {
+    val infiniteTransition = rememberInfiniteTransition()
+    val alpha by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(animation = keyframes {
+            durationMillis = 1000
+            //关键帧动画
+            0.7f at 500
+            0.9f at 800
+        }, repeatMode = RepeatMode.Reverse)
+    )
+    Row(
+        modifier = Modifier
+            .heightIn(min = 64.dp)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color.LightGray.copy(alpha = alpha))
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(32.dp)
+                .background(Color.LightGray.copy(alpha = alpha))
+        )
     }
 }
 
@@ -325,7 +456,11 @@ fun TopicSpacer(shown: Boolean) {
 @Preview
 @Composable
 fun TaskRow(task: String = "First Task", onRemove: () -> Unit = {}) {
-    Surface(modifier = Modifier.fillMaxWidth(), shadowElevation = 2.dp) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .swipeToDismiss(onRemove), shadowElevation = 2.dp
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -372,3 +507,43 @@ private fun LazyListState.isScrollingUp(): Boolean {
     }.value
 }
 
+private fun Modifier.swipeToDismiss(onDismiss: () -> Unit) = composed {
+    val offsetX = remember { Animatable(0f) }
+    pointerInput(Unit) {
+        val decay = splineBasedDecay<Float>(this)
+        coroutineScope {
+            while (true) {
+                val pointerId = awaitPointerEventScope { awaitFirstDown().id }
+                offsetX.stop()
+                val velocityTracker = VelocityTracker()
+                awaitPointerEventScope {
+                    horizontalDrag(pointerId) { change ->
+                        val horizontalDragOffset = offsetX.value + change.positionChange().x
+                        launch {
+                            offsetX.snapTo(horizontalDragOffset)
+                        }
+                        velocityTracker.addPosition(change.uptimeMillis, change.position)
+                        if (change.positionChange() != Offset.Zero) change.consume()
+                    }
+                }
+
+                val velocity = velocityTracker.calculateVelocity().x
+                val targetOffsetX = decay.calculateTargetValue(offsetX.value, velocity)
+
+                offsetX.updateBounds(
+                    lowerBound = -size.width.toFloat(),
+                    upperBound = size.width.toFloat()
+                )
+
+                launch {
+                    if (targetOffsetX.absoluteValue <= size.width) {
+                        offsetX.animateTo(targetValue = 0f, initialVelocity = velocity)
+                    } else {
+                        offsetX.animateDecay(velocity, decay)
+                        onDismiss()
+                    }
+                }
+            }
+        }
+    }.offset { IntOffset(offsetX.value.roundToInt(), 0) }
+}
