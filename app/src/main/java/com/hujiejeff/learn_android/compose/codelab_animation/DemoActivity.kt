@@ -1,6 +1,7 @@
 package com.hujiejeff.learn_android.compose.codelab_animation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -51,6 +52,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Contacts
@@ -69,6 +72,9 @@ import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -86,6 +92,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.input.pointer.positionChanged
@@ -95,11 +102,17 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.blankj.utilcode.util.ToastUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.compose.ui.theme.Amber600
 import com.hujiejeff.learn_android.compose.ui.theme.AppTheme
@@ -163,10 +176,22 @@ fun AnimationDemo() {
     LaunchedEffect(Unit) {
         loadingWeather()
     }
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     MaterialTheme {
         Scaffold(
-            topBar = { HomeTopBar(tabPage, onSelected = { selected -> tabPage = selected }) },
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+//                HomeTopBar(tabPage, onSelected = { selected -> tabPage = selected })
+                     TopAppBar(
+                         scrollBehavior = scrollBehavior,
+                         title = {
+                             /*SelectionContainer() {
+                                 Text("Small Top App Bar")
+                             }*/
+                             AnnotatedClickableText()
+                         })
+            },
             floatingActionButton = {
                 HomeFloatingActionButton(extended = lazyListState.isScrollingUp(), onClick = {
                     coroutineScope.launch {
@@ -478,7 +503,7 @@ fun TaskRow(task: String = "First Task", onRemove: () -> Unit = {}) {
 fun HomeFloatingActionButton(extended: Boolean = true, onClick: () -> Unit = {}) {
     FloatingActionButton(onClick = onClick) {
         Row(modifier = Modifier.padding(horizontal = 16.dp)) {
-            Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+            Icon(imageVector = Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.error)
             AnimatedVisibility(visible = extended) {
                 Text(
                     text = stringResource(R.string.edit),
@@ -546,4 +571,40 @@ private fun Modifier.swipeToDismiss(onDismiss: () -> Unit) = composed {
             }
         }
     }.offset { IntOffset(offsetX.value.roundToInt(), 0) }
+}
+
+@Composable
+fun AnnotatedClickableText() {
+    val annotatedText = buildAnnotatedString {
+        append("Click ")
+
+        // We attach this *URL* annotation to the following content
+        // until `pop()` is called
+        pushStringAnnotation(
+            tag = "URL", annotation = "https://developer.android.com"
+        )
+        withStyle(
+            style = SpanStyle(
+                color = Color.Blue, fontWeight = FontWeight.Bold
+            )
+        ) {
+            append("here")
+        }
+
+        pop()
+
+        append("          fdfadfdafdafdaf")
+    }
+
+    ClickableText(text = annotatedText, onClick = { offset ->
+        // We check if there is an *URL* annotation attached to the text
+        // at the clicked position
+        annotatedText.getStringAnnotations(
+            tag = "URL", start = offset, end = offset
+        ).firstOrNull()?.let { annotation ->
+            // If yes, we log its value
+            Log.d("Clicked URL", annotation.item)
+            ToastUtils.showShort("show")
+        }
+    })
 }

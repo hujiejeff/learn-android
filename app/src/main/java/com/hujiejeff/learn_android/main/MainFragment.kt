@@ -87,5 +87,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         btnOpenComposeDemo2.clickJump<ComposeDemo2Activity>()
         btnOpenComposeDemo3.clickJump<CodeLabActivity>()
         btnOpenComposeDemo4.clickJump<DemoActivity>()
+        btnOpenComposeDemoNavigation.clickJump<com.hujiejeff.learn_android.compose.navigation.DemoActivity>()
     }
 }

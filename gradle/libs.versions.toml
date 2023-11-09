@@ -61,6 +61,7 @@ compose-preview-debug = {group = "androidx.compose.ui", name = "ui-tooling"}
 compose-activity = {group = "androidx.activity", name = "activity-compose", version.ref = "compose_activity_version"}
 compose-viewmodel = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "compose_viewmodel_version"}
 compose-material3-icon = {group = "androidx.compose.material", name = "material-icons-extended"}
+compose-navigation = {group = "androidx.navigation", name = "navigation-compose", version.ref = "compose_viewmodel_version"}
 
 junit = { group = "junit", name = "junit", version.ref = "junit_version" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx_junit_version" }
@@ -90,7 +91,7 @@ retrofit = ["retrofit-core", "retrofit-converter_gson"]
 pictureSelector = ["pictureSelector-core", "pictureSelector-compress", "pictureSelector-ucrop", "pictureSelector-camerax"]
 mvvm = ["mvvm-viewmodel", "mvvm-livedata", "mvvm-common"]
 calligraphy = ["calligraphy3", "viewpump"]
-compose = ["compose-material3", "compose-preview", "compose-activity", "compose-viewmodel", "compose-material3-icon"]
+compose = ["compose-material3", "compose-preview", "compose-activity", "compose-viewmodel", "compose-material3-icon", "compose-navigation"]
 
 [plugins]
 kt = { id = "org.jetbrains.kotlin.android", version.ref = "kt_version" }
