@@ -42,6 +42,8 @@ fun HashScreen(modifier: Modifier = Modifier) {
     var textInput by remember { mutableStateOf("") }
     var currentHashCode by remember { mutableStateOf(HashCode.MD5) }
     var isShowUpperCase by remember { mutableStateOf(false) }
+    val tabs =
+        listOf(HashCode.MD5, HashCode.SHA1, HashCode.SHA256, HashCode.SHA384, HashCode.SHA512)
 
     Column(modifier.padding(16.dp)) {
         OutlinedTextField(
@@ -54,9 +56,14 @@ fun HashScreen(modifier: Modifier = Modifier) {
                 textInput = it
             })
         Spacer(modifier = modifier.height(8.dp * 2))
-        TabButtonGroup(onSelectedListener = {
-            currentHashCode = it
-        })
+        TabButtonGroup(
+            modifier = Modifier,
+            defaultIndex = 0,
+            size = tabs.size,
+            getLabel = { index -> tabs[index].name },
+            onSelectedListener = { index ->
+                currentHashCode = tabs[index]
+            })
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(modifier = Modifier.weight(1f), text = "Show Upper Case")
             Switch(checked = isShowUpperCase, onCheckedChange = {

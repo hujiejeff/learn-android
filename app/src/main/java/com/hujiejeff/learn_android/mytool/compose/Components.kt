@@ -48,10 +48,11 @@ import com.hujiejeff.learn_android.mytool.compose.codetool.HashCode
 fun TabButtonGroup(
     modifier: Modifier = Modifier,
     defaultIndex: Int = 0,
-    onSelectedListener: (HashCode) -> Unit = {}
+    size: Int = 1,
+    onSelectedListener: (Int) -> Unit = {},
+    getLabel: (Int) -> String = {"Lable"}
 ) {
-    val tabs =
-        listOf(HashCode.MD5, HashCode.SHA1, HashCode.SHA256, HashCode.SHA384, HashCode.SHA512)
+
     var selectedIndex by remember {
         mutableStateOf(defaultIndex)
     }
@@ -60,17 +61,16 @@ fun TabButtonGroup(
         containerColor = MaterialTheme.colorScheme.surfaceVariant,
         modifier = modifier
             .wrapContentHeight()
-            .clip(MaterialTheme.shapes.small)
-            .shadow(20.dp),
+            .clip(MaterialTheme.shapes.large),
         indicator = { tabPosition ->
-            TabIndicator(code = tabs[selectedIndex], tabPosition = tabPosition)
+            TabIndicator(selectedIndex, tabPosition = tabPosition)
         },
         divider = {}
     ) {
-        tabs.forEachIndexed { index, item ->
-            TabButton(selected = selectedIndex == index, item.name) {
+        repeat(size) {index ->
+            TabButton(selected = selectedIndex == index, getLabel.invoke(index)) {
                 selectedIndex = index
-                onSelectedListener.invoke(item)
+                onSelectedListener.invoke(index)
             }
         }
     }
@@ -82,7 +82,7 @@ fun TabButton(selected: Boolean, title: String = "title", onClick: () -> Unit = 
         modifier = Modifier
             .height(32.dp)
             .padding(2.dp)
-            .clip(MaterialTheme.shapes.small)
+            .clip(MaterialTheme.shapes.large)
             .zIndex(2f),
         selected = selected,
         onClick = onClick
@@ -92,17 +92,17 @@ fun TabButton(selected: Boolean, title: String = "title", onClick: () -> Unit = 
 }
 
 @Composable
-fun TabIndicator(code: HashCode, tabPosition: List<TabPosition>) {
-    val transition = updateTransition(targetState = code, label = "Tab indicator")
+fun TabIndicator(index: Int, tabPosition: List<TabPosition>) {
+    val transition = updateTransition(targetState = index, label = "Tab indicator")
     val indicatorLeft by transition.animateDp(label = "Indicator left", transitionSpec = {
         spring(stiffness = Spring.StiffnessMedium)
     }) { page ->
-        tabPosition[page.ordinal].left
+        tabPosition[page].left
     }
     val indicatorRight by transition.animateDp(label = "Indicator right", transitionSpec = {
         spring(stiffness = Spring.StiffnessMedium)
     }) { page ->
-        tabPosition[page.ordinal].right
+        tabPosition[page].right
     }
 
 
@@ -114,7 +114,7 @@ fun TabIndicator(code: HashCode, tabPosition: List<TabPosition>) {
             .width(indicatorRight - indicatorLeft)
             .padding(2.dp)
             .fillMaxSize()
-            .clip(MaterialTheme.shapes.small)
+            .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.surface)
             .shadow(0.dp)
     )
