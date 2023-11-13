@@ -182,15 +182,15 @@ fun AnimationDemo() {
         Scaffold(
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
-//                HomeTopBar(tabPage, onSelected = { selected -> tabPage = selected })
-                     TopAppBar(
+                HomeTopBar(tabPage, onSelected = { selected -> tabPage = selected })
+/*                     TopAppBar(
                          scrollBehavior = scrollBehavior,
                          title = {
-                             /*SelectionContainer() {
+                             *//*SelectionContainer() {
                                  Text("Small Top App Bar")
-                             }*/
+                             }*//*
                              AnnotatedClickableText()
-                         })
+                         })*/
             },
             floatingActionButton = {
                 HomeFloatingActionButton(extended = lazyListState.isScrollingUp(), onClick = {

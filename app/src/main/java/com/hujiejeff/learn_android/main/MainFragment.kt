@@ -20,6 +20,7 @@ import com.hujiejeff.learn_android.jetpack.vm.LoginViewModel
 import com.hujiejeff.learn_android.materia_design.constraintlayout.ConstrainLayoutHomeDemoActivity
 import com.hujiejeff.learn_android.materia_design.toolbar.ToolbarDemoFragment
 import com.hujiejeff.learn_android.material3.Material3DemoActivity
+import com.hujiejeff.learn_android.mytool.MyToolActivity
 import com.hujiejeff.learn_android.picture_selector.PictureSelectorDemoActivity
 import com.hujiejeff.learn_android.saf.NewStorageTestActivity
 import com.hujiejeff.learn_android.transition.TransitionDemoActivity
@@ -88,5 +89,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         btnOpenComposeDemo3.clickJump<CodeLabActivity>()
         btnOpenComposeDemo4.clickJump<DemoActivity>()
         btnOpenComposeDemoNavigation.clickJump<com.hujiejeff.learn_android.compose.navigation.DemoActivity>()
+        btnOpenToolApp.clickJump<MyToolActivity>()
     }
 }

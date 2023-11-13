@@ -93,6 +93,7 @@
         <activity android:name="com.hujiejeff.learn_android.compose.codelab_basic_layout.CodeLabActivity" />
         <activity android:name="com.hujiejeff.learn_android.compose.codelab_animation.DemoActivity" />
         <activity android:name="com.hujiejeff.learn_android.compose.navigation.DemoActivity" />
+        <activity android:name="com.hujiejeff.learn_android.mytool.MyToolActivity" />
     </application>
 
 </manifest>
