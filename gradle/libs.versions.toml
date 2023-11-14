@@ -85,6 +85,10 @@ viewpump = {group = "io.github.inflationx", name = "viewpump", version.ref = "vi
 
 utilcodex = {group = "com.blankj", name = "utilcodex", version.ref = "utilcodex_version"}
 
+#qrcode
+zxing = { group = "com.google.zxing", name = "core", version = "3.5.1" }
+zxingLite = { group = "com.github.jenly1314", name = "zxing-lite", version = "2.4.0" }
+
 [bundles]
 foundation = ["androidx-core_ktx", "androidx-appcompat", "androidx-constraintlayout", "material", "androidx-activity_ktx", "androidx-fragment_ktx"]
 retrofit = ["retrofit-core", "retrofit-converter_gson"]

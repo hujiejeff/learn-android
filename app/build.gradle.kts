@@ -91,4 +91,7 @@ dependencies {
     implementation("io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.1")
 //    implementation("com.github.hujiejeff:android-base-lib:0.0.2-alpha")
     api("com.github.getActivity:ShapeView:8.3")
+
+    implementation(libs.zxing)
+    implementation(libs.zxingLite)
 }
