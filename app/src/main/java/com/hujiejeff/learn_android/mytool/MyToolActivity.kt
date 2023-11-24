@@ -79,10 +79,12 @@ class MyToolActivity : ComponentActivity() {
                 }
 
                 PICK_IMAGE -> {
-                    val bitmap = ImageUtils.getBitmap(UriUtils.uri2File(it.data?.data))
-                    val qrResultCode = CodeUtils.parseCode(bitmap) ?: "It seems  no QR code from this image!"
-                    viewModel.qrScanResult.update {
-                        qrResultCode
+                    it.data?.data?.also {uri ->
+                        val bitmap = ImageUtils.getBitmap(UriUtils.uri2File(uri))
+                        val qrResultCode = CodeUtils.parseCode(bitmap) ?: "It seems  no QR code from this image!"
+                        viewModel.qrScanResult.update {
+                            qrResultCode
+                        }
                     }
                 }
             }
