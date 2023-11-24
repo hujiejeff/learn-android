@@ -1,5 +1,6 @@
 package com.hujiejeff.learn_android.mytool.compose.codetool
 
+import android.app.Activity
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +39,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -44,35 +47,36 @@ import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.hujiejeff.learn_android.mytool.MyToolViewModel
+import com.hujiejeff.learn_android.mytool.QRCodeScanActivity
 import com.hujiejeff.learn_android.mytool.compose.TabButtonGroup
 import com.king.zxing.util.CodeUtils
 import kotlinx.coroutines.launch
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.asStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QRScreen(modifier: Modifier = Modifier) {
+fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewModel()) {
     var textInput by remember { mutableStateOf("") }
     val tabs = listOf(QR.SCAN, QR.GENERATE)
     var currentAction by remember {
         mutableStateOf(tabs[0])
     }
-    val coroutineScope = rememberCoroutineScope()
-/*    var bitmap by remember {
-        mutableStateOf<ImageBitmap?>(null)
-    }*/
-
     Column(modifier.padding(16.dp)) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(150.dp)
         ) {
-
+            val activity = LocalContext.current.takeIf { it is Activity }?.let { it as Activity }
             when (currentAction) {
                 QR.SCAN -> {
                     TextButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
-                        onClick = { }) {
+                        onClick = {
+                            viewModel.sendIntent(MyToolViewModel.Intent.ScanByCamera())
+                        }) {
                         Icon(imageVector = Icons.Default.Camera, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = "Scan from camera")
@@ -80,7 +84,9 @@ fun QRScreen(modifier: Modifier = Modifier) {
                     Spacer(modifier = modifier.height(8.dp * 2))
                     TextButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
-                        onClick = { }) {
+                        onClick = {
+                            viewModel.sendIntent(MyToolViewModel.Intent.ScanByAlbum())
+                        }) {
                         Icon(imageVector = Icons.Default.Image, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = "Scan from Image")
@@ -107,9 +113,10 @@ fun QRScreen(modifier: Modifier = Modifier) {
             onSelectedListener = { index ->
                 currentAction = tabs[index]
             })
-        val result = textInput
+        val result by viewModel.qrScanResult.collectAsState()
         when (currentAction) {
             QR.SCAN -> {
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     text = result,
@@ -140,7 +147,9 @@ fun QRScreen(modifier: Modifier = Modifier) {
                     val px = with(LocalDensity.current) { height.toPx() }
                     val bitmap = CodeUtils.createQRCode(this, px.toInt(), MaterialTheme.colorScheme.primary.toArgb()).asImageBitmap()
                     Image(
-                        modifier = Modifier.size(height).align(Alignment.CenterHorizontally),
+                        modifier = Modifier
+                            .size(height)
+                            .align(Alignment.CenterHorizontally),
                         painter = BitmapPainter(bitmap),
                         contentDescription = textInput
                     )

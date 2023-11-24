@@ -4,18 +4,21 @@ import android.app.Application
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import com.blankj.utilcode.util.UriUtils
 import com.bumptech.glide.Glide
 import java.io.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 import java.util.concurrent.Executors
+
 
 object ImageUtil {
     private const val TAG = "BitmapUtil"
@@ -248,5 +251,22 @@ object ImageUtil {
         if (!this::context.isInitialized) {
             context = ctx.applicationContext as Application
         }
+    }
+
+    fun getImagePath(context: Context, uri: Uri?, selection: String): String {
+        if (uri == null) return ""
+        var path: String? = null
+//        if (MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
+        // 通过Uri和selection来获取真实的图片路径
+        val cursor: Cursor? = context.contentResolver.query(uri, null, selection, null, null)
+        cursor?.run {
+            if (moveToFirst()) {
+                val index = getColumnIndex(MediaStore.Images.Media.DATA)
+                path = getString(index)
+            }
+            close()
+        }
+        return path ?: ""
     }
 }
