@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="three_design_image_gap">6dp</dimen>
+    <dimen name="three_design_image_radius">8dp</dimen>
+    <dimen name="normal_card_radius">4dp</dimen>
+    <dimen name="big_card_radius">8dp</dimen>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/iv"
+        tools:src="@tools:sample/avatars"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:background="@drawable/mask_rectangle_gradient"
+        android:textColor="@color/white"
+        android:padding="8dp"
+        android:paddingTop="20dp"
+        android:textSize="14sp"
+        android:id="@+id/tv"
+        tools:text="发扽大幅"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintBottom_toBottomOf="@id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_over"
+        app:constraint_referenced_ids="tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
