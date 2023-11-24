@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.toArgb
@@ -53,6 +54,9 @@ import com.hujiejeff.learn_android.mytool.compose.TabButtonGroup
 import com.king.zxing.util.CodeUtils
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.UriUtils
+import com.hujiejeff.learn_android.util.ImageUtil
 import kotlinx.coroutines.flow.asStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,6 +67,11 @@ fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewMod
     var currentAction by remember {
         mutableStateOf(tabs[0])
     }
+    var bitmap by remember {
+        mutableStateOf<ImageBitmap?>(null)
+    }
+
+    val activity = LocalContext.current.takeIf { it is Activity }?.let { it as Activity }
     Column(modifier.padding(16.dp)) {
         Column(
             modifier = Modifier
@@ -134,25 +143,41 @@ fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewMod
 
             QR.GENERATE -> {
                 Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {
+                        bitmap?.also {
+                            ImageUtil.copyBitmap2Clipboard(it.asAndroidBitmap())
+                            ToastUtils.showShort("Already Copied on Clipboard!")
+                        }
+                    }) {
                         Icon(imageVector = Icons.Default.FileCopy, contentDescription = null)
                     }
 
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {
+                        bitmap?.also {
+                            ImageUtils.save2Album(bitmap?.asAndroidBitmap(), Bitmap.CompressFormat.JPEG)
+                            ToastUtils.showShort("Save Success!")
+                        }
+                    }) {
                         Icon(imageVector = Icons.Default.Download, contentDescription = null)
                     }
                 }
                 val height = 200.dp
                 textInput.takeIf { it.isNotEmpty() }?.run {
                     val px = with(LocalDensity.current) { height.toPx() }
-                    val bitmap = CodeUtils.createQRCode(this, px.toInt(), MaterialTheme.colorScheme.primary.toArgb()).asImageBitmap()
-                    Image(
-                        modifier = Modifier
-                            .size(height)
-                            .align(Alignment.CenterHorizontally),
-                        painter = BitmapPainter(bitmap),
-                        contentDescription = textInput
-                    )
+                    bitmap = CodeUtils.createQRCode(
+                        this,
+                        px.toInt(),
+                        MaterialTheme.colorScheme.primary.toArgb()
+                    ).asImageBitmap()
+                    bitmap?.also {
+                        Image(
+                            modifier = Modifier
+                                .size(height)
+                                .align(Alignment.CenterHorizontally),
+                            painter = BitmapPainter(it),
+                            contentDescription = textInput
+                        )
+                    }
                 }
 
             }

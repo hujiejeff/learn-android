@@ -1,17 +1,23 @@
 package com.hujiejeff.learn_android.util
 
 import android.app.Application
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.ui.graphics.asAndroidBitmap
+import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.UriUtils
+import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
 import java.io.*
 import java.security.MessageDigest
@@ -53,7 +59,8 @@ object ImageUtil {
                     intent.data = Uri.parse("file://" + destFile.absolutePath)
                     context.sendBroadcast(intent)
                     handler.post {
-                        Toast.makeText(context, "图片保存成功，请在相册查看", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "图片保存成功，请在相册查看", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 } else {
                     //android10以上，增加了新字段，自己insert，因为RELATIVE_PATH，DATE_EXPIRES，IS_PENDING是29新增字段
@@ -268,5 +275,18 @@ object ImageUtil {
             close()
         }
         return path ?: ""
+    }
+
+
+    fun copyBitmap2Clipboard(bitmap: Bitmap) {
+        val uri = UriUtils.file2Uri(
+            ImageUtils.save2Album(
+                bitmap,
+                "MyTool",
+                Bitmap.CompressFormat.JPEG
+            )
+        )
+        val cm = Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        cm.setPrimaryClip(ClipData.newUri(Utils.getApp().contentResolver, "", uri))
     }
 }
