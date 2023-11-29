@@ -39,7 +39,7 @@ class MyToolActivity : ComponentActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.intentFlow.collect {
                     when (it) {
-                        is MyToolViewModel.Intent.ScanByCamera -> {
+                        MyToolViewModel.Intent.ScanByCamera -> {
                             requestCode = QRCodeScanActivity.REQUEST_FOR_SCAN
                             startResultActivity.launch(
                                 Intent(
@@ -49,11 +49,14 @@ class MyToolActivity : ComponentActivity() {
                             )
                         }
 
-                        is MyToolViewModel.Intent.ScanByAlbum -> {
+                        MyToolViewModel.Intent.ScanByAlbum -> {
                             requestCode = PICK_IMAGE
                             startResultActivity.launch(Intent(Intent.ACTION_GET_CONTENT).apply {
                                 type = "image/*"
                             })
+                        }
+                        MyToolViewModel.Intent.LoadAPPList -> {
+                            viewModel.loadAppInfoList()
                         }
                     }
 

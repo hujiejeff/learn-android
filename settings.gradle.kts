@@ -4,6 +4,7 @@ pluginManagement {
         google()
         mavenCentral()
         maven("https://jitpack.io")
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
     }
 }
 dependencyResolutionManagement {
@@ -26,23 +27,23 @@ dependencyResolutionManagement {
     }
 
     //启用VersionCatalogs
-/*    versionCatalogs {
-        create("xlibs") {
-            version("groovy", "3.0.5")
-            version("checkstyle", "8.37")
-            library("groovy-core", "org.codehaus.groovy", "groovy").versionRef("groovy")
-            library("groovy-json", "org.codehaus.groovy", "groovy-json").versionRef("groovy")
-            library("groovy-nio", "org.codehaus.groovy", "groovy-nio").versionRef("groovy")
-            library("commons-lang3", "org.apache.commons", "commons-lang3").version {
-                strictly("[3.8, 4.0[")
-                prefer("3.9")
+    /*    versionCatalogs {
+            create("xlibs") {
+                version("groovy", "3.0.5")
+                version("checkstyle", "8.37")
+                library("groovy-core", "org.codehaus.groovy", "groovy").versionRef("groovy")
+                library("groovy-json", "org.codehaus.groovy", "groovy-json").versionRef("groovy")
+                library("groovy-nio", "org.codehaus.groovy", "groovy-nio").versionRef("groovy")
+                library("commons-lang3", "org.apache.commons", "commons-lang3").version {
+                    strictly("[3.8, 4.0[")
+                    prefer("3.9")
+                }
             }
-        }
 
-        create("libs") {
-            from(files("gradle/libs.versions.toml"))
-        }
-    }*/
+            create("libs") {
+                from(files("gradle/libs.versions.toml"))
+            }
+        }*/
 }
 rootProject.name = "learn-android"
 include(":app")

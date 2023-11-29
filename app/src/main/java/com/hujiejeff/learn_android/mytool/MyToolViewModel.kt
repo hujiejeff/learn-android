@@ -1,21 +1,30 @@
 package com.hujiejeff.learn_android.mytool
 
+import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hujiejeff.learn_android.base.CommonApplication
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MyToolViewModel: ViewModel() {
-    val qrScanResult =  MutableStateFlow<String>("")
+class MyToolViewModel : ViewModel() {
+    val qrScanResult = MutableStateFlow<String>("")
 
     private val intentChannel: Channel<Intent> = Channel(Channel.UNLIMITED)
 
     val intentFlow = intentChannel.receiveAsFlow()
+
+    val appInfoList = MutableStateFlow<List<APPInfo>>(emptyList())
 
 
     fun sendIntent(intent: Intent) {
@@ -24,25 +33,33 @@ class MyToolViewModel: ViewModel() {
         }
     }
 
-    sealed class Intent {
-        class ScanByCamera : Intent() {
-            override fun equals(other: Any?): Boolean {
-                return this === other
-            }
-
-            override fun hashCode(): Int {
-                return System.identityHashCode(this)
-            }
-        }
-
-        class ScanByAlbum : Intent() {
-            override fun equals(other: Any?): Boolean {
-                return this === other
-            }
-
-            override fun hashCode(): Int {
-                return System.identityHashCode(this)
+    fun loadAppInfoList() {
+        viewModelScope.launch {
+            val packageManager = CommonApplication.get().packageManager
+            val packageList =
+                packageManager.getInstalledPackages(PackageManager.MATCH_UNINSTALLED_PACKAGES)
+                    .toList()
+            withContext(Dispatchers.IO) {
+                val infoList = packageList.map {
+                    val label = it.applicationInfo.loadLabel(packageManager).toString()
+                    val drawable = it.applicationInfo.loadIcon(packageManager)
+                    APPInfo(label, it.packageName, drawable)
+                }
+                appInfoList.update {
+                    infoList
+                }
             }
         }
     }
+
+    sealed class Intent {
+        object ScanByCamera : Intent()
+
+
+        object ScanByAlbum : Intent()
+
+        object LoadAPPList : Intent()
+    }
+
+    data class APPInfo(val label: String, val packageName: String, val drawable: Drawable)
 }

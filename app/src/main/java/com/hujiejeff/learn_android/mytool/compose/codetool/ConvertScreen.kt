@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.hujiejeff.learn_android.mytool.compose.APPListScreen
 
 @Preview
 @Composable
@@ -35,7 +36,7 @@ fun ConvertScreen(modifier: Modifier = Modifier) {
     }
 
 
-    Column() {
+/*    Column() {
         NumberInput(convert = Convert.Decimal, value = textInput.toString(), onValueChange = {
             textInput = if (it.isNotEmpty()) {
                 it.toInt()
@@ -85,7 +86,8 @@ fun ConvertScreen(modifier: Modifier = Modifier) {
                     textInput = 0
                 }
             })
-    }
+    }*/
+    APPListScreen()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

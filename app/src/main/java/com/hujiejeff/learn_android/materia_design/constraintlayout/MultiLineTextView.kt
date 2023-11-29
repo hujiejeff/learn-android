@@ -1,4 +1,4 @@
-package com.cmstop.cloud.view
+package com.hujiejeff.learn_android.materia_design.constraintlayout
 
 import android.content.Context
 import android.graphics.Canvas
@@ -17,7 +17,7 @@ class MultiLineTextView(context: Context, attr: AttributeSet? = null, def: Int =
     constructor(context: Context) : this(context, null, 0)
 
     @RequiresApi(Build.VERSION_CODES.M)
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         maxLines = min(height / lineHeight, 3)
         super.onDraw(canvas)
 /*        StaticLayout.Builder.obtain(text, 0, text.length, paint, width)

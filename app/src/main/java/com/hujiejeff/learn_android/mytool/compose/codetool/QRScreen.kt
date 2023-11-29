@@ -84,7 +84,7 @@ fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewMod
                     TextButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         onClick = {
-                            viewModel.sendIntent(MyToolViewModel.Intent.ScanByCamera())
+                            viewModel.sendIntent(MyToolViewModel.Intent.ScanByCamera)
                         }) {
                         Icon(imageVector = Icons.Default.Camera, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
@@ -94,7 +94,7 @@ fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewMod
                     TextButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         onClick = {
-                            viewModel.sendIntent(MyToolViewModel.Intent.ScanByAlbum())
+                            viewModel.sendIntent(MyToolViewModel.Intent.ScanByAlbum)
                         }) {
                         Icon(imageVector = Icons.Default.Image, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))

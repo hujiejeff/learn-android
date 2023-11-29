@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.hujiejeff.learn_android"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner =  "androidx.test.runner.AndroidJUnitRunner"
@@ -94,4 +94,7 @@ dependencies {
 
     implementation(libs.zxing)
     implementation(libs.zxingLite)
+
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("com.airbnb.android:lottie-compose:6.2.0")
 }

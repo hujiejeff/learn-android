@@ -51,8 +51,8 @@ class NewStorageTestActivity : BaseActivity<ActivityNewStorageTestBinding>() {
         }
 
         val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object : ActivityResultCallback<ActivityResult>{
-            override fun onActivityResult(result: ActivityResult?) {
-
+            override fun onActivityResult(result: ActivityResult) {
+                TODO("Not yet implemented")
             }
         })
 
