@@ -15,10 +15,15 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.core.content.FileProvider
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.UriUtils
 import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
+import com.hujiejeff.learn_android.base.CommonApplication
 import java.io.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -279,13 +284,20 @@ object ImageUtil {
 
 
     fun copyBitmap2Clipboard(bitmap: Bitmap) {
-        val uri = UriUtils.file2Uri(
+        /*val uri = UriUtils.file2Uri(
             ImageUtils.save2Album(
                 bitmap,
                 "MyTool",
                 Bitmap.CompressFormat.JPEG
             )
-        )
+        )*/
+
+        //存储到自身目录
+        val context = CommonApplication.get() as Context
+        val fileName = EncryptUtils.encryptMD5ToString(System.currentTimeMillis().toString()) + ".jpg"
+        val file = File(context.getExternalFilesDir("images"), fileName)
+        ImageUtils.save(bitmap, file, Bitmap.CompressFormat.JPEG)
+        val uri = FileProvider.getUriForFile(context, AppUtils.getAppPackageName() + ".fileprovider", file)
         val cm = Utils.getApp().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         cm.setPrimaryClip(ClipData.newUri(Utils.getApp().contentResolver, "", uri))
     }
