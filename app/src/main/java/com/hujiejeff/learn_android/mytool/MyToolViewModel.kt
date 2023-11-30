@@ -7,6 +7,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.FileUtils
 import com.hujiejeff.learn_android.base.CommonApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -43,7 +45,16 @@ class MyToolViewModel : ViewModel() {
                 val infoList = packageList.map {
                     val label = it.applicationInfo.loadLabel(packageManager).toString()
                     val drawable = it.applicationInfo.loadIcon(packageManager)
-                    APPInfo(label, it.packageName, drawable)
+                    val apkPath = it.applicationInfo.sourceDir
+                    AppUtils.isAppSystem()
+                    APPInfo(
+                        label,
+                        it.packageName,
+                        drawable,
+                        it.versionName,
+                        apkPath,
+                        FileUtils.getSize(apkPath)
+                    )
                 }
                 appInfoList.update {
                     infoList
@@ -55,11 +66,21 @@ class MyToolViewModel : ViewModel() {
     sealed class Intent {
         object ScanByCamera : Intent()
 
-
         object ScanByAlbum : Intent()
 
         object LoadAPPList : Intent()
     }
 
-    data class APPInfo(val label: String, val packageName: String, val drawable: Drawable)
+    enum class APPGenera(val flag: Int = 0) {
+        SYSTEM(PackageManager.MATCH_SYSTEM_ONLY), USER(), FREEZE
+    }
+
+    data class APPInfo(
+        val label: String,
+        val packageName: String,
+        val drawable: Drawable,
+        val versionName: String = "",
+        val apkPath: String = "",
+        val size: String = ""
+    )
 }
