@@ -50,7 +50,7 @@ class MyToolViewModel : ViewModel() {
                     APPInfo(
                         label,
                         it.packageName,
-                        drawable,
+                        drawable.toBitmap().asImageBitmap(),
                         it.versionName,
                         apkPath,
                         FileUtils.getSize(apkPath)
@@ -78,7 +78,7 @@ class MyToolViewModel : ViewModel() {
     data class APPInfo(
         val label: String,
         val packageName: String,
-        val drawable: Drawable,
+        val drawable: ImageBitmap,
         val versionName: String = "",
         val apkPath: String = "",
         val size: String = ""

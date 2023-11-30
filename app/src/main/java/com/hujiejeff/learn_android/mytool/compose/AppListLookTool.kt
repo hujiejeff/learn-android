@@ -2,6 +2,7 @@ package com.hujiejeff.learn_android.mytool.compose
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -61,6 +62,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.blankj.utilcode.util.AppUtils
@@ -135,12 +137,12 @@ fun PackItemClickModal(
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AsyncImage(
+                Image(
                     modifier = Modifier
                         .height(40.dp)
                         .aspectRatio(1f)
                         .clip(MaterialTheme.shapes.medium),
-                    model = appInfo.drawable,
+                    bitmap = appInfo.drawable,
                     contentDescription = null
                 )
                 Text(
@@ -215,12 +217,12 @@ fun PackageItemInfo(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                AsyncImage(
+                Image(
                     modifier = Modifier
                         .height(40.dp)
                         .aspectRatio(1f)
                         .clip(MaterialTheme.shapes.medium),
-                    model = appInfo.drawable,
+                    bitmap = appInfo.drawable,
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(4.dp))
@@ -237,7 +239,7 @@ fun PackageItemInfo(
 @Composable
 fun LottieLoading() {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
-    val progress by animateLottieCompositionAsState(composition)
+    val progress by animateLottieCompositionAsState(composition, iterations = LottieConstants.IterateForever)
     LottieAnimation(
         modifier = Modifier.size(80.dp),
         composition = composition,
