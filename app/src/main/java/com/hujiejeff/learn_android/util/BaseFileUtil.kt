@@ -1,14 +1,7 @@
 package com.hujiejeff.learn_android.util
 
-import android.content.ContentResolver
-import android.content.ContentUris
-import android.content.Context
-import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import com.hujiejeff.learn_android.base.CommonApplication
 import java.io.*
 
@@ -57,6 +50,16 @@ object BaseFileUtil {
         }
     }
 
+    fun copyFileToAppDir(dirName: String, fileName: String, sourceFile: File): Uri? {
+        val desFile = File(getAppDir(dirName), fileName)
+        val result = com.blankj.utilcode.util.FileUtils.copy(sourceFile, desFile)
+        return if (result) {
+            FileProviderUtil.getAppFileUri(desFile)
+        } else {
+            null
+        }
+    }
+
 
     fun writeFileFromIS(fos: OutputStream, fis: InputStream): Boolean {
         var os: OutputStream? = null
@@ -86,5 +89,10 @@ object BaseFileUtil {
     }
 
 
+    fun testSaveFile(): Unit {
+        //公共目录可以无权限存
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "test.file")
+        file.createNewFile()
+    }
 
 }

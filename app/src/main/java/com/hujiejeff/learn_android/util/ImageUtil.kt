@@ -115,7 +115,7 @@ object ImageUtil {
         fis.use {
             fos.use {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    FileUtils.copy(fis, fos)
+                    android.os.FileUtils.copy(fis, fos)
                 } else {
                     writeFileFromIS(fis, fos)
                 }

@@ -3,6 +3,8 @@ package com.hujiejeff.learn_android.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.provider.DocumentsContract
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -45,7 +47,7 @@ fun FragmentActivity.startFragmentByShareAnimator(
 
 
     transaction.addSharedElement(sharedElement, sharedElementName)
-    transaction.replace(R.id.container,fragment, tag)
+    transaction.replace(R.id.container, fragment, tag)
         .addToBackStack(null)
         .commit()
 }
@@ -54,4 +56,21 @@ fun getCurrentFragment(activity: FragmentActivity): Fragment? {
     return activity
         .supportFragmentManager
         .findFragmentById(R.id.container)
+}
+
+
+/**
+ * saf保存文件
+ */
+fun getSafSaveFileIntent(
+    fileName: String,
+    mimeType: String
+): Intent {
+    return Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+        addCategory(Intent.CATEGORY_OPENABLE)
+        type = mimeType
+        putExtra(Intent.EXTRA_TITLE, fileName)
+        putExtra(FileProviderUtil.EXTRA_APP_FILE_COPY_NAME, fileName)
+        putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.EMPTY)
+    }
 }

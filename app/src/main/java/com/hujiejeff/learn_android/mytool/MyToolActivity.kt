@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,8 +15,10 @@ import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.IntentUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.UriUtils
+import com.hujiejeff.learn_android.base.BaseComposeActivity
 import com.hujiejeff.learn_android.compose.ui.theme.AppTheme
 import com.hujiejeff.learn_android.mytool.compose.MyToolApp
+import com.hujiejeff.learn_android.util.BaseFileUtil
 import com.hujiejeff.learn_android.util.ImageUtil
 import com.hujiejeff.learn_android.util.ImageUtil.getImagePath
 import com.king.zxing.util.BitmapUtils
@@ -23,7 +26,7 @@ import com.king.zxing.util.CodeUtils
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MyToolActivity : ComponentActivity() {
+class MyToolActivity : BaseComposeActivity() {
     private val viewModel: MyToolViewModel by viewModels()
     private val PICK_IMAGE = 1;
     private var requestCode = 0

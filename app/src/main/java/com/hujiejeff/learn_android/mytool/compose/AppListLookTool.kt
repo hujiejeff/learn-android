@@ -65,9 +65,22 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.UriUtils
+import com.google.android.exoplayer2.util.MimeTypes
 import com.hujiejeff.learn_android.R
+import com.hujiejeff.learn_android.base.CommonApplication
+import com.hujiejeff.learn_android.mytool.MyToolActivity
+import com.hujiejeff.learn_android.util.BaseFileUtil
+import com.hujiejeff.learn_android.util.FileProviderUtil
+import com.hujiejeff.learn_android.util.ImageUtil.copyFile
+import com.hujiejeff.learn_android.util.getSafSaveFileIntent
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileInputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -173,7 +186,7 @@ fun PackItemClickModal(
             LazyVerticalGrid(columns = GridCells.Adaptive(100.dp)) {
                 items(list.size) {
                     PackageActionItem(action = list[it]) {
-                        list[it].action.invoke(appInfo.packageName)
+                        list[it].action.invoke(appInfo)
                     }
                 }
             }
@@ -207,9 +220,11 @@ fun PackageItemInfo(
                 onClick.invoke(appInfo)
             }
     ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
             Text(text = appInfo.label, style = MaterialTheme.typography.labelMedium)
             Spacer(modifier = Modifier.height(4.dp))
             Row(
@@ -239,7 +254,10 @@ fun PackageItemInfo(
 @Composable
 fun LottieLoading() {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading))
-    val progress by animateLottieCompositionAsState(composition, iterations = LottieConstants.IterateForever)
+    val progress by animateLottieCompositionAsState(
+        composition,
+        iterations = LottieConstants.IterateForever
+    )
     LottieAnimation(
         modifier = Modifier.size(80.dp),
         composition = composition,
@@ -250,14 +268,14 @@ fun LottieLoading() {
 sealed class APPClickAction(
     val actionIcon: ImageVector,
     val actionLabel: String,
-    val action: (packageName: String) -> Unit
+    val action: (appInfo: MyToolViewModel.APPInfo) -> Unit
 ) {
     object OpenAPP : APPClickAction(Icons.Default.OpenInNew, "打开应用", {
-        AppUtils.launchApp(it)
+        AppUtils.launchApp(it.packageName)
     })
 
     object UninstallAPP : APPClickAction(Icons.Default.Delete, "卸载应用", {
-        AppUtils.uninstallApp(it)
+        AppUtils.uninstallApp(it.packageName)
     })
 
     object ShareAPP : APPClickAction(Icons.Default.Share, "分享应用", {
@@ -265,15 +283,30 @@ sealed class APPClickAction(
     })
 
     object OpenAPPDetail : APPClickAction(Icons.Default.Details, "应用详情", {
-        AppUtils.launchAppDetailsSettings(it)
+        AppUtils.launchAppDetailsSettings(it.packageName)
     })
 
     object LookAPPInfo : APPClickAction(Icons.Default.Info, "应用信息", {
 
     })
 
-    object ExtractAPK : APPClickAction(Icons.Default.Upload, "提取安装包", {
-
+    object ExtractAPK : APPClickAction(Icons.Default.Upload, "提取安装包", { appInfo ->
+        val activity = (ActivityUtils.getTopActivity() as MyToolActivity)
+        val fileName = "${appInfo.label}.apk"
+        val intent = getSafSaveFileIntent(
+            fileName,
+            "application/vnd.android.package-archive"
+        )
+        activity.launchActivityForResult(intent) {
+            it?.data?.also {uri ->
+                val resultPath = FileProviderUtil.saveFileToUri(File(appInfo.apkPath), uri)
+                if (resultPath.isNotEmpty()) {
+                    ToastUtils.showShort("保存成功, 文件路径是$resultPath")
+                } else {
+                    ToastUtils.showShort("保存失败")
+                }
+            }
+        }
     })
 
     object ExtractIcon : APPClickAction(Icons.Default.Image, "提取图标", {
