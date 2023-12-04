@@ -60,14 +60,14 @@ class NewStorageTestActivity : BaseActivity<ActivityNewStorageTestBinding>() {
             openFile(uriOpenFile)
         }
         btnCreateFile.setOnClickListener {
-//            createFile(Uri.EMPTY)
-            val dir = File(
+            createFile(Uri.EMPTY)
+            /*val dir = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
                 packageName
             )
             dir.mkdir()
             val destFile = File(dir, "test.tmp")
-            destFile.createNewFile()
+            destFile.createNewFile()*/
         }
         btnClearExternalCache.setOnClickListener {
             /*val intent = Intent(StorageManager.ACTION_MANAGE_STORAGE)

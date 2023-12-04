@@ -1,5 +1,7 @@
 package com.hujiejeff.learn_android.mytool.compose
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -27,13 +29,10 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Details
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.MinorCrash
 import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Upload
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,7 +45,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -54,12 +52,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.hujiejeff.learn_android.mytool.MyToolViewModel
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -67,20 +65,16 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.UriUtils
-import com.google.android.exoplayer2.util.MimeTypes
 import com.hujiejeff.learn_android.R
-import com.hujiejeff.learn_android.base.CommonApplication
 import com.hujiejeff.learn_android.mytool.MyToolActivity
+import com.hujiejeff.learn_android.mytool.MyToolViewModel
 import com.hujiejeff.learn_android.util.BaseFileUtil
 import com.hujiejeff.learn_android.util.FileProviderUtil
-import com.hujiejeff.learn_android.util.ImageUtil.copyFile
 import com.hujiejeff.learn_android.util.getSafSaveFileIntent
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileInputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -93,6 +87,7 @@ fun APPListScreen(viewModel: MyToolViewModel = viewModel()) {
     }
 
     var showBottomSheet by remember { mutableStateOf(false) }
+    var showDetailDialog by remember { mutableStateOf(false) }
     if (appList.isEmpty()) {
         LaunchedEffect(Unit) {
             viewModel.sendIntent(MyToolViewModel.Intent.LoadAPPList)
@@ -119,14 +114,24 @@ fun APPListScreen(viewModel: MyToolViewModel = viewModel()) {
                 }
             }
         }
-
+        val scope = rememberCoroutineScope()
         if (showBottomSheet) {
             PackItemClickModal(
                 sheetState = sheetState,
                 appInfo = currentAPPInfo!!,
                 onHide = {
                     showBottomSheet = false
+                },
+                onShowDetailDialog = {
+                    showBottomSheet = false
+                    showDetailDialog = true
                 })
+        }
+
+        if (showDetailDialog) {
+            PackageInfoDetailDialog(appInfo = currentAPPInfo!!, onHide = {
+                showDetailDialog = false
+            })
         }
     }
 }
@@ -136,7 +141,8 @@ fun APPListScreen(viewModel: MyToolViewModel = viewModel()) {
 fun PackItemClickModal(
     sheetState: SheetState,
     appInfo: MyToolViewModel.APPInfo,
-    onHide: () -> Unit
+    onHide: () -> Unit,
+    onShowDetailDialog: (MyToolViewModel.APPInfo) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     ModalBottomSheet(
@@ -186,13 +192,67 @@ fun PackItemClickModal(
             LazyVerticalGrid(columns = GridCells.Adaptive(100.dp)) {
                 items(list.size) {
                     PackageActionItem(action = list[it]) {
-                        list[it].action.invoke(appInfo)
+                        if (list[it] == APPClickAction.LookAPPInfo) {
+                            onShowDetailDialog.invoke(appInfo)
+                        } else {
+                            list[it].action.invoke(appInfo)
+                        }
                     }
                 }
             }
         }
     }
 }
+
+@Composable
+fun PackageInfoDetailDialog(
+    modifier: Modifier = Modifier,
+    appInfo: MyToolViewModel.APPInfo,
+    onHide: () -> Unit
+) {
+    Dialog(
+        onDismissRequest = onHide,
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp),
+            shape = MaterialTheme.shapes.medium,
+        ) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp)) {
+                Text(modifier = Modifier.fillMaxWidth(), text = "应用名:${appInfo.label}")
+                Text(modifier = Modifier.fillMaxWidth(), text = "包名:${appInfo.packageName}")
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "启动类:${ActivityUtils.getLauncherActivity(appInfo.packageName)}"
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "版本名:${AppUtils.getAppVersionName(appInfo.packageName)}"
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "版本号:${AppUtils.getAppVersionCode(appInfo.packageName)}"
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "apk目录:${AppUtils.getAppPath(appInfo.packageName)}"
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "UID:${AppUtils.getAppUid(appInfo.packageName)}"
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "MD5:${AppUtils.getAppSignaturesMD5(appInfo.packageName)}"
+                )
+            }
+        }
+    }
+}
+
 
 @Composable
 fun PackageActionItem(modifier: Modifier = Modifier, action: APPClickAction, onClick: () -> Unit) {
@@ -279,7 +339,16 @@ sealed class APPClickAction(
     })
 
     object ShareAPP : APPClickAction(Icons.Default.Share, "分享应用", {
-
+        val uri = BaseFileUtil.copyFileToAppDir("apks", "${it.label}.apk", File(it.apkPath))
+        Intent().apply {
+            action = Intent.ACTION_SEND
+            setDataAndType(uri, "application/vnd.android.package-archive")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        }.run {
+            ActivityUtils.startActivity(this)
+        }
     })
 
     object OpenAPPDetail : APPClickAction(Icons.Default.Details, "应用详情", {
@@ -298,7 +367,7 @@ sealed class APPClickAction(
             "application/vnd.android.package-archive"
         )
         activity.launchActivityForResult(intent) {
-            it?.data?.also {uri ->
+            it?.data?.also { uri ->
                 val resultPath = FileProviderUtil.saveFileToUri(File(appInfo.apkPath), uri)
                 if (resultPath.isNotEmpty()) {
                     ToastUtils.showShort("保存成功, 文件路径是$resultPath")
@@ -310,6 +379,7 @@ sealed class APPClickAction(
     })
 
     object ExtractIcon : APPClickAction(Icons.Default.Image, "提取图标", {
-
+        ImageUtils.save2Album(it.drawable.asAndroidBitmap(), "MyTool", Bitmap.CompressFormat.PNG)
+        ToastUtils.showShort("已保存至相册")
     })
 }

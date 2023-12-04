@@ -35,6 +35,8 @@ import androidx.core.content.FileProvider;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import com.hujiejeff.learn_android.BuildConfig;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileFilter;
@@ -51,7 +53,7 @@ import okhttp3.ResponseBody;
 public class FileUtils {
     public static final String DOCUMENTS_DIR = "documents";
     // configured android:authorities in AndroidManifest (https://developer.android.com/reference/android/support/v4/content/FileProvider)
-    public static final String AUTHORITY =  "YOUR_AUTHORITY.provider";
+    public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".provider";
     public static final String HIDDEN_PREFIX = ".";
     /**
      * TAG for log messages.
