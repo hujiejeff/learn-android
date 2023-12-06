@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
@@ -38,6 +39,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -128,13 +130,13 @@ fun APPListScreen(viewModel: MyToolViewModel = viewModel()) {
                 })
         }
 
-        if (showDetailDialog) {
-            PackageInfoDetailDialog(appInfo = currentAPPInfo!!, onHide = {
-                showDetailDialog = false
-            })
+            if (showDetailDialog) {
+                PackageInfoDetailDialog(appInfo = currentAPPInfo!!, onHide = {
+                    showDetailDialog = false
+                })
+            }
         }
     }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

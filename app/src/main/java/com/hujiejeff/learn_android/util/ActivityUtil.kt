@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.transition.Explode
 import androidx.transition.Slide
+import com.blankj.utilcode.util.ActivityUtils
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
@@ -72,5 +73,13 @@ fun getSafSaveFileIntent(
         putExtra(Intent.EXTRA_TITLE, fileName)
         putExtra(FileProviderUtil.EXTRA_APP_FILE_COPY_NAME, fileName)
         putExtra(DocumentsContract.EXTRA_INITIAL_URI, Uri.EMPTY)
+    }
+}
+
+fun jumpDevSetting() {
+    Intent().apply {
+        action = android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS
+    }.run {
+        ActivityUtils.startActivity(this)
     }
 }
