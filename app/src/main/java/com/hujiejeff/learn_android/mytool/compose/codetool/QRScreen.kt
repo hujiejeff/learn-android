@@ -90,7 +90,7 @@ fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewMod
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = "Scan from camera")
                     }
-                    Spacer(modifier = modifier.height(8.dp * 2))
+                    Spacer(modifier = Modifier.height(8.dp * 2))
                     TextButton(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
                         onClick = {
@@ -104,7 +104,7 @@ fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewMod
 
                 QR.GENERATE -> {
                     OutlinedTextField(
-                        modifier = modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         maxLines = 5,
                         value = textInput,
                         onValueChange = {
@@ -113,7 +113,7 @@ fun QRScreen(modifier: Modifier = Modifier, viewModel: MyToolViewModel = viewMod
                 }
             }
         }
-        Spacer(modifier = modifier.height(8.dp * 2))
+        Spacer(modifier = Modifier.height(8.dp * 2))
         TabButtonGroup(
             modifier = Modifier,
             defaultIndex = 0,

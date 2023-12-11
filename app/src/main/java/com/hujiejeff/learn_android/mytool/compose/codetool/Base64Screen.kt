@@ -40,7 +40,7 @@ fun Base64Screen(modifier: Modifier = Modifier) {
 
     Column(modifier.padding(16.dp)) {
         OutlinedTextField(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(150.dp),
             maxLines = 5,
@@ -48,7 +48,7 @@ fun Base64Screen(modifier: Modifier = Modifier) {
             onValueChange = {
                 textInput = it
             })
-        Spacer(modifier = modifier.height(8.dp * 2))
+        Spacer(modifier = Modifier.height(8.dp * 2))
         TabButtonGroup(
             modifier = Modifier,
             defaultIndex = 0,
