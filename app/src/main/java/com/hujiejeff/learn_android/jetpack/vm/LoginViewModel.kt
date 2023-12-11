@@ -11,7 +11,7 @@ class LoginViewModel : ViewModel() {
 
     val ss = userName.asFlow()
 
-    private val page = MutableStateFlow<Int>(1)
+    val page = MutableStateFlow<Int>(1)
     private val api: Flow<List<String>> = page.transform {
         emit(getNewsList(it))
     }

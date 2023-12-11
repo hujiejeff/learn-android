@@ -8,7 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -55,13 +54,11 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.compose.ui.theme.AppTheme
 
@@ -69,13 +66,13 @@ class CodeLabActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MySootheAppPortrait()
+            BasicLayoutDemoScreenPortrait()
         }
     }
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun BasicLayoutDemoScreen(modifier: Modifier = Modifier) {
     Column(modifier = modifier.verticalScroll(rememberScrollState())) {
         Spacer(
             Modifier
@@ -101,7 +98,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE, heightDp = 180)
 @Composable
 fun ScreenContentPreview() {
-    AppTheme { HomeScreen() }
+    AppTheme { BasicLayoutDemoScreen() }
 }
 
 private data class DrawableStringPair(
@@ -316,10 +313,10 @@ fun SootheNavigationRail(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun MySootheAppPortrait() {
+fun BasicLayoutDemoScreenPortrait() {
     AppTheme {
         Scaffold(bottomBar = { SootheBottomNavigation() }) { padding ->
-            HomeScreen(Modifier.padding(padding))
+            BasicLayoutDemoScreen(Modifier.padding(padding))
         }
     }
 }
@@ -331,7 +328,7 @@ fun MySootheAppLandscape() {
         Surface(color = MaterialTheme.colorScheme.background) {
             Row {
                 SootheNavigationRail()
-                HomeScreen()
+                BasicLayoutDemoScreen()
             }
 
         }

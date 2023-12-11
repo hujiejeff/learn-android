@@ -1,9 +1,6 @@
 package com.hujiejeff.learn_android.compose.codelab_animation
 
-import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
@@ -53,7 +50,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Contacts
@@ -72,7 +68,6 @@ import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -91,19 +86,17 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChange
-import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.input.pointer.util.VelocityTracker
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -115,7 +108,6 @@ import androidx.compose.ui.unit.sp
 import com.blankj.utilcode.util.ToastUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.compose.ui.theme.Amber600
-import com.hujiejeff.learn_android.compose.ui.theme.AppTheme
 import com.hujiejeff.learn_android.compose.ui.theme.Green300
 import com.hujiejeff.learn_android.compose.ui.theme.Green800
 import com.hujiejeff.learn_android.compose.ui.theme.Purple100
@@ -123,21 +115,15 @@ import com.hujiejeff.learn_android.compose.ui.theme.Purple700
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import okhttp3.internal.toHexString
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
-class DemoActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AnimationDemo()
-        }
-    }
-}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AnimationDemo() {
+fun AnimationCodeLabScreen() {
     val allTasks = stringArrayResource(R.array.tasks)
     val allTopics = stringArrayResource(R.array.topics)
     var tabPage by remember { mutableStateOf(TabPage.Home) }
@@ -210,7 +196,7 @@ fun AnimationDemo() {
                     modifier = Modifier.padding(padding)
                 ) {
 
-                    item { Header(title = stringResource(R.string.weather)) }
+                    item { Header(title ="#" + backgroundColorAnimate.toArgb().toHexString().uppercase()) }
                     item { Spacer(modifier = Modifier.height(16.dp)) }
 
                     //Weather

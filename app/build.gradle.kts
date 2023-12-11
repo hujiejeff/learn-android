@@ -97,4 +97,5 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("com.airbnb.android:lottie-compose:6.2.0")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }

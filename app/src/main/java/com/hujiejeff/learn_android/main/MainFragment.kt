@@ -9,10 +9,7 @@ import androidx.fragment.app.viewModels
 import com.blankj.utilcode.util.SnackbarUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseFragment
-import com.hujiejeff.learn_android.compose.codelab_animation.DemoActivity
-import com.hujiejeff.learn_android.compose.codelab_basic.ComposeDemo2Activity
-import com.hujiejeff.learn_android.compose.codelab_basic_layout.CodeLabActivity
-import com.hujiejeff.learn_android.compose.codelab_quickuse.ComposeDemoActivity
+import com.hujiejeff.learn_android.compose.ComposeDemoActivity
 import com.hujiejeff.learn_android.databinding.DialogSampleBinding
 import com.hujiejeff.learn_android.databinding.FragmentMainBinding
 import com.hujiejeff.learn_android.jetpack.vm.LoginActivity
@@ -85,10 +82,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             shapeBtn.text = "颜色已经2222改变啦22222"
         }
         btnOpenComposeDemo.clickJump<ComposeDemoActivity>()
-        btnOpenComposeDemo2.clickJump<ComposeDemo2Activity>()
-        btnOpenComposeDemo3.clickJump<CodeLabActivity>()
-        btnOpenComposeDemo4.clickJump<DemoActivity>()
-        btnOpenComposeDemoNavigation.clickJump<com.hujiejeff.learn_android.compose.navigation.DemoActivity>()
         btnOpenToolApp.clickJump<MyToolActivity>()
     }
 }

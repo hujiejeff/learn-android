@@ -3,6 +3,15 @@ package com.hujiejeff.learn_android.compose.navigation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOut
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,7 +48,7 @@ class DemoActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                NavigationDemo(modifier = Modifier)
+                NavigationDemoScreen(modifier = Modifier)
             }
         }
     }
@@ -48,9 +57,9 @@ class DemoActivity : ComponentActivity() {
 }
 
 @Composable
-fun NavigationDemo(modifier: Modifier) {
+fun NavigationDemoScreen(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    Column {
+    Column(modifier = Modifier.background(MaterialTheme.colorScheme.primary)) {
         Card(
             modifier
                 .padding(16.dp)
@@ -75,7 +84,14 @@ fun NavigationDemo(modifier: Modifier) {
 
 @Composable
 fun MyNavigationView(modifier: Modifier, navController: NavHostController) {
-    NavHost(modifier = modifier, navController = navController, startDestination = "RouteA") {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = "RouteA",
+        enterTransition = { slideInHorizontally { fullWidth -> fullWidth }},
+        exitTransition = { slideOutHorizontally { fullWidth -> -fullWidth }},
+        popEnterTransition = { slideInHorizontally { fullWidth -> -fullWidth} },
+        popExitTransition = { slideOutHorizontally { fullWidth -> fullWidth } }) {
         composable(route = "RouteA") {
             RouteA()
         }

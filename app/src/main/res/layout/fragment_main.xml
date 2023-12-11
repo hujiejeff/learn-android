@@ -102,34 +102,6 @@
         android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_open_compose_demo_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compose Demo2"
-        android:textAllCaps="false" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_open_compose_demo_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compose Demo of basic layout"
-        android:textAllCaps="false" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_open_compose_demo_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compose Demo of Animation"
-        android:textAllCaps="false" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_open_compose_demo_navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compose Demo of Navigation"
-        android:textAllCaps="false" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_open_tool_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo,btn_open_shizuku_demo,btn_open_material3_demo,shape_btn,btn_open_compose_demo,btn_open_compose_demo_2,btn_open_compose_demo_3,btn_open_compose_demo_4,btn_open_compose_demo_navigation,btn_open_tool_app"
+        app:constraint_referenced_ids="btn_constrain_layout_demo,btn_toolbar_demo,btn_bottom_appbar_demo,btn_mvvm_demo,btn_open_alert_dialog,btn_switch_theme,btn_open_dialog_fragment,btn_open_new_storage_api_activity,btn_open_picture_selector_demo,btn_open_transition_demo,btn_open_shizuku_demo,btn_open_material3_demo,shape_btn,btn_open_compose_demo,btn_open_tool_app"
         app:flow_horizontalGap="5dp"
         app:flow_horizontalStyle="packed"
         app:flow_verticalAlign="bottom"
