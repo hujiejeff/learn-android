@@ -135,7 +135,8 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
             Text(text = if (isShowCardA) "hide" else "show")
         }
 
-
+        Divider()
+        Text(text = "AnimatedContent动画练习")
         //AnimatedContent切换
         AnimatedContent(
             targetState = selectA,
@@ -187,8 +188,6 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
                 )
             }
         }
-        Divider()
-        Text(text = "AnimatedContent动画练习")
         Button(onClick = {
             selectA = !selectA
         }) {
