@@ -14,8 +14,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -81,13 +86,15 @@ fun HomeApp(
 
     //collect route to navigation
     val intent by viewModel.activityIntentFlow.collectAsState()
-    when(intent) {
-        is ComposeDemoViewModel.Intent.NavigationIntent -> {
-            navController.navigate((intent as ComposeDemoViewModel.Intent.NavigationIntent).route)
-        }
+    LaunchedEffect(intent) {
+        when(intent) {
+            is ComposeDemoViewModel.Intent.NavigationIntent -> {
+                navController.navigate((intent as ComposeDemoViewModel.Intent.NavigationIntent).route)
+            }
 
-        else -> {
+            else -> {
 
+            }
         }
     }
 }
@@ -98,6 +105,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: ComposeDemoViewModel = viewModel(viewModelStoreOwner = LocalContext.current as ComponentActivity)
+    //Local.current必须出现在重组里面，通过赋值一下转化出来调用
+    val navigatorController = LocalNavController.current
     Scaffold(modifier = modifier) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             AnimationDemoNavi()
@@ -127,7 +136,9 @@ fun HomeScreen(
                 Text(text = "Material Demo")
             }
             FilledTonalButton(onClick = {
-                viewModel.composeNavi(Route.SearchViewDemo)
+//                viewModel.composeNavi(Route.SearchViewDemo)
+//                clickRoute = Route.SearchViewDemo
+                navigatorController.navigate(Route.SearchViewDemo.route)
             }) {
                 Text(text = "Search Demo")
             }
