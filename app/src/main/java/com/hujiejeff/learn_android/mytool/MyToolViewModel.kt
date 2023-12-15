@@ -2,6 +2,7 @@ package com.hujiejeff.learn_android.mytool
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
@@ -117,6 +118,7 @@ class MyToolViewModel : ViewModel() {
         class SearchApp(val searchKey: String) : ViewModelIntent()
     }
 
+    @Stable
     data class APPInfo(
         val label: String,
         val packageName: String,

@@ -63,6 +63,8 @@ fun HomeApp(
             composableWithRoute(route = Route.BasicLayoutDemo)
             composableWithRoute(route = Route.ComposeDemo2)
             composableWithRoute(route = Route.NavigationDemo)
+            composableWithRoute(route = Route.MaterialDemo)
+            composableWithRoute(route = Route.SearchViewDemo)
             /*composable(
                 route = "demo" + "/{title}",
                 arguments = listOf(navArgument("title") { type = NavType.StringType })
@@ -118,6 +120,16 @@ fun HomeScreen(
                 viewModel.composeNavi(Route.NavigationDemo)
             }) {
                 Text(text = "Navigation Demo")
+            }
+            FilledTonalButton(onClick = {
+                viewModel.composeNavi(Route.MaterialDemo)
+            }) {
+                Text(text = "Material Demo")
+            }
+            FilledTonalButton(onClick = {
+                viewModel.composeNavi(Route.SearchViewDemo)
+            }) {
+                Text(text = "Search Demo")
             }
         }
     }

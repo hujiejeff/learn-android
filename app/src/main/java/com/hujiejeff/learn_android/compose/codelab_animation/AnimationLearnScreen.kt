@@ -57,9 +57,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
@@ -273,10 +275,22 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
                     ), repeatMode = RepeatMode.Reverse
                 )
             )
-            Surface(modifier = Modifier
+
+            val infiniteAnimateColor2 by infiniteTransition.animateColor(
+                initialValue = Color.Cyan,
+                targetValue = Color.Red,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(
+                        2000,
+                        easing = LinearEasing
+                    ), repeatMode = RepeatMode.Reverse
+                )
+            )
+            val brushColor = Brush.linearGradient(listOf(infiniteAnimateColor, infiniteAnimateColor2))
+            Box(modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clip(MaterialTheme.shapes.large), color = infiniteAnimateColor) {
+                .clip(MaterialTheme.shapes.large).background(brushColor)) {
             }
         }
         Button(onClick = {
@@ -299,8 +313,9 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
         Box(modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .background(animatableColor.value))
-
+            .drawBehind {
+                drawRect(animatableColor.value)
+            })
         Button(onClick = {
             startAnimatable = !startAnimatable
         }) {
