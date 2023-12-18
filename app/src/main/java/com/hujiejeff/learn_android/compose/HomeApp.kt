@@ -70,6 +70,7 @@ fun HomeApp(
             composableWithRoute(route = Route.NavigationDemo)
             composableWithRoute(route = Route.MaterialDemo)
             composableWithRoute(route = Route.SearchViewDemo)
+            composableWithRoute(route = Route.DialogDemo)
             /*composable(
                 route = "demo" + "/{title}",
                 arguments = listOf(navArgument("title") { type = NavType.StringType })
@@ -141,6 +142,12 @@ fun HomeScreen(
                 navigatorController.navigate(Route.SearchViewDemo.route)
             }) {
                 Text(text = "Search Demo")
+            }
+
+            FilledTonalButton(onClick = {
+                navigatorController.navigate(Route.DialogDemo.route)
+            }) {
+                Text(text = "DialogDemo Demo")
             }
         }
     }

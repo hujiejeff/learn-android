@@ -6,6 +6,7 @@ import com.hujiejeff.learn_android.compose.codelab_animation.AnimationPracticeSc
 import com.hujiejeff.learn_android.compose.codelab_basic.FirstCodeLabDemo
 import com.hujiejeff.learn_android.compose.codelab_basic_layout.BasicLayoutDemoScreenPortrait
 import com.hujiejeff.learn_android.compose.codelab_quickuse.ChatListCodeLab
+import com.hujiejeff.learn_android.compose.material.DialogDemo
 import com.hujiejeff.learn_android.compose.material.MaterialDemoScreen
 import com.hujiejeff.learn_android.compose.material.SearchDemo
 import com.hujiejeff.learn_android.compose.navigation.NavigationDemoScreen
@@ -47,5 +48,9 @@ sealed class Route(val route: String, val composable: @Composable () -> Unit) {
     })
     object SearchViewDemo: Route("SearchViewDemo", {
         SearchDemo()
+    })
+
+    object DialogDemo: Route("DialogDemo", {
+        DialogDemo()
     })
 }
