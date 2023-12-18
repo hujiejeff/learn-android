@@ -6,9 +6,13 @@ import android.content.ContextWrapper
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -95,21 +99,18 @@ fun AlertDialogTest(onDismiss: () -> Unit) {
 @Composable
 private fun DialogFullScreen(onDismiss: () -> Unit) {
     var isShow by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
-    val bgAlpha = remember {
-        Animatable(if (isShow) 0f else 0.7f)
+    var isBackPress by remember {
+        mutableStateOf(false)
     }
-    val offsetFloat = remember {
-        Animatable(if (isShow) 0f else 1f)
+    val handleBackPress = {
+        if (!isBackPress) {
+            isBackPress = true
+            isShow = false
+        }
     }
-    LaunchedEffect(isShow) {
-        bgAlpha.animateTo(if (isShow) 0.7f else 0f)
-        if (!isShow) onDismiss.invoke()
-    }
-    LaunchedEffect(isShow) {
-        offsetFloat.animateTo(if (isShow) 1f else 0f)
-    }
+
     Dialog(
         onDismissRequest = {
             isShow = false
@@ -119,10 +120,18 @@ private fun DialogFullScreen(onDismiss: () -> Unit) {
             decorFitsSystemWindows = false
         )
     ) {
+        val bgAlpha = remember {
+            Animatable(if (isShow) 0f else 0.7f)
+        }
+
+        LaunchedEffect(isShow) {
+            bgAlpha.animateTo(if (isShow) 0.7f else 0f)
+            if (!isShow) onDismiss.invoke()
+        }
         val activityWindow = getActivityWindow()
         val dialogWindow = getDialogWindow()
         SideEffect {
-            if (activityWindow != null && dialogWindow != null) {
+            if (activityWindow != null && dialogWindow != null && !isBackPress && !isShow) {
                 val attributes = WindowManager.LayoutParams()
                 // 复制Activity窗口属性
                 attributes.copyFrom(activityWindow.attributes)
@@ -135,39 +144,43 @@ private fun DialogFullScreen(onDismiss: () -> Unit) {
                     activityWindow.decorView.width,
                     activityWindow.decorView.height
                 )
+                isShow = true
             }
         }
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .clickable(
-                    interactionSource = NoRippleInteractionSource(),
-                    indication = null,
-                    onClick = {
-                        isShow = false
-                    })
-                .background(Color.Black.copy(bgAlpha.value))
+                .fillMaxSize(), contentAlignment = Alignment.BottomCenter
+            /*.clickable(
+                interactionSource = NoRippleInteractionSource(),
+                indication = null,
+                onClick = {
+                    isShow = false
+                })
+            .background(Color.Black.copy(bgAlpha.value))*/
         ) {
-            /*Spacer(
+            Spacer(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Black.copy(bgAlpha.value))
                     .clickOutSideModifier(true) {
-                        isShow = false
+                        handleBackPress.invoke()
                     }
-            )*/
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .clickable(enabled = false) { }
-                    .offset(y = ((1 - offsetFloat.value) * 200).dp)
-                    .align(Alignment.BottomCenter)
-            ) {
-                Text(text = "Dialog")
+            )
+            AnimatedVisibility(
+                modifier = Modifier.pointerInput(Unit) {},
+                visible = isShow,
+                enter = slideInVertically { it },
+                exit = slideOutVertically { it }) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                ) {
+                    Text(text = "Dialog")
+                }
             }
             BackHandler() {
-                isShow = false
+                handleBackPress.invoke()
             }
         }
     }
