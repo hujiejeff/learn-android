@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
@@ -35,9 +36,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hujiejeff.learn_android.compose.codelab_animation.AnimationDemoNavi
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.hujiejeff.learn_android.compose.component.PullToRefresh
 import com.hujiejeff.learn_android.compose.material.DialogDemo
 
 
@@ -90,11 +93,12 @@ fun HomeApp(
                 "${Route.DialogDemo.route}/{title}?arg={arg}",
                 arguments = listOf(
                     navArgument("title") { NavType.StringType },
-                    navArgument("arg") { defaultValue = ""}),//参数
+                    navArgument("arg") { defaultValue = "" }),//参数
                 deepLinks = listOf(navDeepLink { uriPattern = "$uri/{title}?arg={arg}" })//深层链接
             ) {
                 DialogDemo()
             }
+
             /*composable(
                 route = "demo" + "/{title}",
                 arguments = listOf(navArgument("title") { type = NavType.StringType })
@@ -106,6 +110,43 @@ fun HomeApp(
                 }
             }*/
 
+            //比起深度链接一个一个去匹配更好的做法是，直接匹配到一个路由页面再进行中转
+            composable("deepRouter", deepLinks = listOf(navDeepLink {
+                uriPattern = "myapp://home.router/{page}?argJson={argJson}"
+            })) { entry ->
+                val page = entry.arguments?.getString("page")
+                val argJson = entry.arguments?.getString("argJson")
+
+                //打印路由参数
+                /* Column() {
+                     Text(text = "page is $page")
+                     Text(text = "argJson is $argJson")
+                 }*/
+                LaunchedEffect(Unit) {
+                    /*navController.navigate("home") {
+                        //确保 "home" 页面被添加到回退栈，并且不包含任何其他页面
+                        popUpTo("home") {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }*/
+                    if (page != "home" && page != null) {
+                        // 在导航到深度链接目标前清除回退栈中的对应页面
+                        navController.navigate(page) {
+                            popUpTo(page) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                }
+                SideEffect {
+                    Log.d("TAG", "HomeApp: " + page)
+                    Log.d("TAG", "HomeApp: " + argJson)
+                }
+            }
+
+            composable("PullRefreshScreen") {
+                PullToRefresh()
+            }
         }
     }
 
@@ -183,6 +224,12 @@ fun HomeScreen(
             }) {
                 Text(text = "深层链接跳转")
             }
+
+            FilledTonalButton(onClick = {
+                navigatorController.navigate("PullRefreshScreen")
+            }) {
+                Text(text = "自定义下拉刷新")
+            }
         }
     }
 }
@@ -203,4 +250,17 @@ fun Context.testDeepLinkJump(arg: String) {
     startActivity(deepLinkIntent)
     //adb 测试,最后命令加上包名指向性会更明确一点
     //adb shell am start -W -a android.intent.action.VIEW -d "myapp://www.example.com/path"
+}
+
+
+@Composable
+fun MyComposable() {
+    var recompositions by remember { mutableStateOf(0) }
+
+    SideEffect {
+        recompositions++
+        Log.d("Recomposition Tracker", "MyComposable has been recomposed $recompositions times.")
+    }
+
+    // your Composable's code...
 }
