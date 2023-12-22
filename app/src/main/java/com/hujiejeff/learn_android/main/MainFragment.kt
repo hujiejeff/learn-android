@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.SnackbarUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseFragment
 import com.hujiejeff.learn_android.compose.ComposeDemoActivity
+import com.hujiejeff.learn_android.compose.testDeepLinkJump
 import com.hujiejeff.learn_android.databinding.DialogSampleBinding
 import com.hujiejeff.learn_android.databinding.FragmentMainBinding
 import com.hujiejeff.learn_android.jetpack.vm.LoginActivity
@@ -83,5 +84,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         }
         btnOpenComposeDemo.clickJump<ComposeDemoActivity>()
         btnOpenToolApp.clickJump<MyToolActivity>()
+        btnOpenComposeDeepLink.setOnClickListener {
+            context?.testDeepLinkJump("fromAnotherActivity")
+        }
     }
 }

@@ -6,6 +6,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,12 +21,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
@@ -33,6 +38,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Upload
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -56,6 +62,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -90,29 +98,45 @@ fun APPListScreen(viewModel: MyToolViewModel = viewModel()) {
 
     var showBottomSheet by remember { mutableStateOf(false) }
     var showDetailDialog by remember { mutableStateOf(false) }
+    val state = rememberLazyStaggeredGridState()
     if (appList.isEmpty()) {
         LaunchedEffect(Unit) {
             viewModel.sendIntent(MyToolViewModel.Intent.LoadAPPList)
         }
+    } else {
+//        LaunchedEffect(Unit) { state.animateScrollToItem(10) }
     }
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         if (appList.isEmpty()) {
             LottieLoading()
         } else {
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(2),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                verticalItemSpacing = 8.dp,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                userScrollEnabled = true
-            ) {
-                items(items = appList, key = { info -> info.packageName }) {
-                    PackageItemInfo(appInfo = it, onClick = {
-                        currentAPPInfo = it
-                        showBottomSheet = true
-                    })
+            Column() {
+/*                var offset by remember { mutableStateOf(0f) }
+                Spacer(modifier = Modifier.height((offset/10.0).dp))*/
+
+                LazyVerticalStaggeredGrid(
+                    state = state,
+                    columns = StaggeredGridCells.Fixed(2),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+/*                        .scrollable(
+                            orientation = Orientation.Vertical,
+                            state = rememberScrollableState { delta ->
+                                offset += delta
+                                delta
+                            }
+                        )*/,
+                    verticalItemSpacing = 8.dp,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    userScrollEnabled = true
+                ) {
+                    items(items = appList, key = { info -> info.packageName }) {
+                        PackageItemInfo(appInfo = it, onClick = {
+                            currentAPPInfo = it
+                            showBottomSheet = true
+                        })
+                    }
                 }
             }
         }
@@ -218,7 +242,7 @@ fun PackageInfoDetailDialog(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(0.dp),
+                .padding(30.dp),
             shape = MaterialTheme.shapes.medium,
         ) {
             Column(modifier = Modifier

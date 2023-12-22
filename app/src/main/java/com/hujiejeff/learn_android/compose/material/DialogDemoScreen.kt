@@ -20,19 +20,26 @@ import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,10 +50,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -70,6 +79,29 @@ fun DialogDemo() {
         }) {
             Text(text = "ShowCustomDialog")
         }
+
+
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min)) {
+            Text(text = "测试", modifier = Modifier
+                .weight(1f)
+                .wrapContentWidth(Alignment.Start))
+            Divider(modifier = Modifier
+                .fillMaxHeight()
+                .width(1.dp))
+            Text(text = "测试而", modifier = Modifier.weight(1f), textAlign = TextAlign.End)
+        }
+        val myState  = remember {
+            MyState(0)
+        }
+        OutlinedButton(onClick = { myState.updateCount(myState.countState + 1) }) {
+            Text(text = "${myState.countState}")
+        }
+        val viewModel: MaterialDemoViewModel = viewModel()
+
+        Text(text = "title = " + viewModel.title)
+        Text(text = "title = " + viewModel.arg)
     }
 
     if (isShowAlertDialog) {
@@ -217,3 +249,13 @@ private fun Modifier.clickOutSideModifier(
         }
     } else Modifier
 )
+
+
+
+class MyState(count: Int) {
+    var countState by mutableStateOf(count)
+        private set
+    fun updateCount(newCount: Int) {
+        countState = newCount
+    }
+}
