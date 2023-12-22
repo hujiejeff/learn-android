@@ -92,8 +92,21 @@
             android:theme="@style/AppTheme" />
         <activity android:name="com.hujiejeff.learn_android.compose.ComposeDemoActivity"
             android:exported="true">
+            <!--<intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="example" android:host="dialog" android:pathPrefix="/hello"/>
+            </intent-filter>-->
+
             <intent-filter>
-                <data android:scheme="example" android:host="dialog/dialog" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.example.com"
+                    android:scheme="myapp" />
             </intent-filter>
         </activity>
         <activity android:name="com.hujiejeff.learn_android.mytool.MyToolActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>

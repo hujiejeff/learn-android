@@ -85,7 +85,7 @@ fun HomeApp(
             ) {
                 DialogDemo()
             }*/
-            val uri = "example://dialog"
+            val uri = "myapp://www.example.com"
             composable(
                 "${Route.DialogDemo.route}/{title}?arg={arg}",
                 arguments = listOf(
@@ -196,9 +196,11 @@ fun NavGraphBuilder.composableWithRoute(route: Route) {
 fun Context.testDeepLinkJump(arg: String) {
     val deepLinkIntent = Intent(
         Intent.ACTION_VIEW,
-        "example://dialog/hello?arg=${arg}".toUri(),
+        "myapp://www.example.com/hello?arg=${arg}".toUri(),
         this,
         ComposeDemoActivity::class.java
     )
     startActivity(deepLinkIntent)
+    //adb 测试,最后命令加上包名指向性会更明确一点
+    //adb shell am start -W -a android.intent.action.VIEW -d "myapp://www.example.com/path"
 }
