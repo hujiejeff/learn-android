@@ -3,27 +3,27 @@ package com.hujiejeff.learn_android.compose.material
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.TwoWayConverter
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateIntOffset
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -44,12 +44,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,17 +57,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
@@ -162,7 +161,7 @@ fun DialogDemo() {
     }
 
     if (isShowBigImageDialog && smallRect != null) {
-        BigImageDialog(initRect = smallRect!!, onDismiss = {
+        ImageViewerDialog(initRect = smallRect!!, onDismiss = {
             isShowAlertDialog = false
             smallRect = null
         })
@@ -454,6 +453,194 @@ private fun BigImageDialog(onDismiss: () -> Unit, initRect: Rect) {
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
+            BackHandler {
+                handleBackPress.invoke()
+            }
+        }
+    }
+}
+
+@Composable
+fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
+    val intOffsetToVector: TwoWayConverter<IntOffset, AnimationVector2D> = TwoWayConverter(
+        convertToVector = { offset: IntOffset ->
+            AnimationVector2D(offset.x.toFloat(), offset.y.toFloat())
+        },
+        convertFromVector = { vector: AnimationVector2D ->
+            IntOffset(vector.v1.toInt(), vector.v2.toInt())
+        }
+    )
+    val isShow = remember {
+        mutableStateOf(false)
+    }
+    val screenWidth = remember {
+        ScreenUtils.getScreenWidth().toFloat()
+    }
+    val screenHeight = remember {
+        ScreenUtils.getScreenHeight().toFloat()
+    }
+    val coroutineScope = rememberCoroutineScope()
+    val initScale = initRect.width / screenWidth
+
+    CustomDialog(onDismiss = onDismiss, isShowState = isShow) {
+        val transition = updateTransition(targetState = isShow.value, label = "complex")
+        val bg by transition.animateColor(label = "bg") {
+            if (it) Color.Black else Color.Black.copy(alpha = 0f)
+        }
+        val width by transition.animateDp(label = "width") {
+            pxToDp(px = if (it) screenWidth else initRect.width)
+        }
+        val height by transition.animateDp(label = "height") {
+            pxToDp(px = if (it) screenHeight else initRect.height)
+        }
+        val offset by transition.animateIntOffset(label = "offset") {
+            if (it) IntOffset.Zero else IntOffset(initRect.left.toInt(), initRect.top.toInt())
+        }
+
+        var draggableOffset by remember { mutableStateOf(0f) }
+        val startDraggable = remember(draggableOffset) {
+            derivedStateOf {draggableOffset > 0}
+        }
+        var startResumeDraggable by remember {
+            mutableStateOf(false)
+        }
+        val scale = maxOf((1 - draggableOffset / 1000), 0.3f)
+        val resumeTransition = updateTransition(targetState = startResumeDraggable, label = "updateTransition")
+        val resumeDraggableScale by resumeTransition.animateFloat(label = "scale2") {
+            if (it) 1f else scale
+        }
+        val resumeDraggableOffset by resumeTransition.animateIntOffset(label = "offset2") {
+            if (it) IntOffset.Zero else IntOffset(
+                0,
+                draggableOffset.toInt()
+            )
+        }
+
+        val isShowCrop = remember(resumeDraggableScale) {
+            derivedStateOf { resumeDraggableScale == initScale }
+        }
+
+
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .drawBehind {
+                drawRect(bg)
+            }) {
+            Image(
+                modifier = Modifier
+                    .size(width, height)
+                    .scale(if (startResumeDraggable) resumeDraggableScale else scale)
+                    .offset {
+                        if (startDraggable.value) {
+                            if (startResumeDraggable) {
+                                resumeDraggableOffset
+                            } else {
+                                IntOffset(
+                                    0,
+                                    draggableOffset.toInt()
+                                )
+                            }
+                        } else {
+                            offset
+                        }
+                    }
+                    .draggable(
+                        orientation = Orientation.Vertical,
+                        state = rememberDraggableState { delta ->
+                            draggableOffset += delta
+                        }, onDragStopped = {
+                            startResumeDraggable = true
+                            draggableOffset = 0f
+                        }
+                    ),
+                painter = painterResource(id = R.drawable.ab2_quick_yoga),
+                contentDescription = null,
+                contentScale = if (isShowCrop.value) ContentScale.Crop else ContentScale.FillWidth
+            )
+        }
+    }
+}
+
+@Composable
+fun pxToDp(px: Float) = with(LocalDensity.current) {
+    px.toDp()
+}
+
+
+@Composable
+fun CustomDialog(
+    onDismiss: () -> Unit,
+    isShowState: MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    },
+    content: @Composable () -> Unit
+) {
+
+    var isShow by isShowState
+    var isBackPress by remember {
+        mutableStateOf(false)
+    }
+    val coroutineScope = rememberCoroutineScope()
+    val handleBackPress = {
+        if (!isBackPress) {
+            isBackPress = true
+            isShow = false
+        }
+    }
+
+    Dialog(
+        onDismissRequest = {
+            isShow = false
+        },
+        properties = DialogProperties(
+            usePlatformDefaultWidth = true,
+            decorFitsSystemWindows = false
+        )
+    ) {
+
+        val bgAlpha = remember {
+            Animatable(if (isShow) 0.7f else 0f)
+        }
+
+
+        LaunchedEffect(isShow) {
+            coroutineScope.launch {
+                bgAlpha.animateTo(if (isShow) 0.7f else 0f)
+                if (!isShow) onDismiss.invoke()
+            }
+        }
+        val activityWindow = getActivityWindow()
+        val dialogWindow = getDialogWindow()
+        SideEffect {
+            if (activityWindow != null && dialogWindow != null && !isBackPress && !isShow) {
+                val attributes = WindowManager.LayoutParams()
+                // 复制Activity窗口属性
+                attributes.copyFrom(activityWindow.attributes)
+                // 这个一定要设置
+                attributes.type = dialogWindow.attributes.type
+                // 更新窗口属性
+                dialogWindow.attributes = attributes
+                // 设置窗口的宽度和高度，这段代码Dialog源码中就有哦，可以自己去查看
+                dialogWindow.setLayout(
+                    activityWindow.decorView.width,
+                    activityWindow.decorView.height
+                )
+                isShow = true
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+/*            Spacer(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(bgAlpha.value))
+                    .clickOutSideModifier(true) {
+//                        handleBackPress.invoke()
+                    }
+            )*/
+            content()
             BackHandler {
                 handleBackPress.invoke()
             }
