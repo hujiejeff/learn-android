@@ -15,13 +15,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Downloading
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,8 +40,15 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -65,7 +76,11 @@ fun ProgressIndicator(refreshing: Boolean, progress: Float) {
             )
         ).value
     }
-    Box(modifier = Modifier.offset(0.dp, ((progress) * 50).dp).rotate(p * 360)) {
+    Box(
+        modifier = Modifier
+            .offset(0.dp, ((progress) * 50).dp)
+            .rotate(p * 360)
+    ) {
         Icon(imageVector = Icons.Default.Downloading, contentDescription = null)
     }
 }
@@ -106,6 +121,11 @@ fun PullToRefresh(modifier: Modifier = Modifier) {
                 offsetY += delta
                 progress = offsetY / 500f
             }
+
+            if (offsetY + delta <= 0) {
+                offsetY = 0f
+                progress = 0f
+            }
 //            refreshing = offsetY > 250f
         }
 
@@ -127,5 +147,45 @@ fun PullToRefresh(modifier: Modifier = Modifier) {
                     }
                 )
         )
+    }
+}
+
+@Composable
+fun SwipeRefreshDemo() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        // 是否正在刷新
+        var isRefreshing by remember { mutableStateOf(false) }
+        val listState = rememberLazyListState()
+        val scope = rememberCoroutineScope()
+        val swipeState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
+        val density = LocalDensity.current
+        val dpValue =
+        SwipeRefresh(
+            state = swipeState,
+            onRefresh = {
+                scope.launch {
+                    // 这里执行刷新操作，比如获取网络数据
+                    isRefreshing = true
+                    delay(2000) // 模拟耗时操作
+                    // 刷新结束
+                    isRefreshing = false
+                }
+            }
+        ) {
+            // 列表内容
+            Text(text = "底层内容")
+            Surface(modifier = Modifier.offset(0.dp, with(density) { swipeState.indicatorOffset.toDp() })) {
+                LazyColumn(state = listState) {
+                    items(20) { index ->
+                        Text(
+                            "Item $index",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
+                    }
+                }
+            }
+        }
     }
 }

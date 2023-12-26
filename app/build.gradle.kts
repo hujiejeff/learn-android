@@ -79,7 +79,7 @@ dependencies {
     androidTestImplementation("androidx.window:window-testing:$windowmanager_version")
 
     implementation("androidx.transition:transition:1.4.1")
-    implementation("io.github.FlyJingFish.OpenImage:OpenImageFullLib:2.0.3")
+//    implementation("io.github.FlyJingFish.OpenImage:OpenImageFullLib:2.0.3")
 
     //字体
     implementation(libs.bundles.calligraphy)
@@ -98,4 +98,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("com.airbnb.android:lottie-compose:6.2.0")
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
+
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.21.3-beta")
 }

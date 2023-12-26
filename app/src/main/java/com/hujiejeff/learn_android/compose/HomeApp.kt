@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
 import androidx.navigation.NavGraphBuilder
@@ -40,8 +42,11 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.hujiejeff.learn_android.compose.component.ImageViewerDemoScreen
 import com.hujiejeff.learn_android.compose.component.PullToRefresh
+import com.hujiejeff.learn_android.compose.component.SwipeRefreshDemo
 import com.hujiejeff.learn_android.compose.material.DialogDemo
+import kotlin.math.PI
 
 
 val LocalNavController = staticCompositionLocalOf<NavHostController> {
@@ -145,7 +150,14 @@ fun HomeApp(
             }
 
             composable("PullRefreshScreen") {
-                PullToRefresh()
+//                PullToRefresh()
+                SwipeRefreshDemo()
+            }
+
+
+            composable("ImageViewer") {
+//                PullToRefresh()
+                ImageViewerDemoScreen()
             }
         }
     }
@@ -176,7 +188,15 @@ fun HomeScreen(
         viewModel(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     //Local.current必须出现在重组里面，通过赋值一下转化出来调用
     val navigatorController = LocalNavController.current
-    Scaffold(modifier = modifier) { paddingValues ->
+    Scaffold(modifier = modifier
+        .fillMaxSize()
+        .graphicsLayer {
+            translationY = 50f
+            rotationX = 10f
+//        cameraDistance = Float.MAX_VALUE
+//        scaleX = 0.8f
+
+        }) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
             AnimationDemoNavi()
             FilledTonalButton(onClick = {
@@ -229,6 +249,12 @@ fun HomeScreen(
                 navigatorController.navigate("PullRefreshScreen")
             }) {
                 Text(text = "自定义下拉刷新")
+            }
+
+            FilledTonalButton(onClick = {
+                navigatorController.navigate("ImageViewer")
+            }) {
+                Text(text = "大图查看器")
             }
         }
     }
