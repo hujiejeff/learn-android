@@ -47,7 +47,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -481,9 +480,29 @@ fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
     }
     val coroutineScope = rememberCoroutineScope()
     val initScale = initRect.width / screenWidth
+    val dialogState = remember { DialogState() }
+    var draggableOffset by remember { mutableStateOf(0f) }
+    var endDraggable by remember {
+        mutableStateOf(false)
+    }
+    val startDraggable = remember(draggableOffset) {
+        derivedStateOf { draggableOffset > 0 }
+    }
 
-    CustomDialog(onDismiss = onDismiss, isShowState = isShow) {
-        val transition = updateTransition(targetState = isShow.value, label = "complex")
+    val imageViewerState = remember(dialogState.isShow, startDraggable.value) {
+        if (startDraggable.value) {
+            if (endDraggable) {
+                if (draggableOffset > 500) ImageViewerState.DRAG_END_TRIGGER else ImageViewerState.DRAG_END_RESUME
+            } else {
+                ImageViewerState.DRAG_ING
+            }
+        } else {
+            if (dialogState.isShow) ImageViewerState.CLICK_BEFORE else ImageViewerState.CLICK_BEFORE
+        }
+    }
+
+    CustomDialog(onDismiss = onDismiss, dialogState = dialogState) {
+        val transition = updateTransition(targetState = dialogState.isShow, label = "complex")
         val bg by transition.animateColor(label = "bg") {
             if (it) Color.Black else Color.Black.copy(alpha = 0f)
         }
@@ -497,15 +516,14 @@ fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
             if (it) IntOffset.Zero else IntOffset(initRect.left.toInt(), initRect.top.toInt())
         }
 
-        var draggableOffset by remember { mutableStateOf(0f) }
-        val startDraggable = remember(draggableOffset) {
-            derivedStateOf {draggableOffset > 0}
-        }
+
+
         var startResumeDraggable by remember {
             mutableStateOf(false)
         }
         val scale = maxOf((1 - draggableOffset / 1000), 0.3f)
-        val resumeTransition = updateTransition(targetState = startResumeDraggable, label = "updateTransition")
+        val resumeTransition =
+            updateTransition(targetState = startResumeDraggable, label = "updateTransition")
         val resumeDraggableScale by resumeTransition.animateFloat(label = "scale2") {
             if (it) 1f else scale
         }
@@ -561,6 +579,14 @@ fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
     }
 }
 
+enum class ImageViewerState {
+    CLICK_BEFORE,
+    CLICK_AFTER,
+    DRAG_ING,
+    DRAG_END_TRIGGER,
+    DRAG_END_RESUME,
+}
+
 @Composable
 fun pxToDp(px: Float) = with(LocalDensity.current) {
     px.toDp()
@@ -570,27 +596,14 @@ fun pxToDp(px: Float) = with(LocalDensity.current) {
 @Composable
 fun CustomDialog(
     onDismiss: () -> Unit,
-    isShowState: MutableState<Boolean> = remember {
-        mutableStateOf(false)
-    },
+    dialogState: DialogState,
     content: @Composable () -> Unit
 ) {
-
-    var isShow by isShowState
-    var isBackPress by remember {
-        mutableStateOf(false)
-    }
     val coroutineScope = rememberCoroutineScope()
-    val handleBackPress = {
-        if (!isBackPress) {
-            isBackPress = true
-            isShow = false
-        }
-    }
 
     Dialog(
         onDismissRequest = {
-            isShow = false
+            dialogState.setIsShow(false)
         },
         properties = DialogProperties(
             usePlatformDefaultWidth = true,
@@ -599,20 +612,20 @@ fun CustomDialog(
     ) {
 
         val bgAlpha = remember {
-            Animatable(if (isShow) 0.7f else 0f)
+            Animatable(if (dialogState.isShow) 0.7f else 0f)
         }
 
 
-        LaunchedEffect(isShow) {
+        LaunchedEffect(dialogState.isShow) {
             coroutineScope.launch {
-                bgAlpha.animateTo(if (isShow) 0.7f else 0f)
-                if (!isShow) onDismiss.invoke()
+                bgAlpha.animateTo(if (dialogState.isShow) 0.7f else 0f)
+                if (!dialogState.isShow) onDismiss.invoke()
             }
         }
         val activityWindow = getActivityWindow()
         val dialogWindow = getDialogWindow()
         SideEffect {
-            if (activityWindow != null && dialogWindow != null && !isBackPress && !isShow) {
+            if (activityWindow != null && dialogWindow != null && !dialogState.isBackPress && !dialogState.isShow) {
                 val attributes = WindowManager.LayoutParams()
                 // 复制Activity窗口属性
                 attributes.copyFrom(activityWindow.attributes)
@@ -625,7 +638,7 @@ fun CustomDialog(
                     activityWindow.decorView.width,
                     activityWindow.decorView.height
                 )
-                isShow = true
+                dialogState.setIsShow(true)
             }
         }
         Box(
@@ -642,8 +655,30 @@ fun CustomDialog(
             )*/
             content()
             BackHandler {
-                handleBackPress.invoke()
+                dialogState.handleBackPress()
             }
         }
+    }
+}
+
+class DialogState() {
+    var isShow by mutableStateOf(false)
+        private set
+    var isBackPress by mutableStateOf(false)
+        private set
+
+    fun handleBackPress() {
+        if (!isBackPress) {
+            isBackPress = true
+            isShow = false
+        }
+    }
+
+    fun setIsShow(boolean: Boolean) {
+        isShow = boolean
+    }
+
+    fun setIsBackPress(boolean: Boolean) {
+        isBackPress = boolean
     }
 }
