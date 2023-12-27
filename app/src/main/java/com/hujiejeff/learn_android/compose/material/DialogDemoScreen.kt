@@ -6,6 +6,7 @@ import android.content.ContextWrapper
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Animatable
@@ -61,14 +62,19 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontVariation.width
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -77,10 +83,14 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import com.blankj.utilcode.util.ScreenUtils
 import com.hujiejeff.learn_android.R
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -98,6 +108,8 @@ fun DialogDemo() {
     }
 
     var smallRect by remember { mutableStateOf<Rect?>(null) }
+    var currentShowIamge by remember { mutableStateOf<Int?>(null) }
+    var currentShowIamgeContentScale by remember { mutableStateOf(ContentScale.Crop) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedButton(onClick = {
@@ -140,10 +152,35 @@ fun DialogDemo() {
 
         Text(text = "title = " + viewModel.title)
         Text(text = "title = " + viewModel.arg)
-        Spacer(modifier = Modifier.height(300.dp))
-        Thumbnail() {
+        Spacer(modifier = Modifier.height(16.dp))
+        Thumbnail(id = R.drawable.ab2_quick_yoga) { rect, contentScale ->
             isShowBigImageDialog = true
-            smallRect = it
+            smallRect = rect
+            currentShowIamge = R.drawable.ab2_quick_yoga
+            currentShowIamgeContentScale = contentScale
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row() {
+            Thumbnail(id = R.drawable.ab2_quick_yoga) { rect, contentScale ->
+                isShowBigImageDialog = true
+                smallRect = rect
+                currentShowIamge = R.drawable.ab2_quick_yoga
+                currentShowIamgeContentScale = contentScale
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Thumbnail(id = R.drawable.ab1_inversions) { rect, contentScale ->
+                isShowBigImageDialog = true
+                smallRect = rect
+                currentShowIamge = R.drawable.ab1_inversions
+                currentShowIamgeContentScale = contentScale
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Thumbnail(id = R.drawable.ab3_stretching) { rect, contentScale ->
+                isShowBigImageDialog = true
+                smallRect = rect
+                currentShowIamge = R.drawable.ab3_stretching
+                currentShowIamgeContentScale = contentScale
+            }
         }
     }
 
@@ -163,7 +200,7 @@ fun DialogDemo() {
         ImageViewerDialog(initRect = smallRect!!, onDismiss = {
             isShowAlertDialog = false
             smallRect = null
-        })
+        }, id = currentShowIamge!!, contentScale = currentShowIamgeContentScale)
     }
 }
 
@@ -178,26 +215,44 @@ fun AlertDialogTest(onDismiss: () -> Unit) {
 }
 
 @Composable
-fun Thumbnail(onClick: (Rect) -> Unit) {
+fun Thumbnail(@DrawableRes id: Int, onClick: (Rect, ContentScale) -> Unit) {
     var layoutCoordinates by remember { mutableStateOf<LayoutCoordinates?>(null) }
-    Image(
-        painter = painterResource(id = R.drawable.ab2_quick_yoga),
-        contentDescription = null,
-        modifier = Modifier
-            .size(200.dp)
-            .onGloballyPositioned {
-                layoutCoordinates = it
-            }
-            .clickable {
-                layoutCoordinates?.let { lc ->
-                    val globalPosition = lc.positionInWindow()
-                    val size = lc.size.toSize()
-                    val rect = Rect(Offset(globalPosition.x, globalPosition.y), size)
-                    onClick(rect)
+    val coroutineScope = rememberCoroutineScope()
+    val imageState = remember { mutableStateOf<ImageBitmap?>(null) }
+    val resource = LocalContext.current.resources
+    LaunchedEffect(id) {
+        coroutineScope.launch(Dispatchers.IO) {
+            val image = ImageBitmap.imageResource(resource, id) // 加载图片
+            imageState.value = image  // 将结果保存在 State 中
+        }
+    }
+
+    if (imageState.value != null) {
+        assert(imageState.value != null)
+        Image(
+            bitmap = imageState.value!!,
+            contentDescription = null,
+            modifier = Modifier
+                .size(100.dp)
+                .onGloballyPositioned {
+                    //获取坐标
+                    layoutCoordinates = it
                 }
-            },
-        contentScale = ContentScale.Crop
-    )
+                .clickable {
+                    layoutCoordinates?.let { lc ->
+                        val globalPosition = lc.positionInWindow()
+                        val size = lc.size.toSize()
+                        val rect = Rect(Offset(globalPosition.x, globalPosition.y), size)
+                        onClick(
+                            rect,
+                            if (imageState.value!!.height > imageState.value!!.width) ContentScale.FillWidth else ContentScale.FillHeight
+                        )
+                    }
+                },
+            contentScale = ContentScale.Crop
+        )
+    }
+
 }
 
 
@@ -460,7 +515,7 @@ private fun BigImageDialog(onDismiss: () -> Unit, initRect: Rect) {
 }
 
 @Composable
-fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
+fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect, @DrawableRes id: Int, contentScale: ContentScale) {
     val intOffsetToVector: TwoWayConverter<IntOffset, AnimationVector2D> = TwoWayConverter(
         convertToVector = { offset: IntOffset ->
             AnimationVector2D(offset.x.toFloat(), offset.y.toFloat())
@@ -482,6 +537,7 @@ fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
     val initScale = initRect.width / screenWidth
     val dialogState = remember { DialogState() }
     var draggableOffset by remember { mutableStateOf(0f) }
+    val scale = minOf(maxOf((1 - draggableOffset / 1000), 0.3f), 1f)
     var endDraggable by remember {
         mutableStateOf(false)
     }
@@ -489,36 +545,72 @@ fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
         derivedStateOf { draggableOffset > 0 }
     }
 
-    val imageViewerState = remember(dialogState.isShow, startDraggable.value) {
-        if (startDraggable.value) {
-            if (endDraggable) {
-                if (draggableOffset > 500) ImageViewerState.DRAG_END_TRIGGER else ImageViewerState.DRAG_END_RESUME
+    val imageViewerState =
+        remember(dialogState.isShow, draggableOffset, startDraggable.value, endDraggable) {
+            if (startDraggable.value) {
+                if (endDraggable) {
+                    if (draggableOffset > 500) {
+                        dialogState.handleBackPress()
+                        ImageViewerState.CLICK_BEFORE
+                    } else {
+                        ImageViewerState.CLICK_AFTER
+                    }
+                    endDraggable = false
+                    draggableOffset = 0f
+                } else {
+                    ImageViewerState.DRAG_ING
+                }
             } else {
-                ImageViewerState.DRAG_ING
+                if (dialogState.isShow) ImageViewerState.CLICK_AFTER else ImageViewerState.CLICK_BEFORE
             }
-        } else {
-            if (dialogState.isShow) ImageViewerState.CLICK_BEFORE else ImageViewerState.CLICK_BEFORE
         }
-    }
 
     CustomDialog(onDismiss = onDismiss, dialogState = dialogState) {
-        val transition = updateTransition(targetState = dialogState.isShow, label = "complex")
+        val transition = updateTransition(targetState = imageViewerState, label = "complex")
         val bg by transition.animateColor(label = "bg") {
-            if (it) Color.Black else Color.Black.copy(alpha = 0f)
+            when (it) {
+                ImageViewerState.CLICK_BEFORE -> Color.Black.copy(alpha = 0f)
+                ImageViewerState.CLICK_AFTER -> Color.Black
+                else -> Color.Black.copy(alpha = scale)
+
+            }
         }
         val width by transition.animateDp(label = "width") {
-            pxToDp(px = if (it) screenWidth else initRect.width)
+            pxToDp(
+                px = when (it) {
+                    ImageViewerState.CLICK_BEFORE -> initRect.width
+                    ImageViewerState.CLICK_AFTER -> screenWidth
+                    else -> screenWidth * scale
+                }
+            )
+
         }
         val height by transition.animateDp(label = "height") {
-            pxToDp(px = if (it) screenHeight else initRect.height)
+            pxToDp(
+                px = when (it) {
+                    ImageViewerState.CLICK_BEFORE -> initRect.height
+                    ImageViewerState.CLICK_AFTER -> screenHeight
+                    else -> screenHeight * scale
+                }
+            )
         }
         val offset by transition.animateIntOffset(label = "offset") {
-            if (it) IntOffset.Zero else IntOffset(initRect.left.toInt(), initRect.top.toInt())
+            when (it) {
+                ImageViewerState.CLICK_BEFORE -> IntOffset(
+                    initRect.left.toInt(),
+                    initRect.top.toInt()
+                )
+
+                ImageViewerState.CLICK_AFTER -> IntOffset.Zero
+                else -> IntOffset(
+                    (screenWidth.toInt() - dp2Px(width.value).toInt()) / 2,
+                    (screenHeight.toInt() - dp2Px(height.value).toInt()) / 2
+                )
+            }
         }
 
 
-
-        var startResumeDraggable by remember {
+        /*var startResumeDraggable by remember {
             mutableStateOf(false)
         }
         val scale = maxOf((1 - draggableOffset / 1000), 0.3f)
@@ -532,10 +624,17 @@ fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
                 0,
                 draggableOffset.toInt()
             )
-        }
+        }*/
 
-        val isShowCrop = remember(resumeDraggableScale) {
-            derivedStateOf { resumeDraggableScale == initScale }
+        //0 -> crop 1 -> fill_width 2->fill_height
+        val ivContentScale by remember(width.value, height.value) {
+            derivedStateOf {
+                if (height.value == initRect.height) {
+                    ContentScale.Crop
+                } else {
+                    contentScale
+                }
+            }
         }
 
 
@@ -547,34 +646,52 @@ fun ImageViewerDialog(onDismiss: () -> Unit, initRect: Rect) {
             Image(
                 modifier = Modifier
                     .size(width, height)
-                    .scale(if (startResumeDraggable) resumeDraggableScale else scale)
+                    .clickable(
+                        interactionSource = NoRippleInteractionSource(),
+                        indication = null,
+                        onClick = {
+                            dialogState.handleBackPress()
+                        })
                     .offset {
-                        if (startDraggable.value) {
-                            if (startResumeDraggable) {
-                                resumeDraggableOffset
-                            } else {
-                                IntOffset(
-                                    0,
-                                    draggableOffset.toInt()
-                                )
-                            }
-                        } else {
-                            offset
-                        }
+                        offset
                     }
                     .draggable(
                         orientation = Orientation.Vertical,
                         state = rememberDraggableState { delta ->
                             draggableOffset += delta
                         }, onDragStopped = {
-                            startResumeDraggable = true
-                            draggableOffset = 0f
+                            endDraggable = true
                         }
                     ),
-                painter = painterResource(id = R.drawable.ab2_quick_yoga),
+                painter = painterResource(id = id),
                 contentDescription = null,
-                contentScale = if (isShowCrop.value) ContentScale.Crop else ContentScale.FillWidth
+                contentScale = ivContentScale
             )
+            /*Image(
+                modifier = Modifier
+                    .size(pxToDp(initRect.width), pxToDp(initRect.height))
+                    .clickable(
+                        interactionSource = NoRippleInteractionSource(),
+                        indication = null,
+                        onClick = {
+                            dialogState.handleBackPress()
+                        })
+                    .offset {
+//                        offset
+                        IntOffset(initRect.left.toInt(), initRect.top.toInt())
+                    }
+                    .draggable(
+                        orientation = Orientation.Vertical,
+                        state = rememberDraggableState { delta ->
+                            draggableOffset += delta
+                        }, onDragStopped = {
+                            endDraggable = true
+                        }
+                    ),
+                painter = painterResource(id = id),
+                contentDescription = null,
+                contentScale = if (imageViewerState == ImageViewerState.CLICK_BEFORE) ContentScale.Crop else ContentScale.FillWidth
+            )*/
         }
     }
 }
@@ -590,6 +707,11 @@ enum class ImageViewerState {
 @Composable
 fun pxToDp(px: Float) = with(LocalDensity.current) {
     px.toDp()
+}
+
+@Composable
+fun dp2Px(dp: Float) = with(LocalDensity.current) {
+    dp.dp.toPx()
 }
 
 

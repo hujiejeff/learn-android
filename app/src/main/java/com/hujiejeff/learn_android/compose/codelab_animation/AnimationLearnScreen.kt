@@ -71,6 +71,7 @@ import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.internal.toHexString
 import kotlin.math.PI
@@ -229,6 +230,15 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
             targetValue = targetColor,
             animationSpec = tween(3000)
         )
+
+        LaunchedEffect(Unit) {
+            delay(1000)
+            val randomR = (0..10).random() / 10.0
+            val randomG = (0..10).random() / 10.0
+            val randomB = (0..10).random() / 10.0
+            targetColor =
+                Color((255 * randomR).toInt(), (255 * randomG).toInt(), (255 * randomB).toInt())
+        }
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
@@ -290,7 +300,8 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clip(MaterialTheme.shapes.large).background(brushColor)) {
+                .clip(MaterialTheme.shapes.large)
+                .background(brushColor)) {
             }
         }
         Button(onClick = {
@@ -336,8 +347,8 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
                             awaitFirstDown().id
                         }
                         awaitPointerEventScope {
-                            drag(position) {change ->
-                                val dragOffset =  change.position
+                            drag(position) { change ->
+                                val dragOffset = change.position
                                 launch {
                                     offset.snapTo(dragOffset)
                                 }
@@ -348,7 +359,9 @@ fun AnimationPracticeScreen(modifier: Modifier = Modifier) {
                     }
                 }
             }) {
-            Card(modifier = Modifier.size(50.dp).offset { (offset.value + Offset(25.dp.value, 25.dp.value)).toIntOffset()}, shape = CircleShape) {}
+            Card(modifier = Modifier
+                .size(50.dp)
+                .offset { (offset.value + Offset(25.dp.value, 25.dp.value)).toIntOffset() }, shape = CircleShape) {}
         }
     }
 }
