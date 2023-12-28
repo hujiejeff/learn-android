@@ -46,6 +46,7 @@ import com.hujiejeff.learn_android.compose.component.ImageViewerDemoScreen
 import com.hujiejeff.learn_android.compose.component.PullToRefresh
 import com.hujiejeff.learn_android.compose.component.SwipeRefreshDemo
 import com.hujiejeff.learn_android.compose.material.DialogDemo
+import com.hujiejeff.learn_android.compose.material.ViewPagerScreenDemo
 import kotlin.math.PI
 
 
@@ -159,6 +160,10 @@ fun HomeApp(
 //                PullToRefresh()
                 ImageViewerDemoScreen()
             }
+
+            composable("ViewPagerScreenDemo") {
+                ViewPagerScreenDemo()
+            }
         }
     }
 
@@ -192,7 +197,7 @@ fun HomeScreen(
         .fillMaxSize()
         .graphicsLayer {
             translationY = 50f
-            rotationX = 10f
+            rotationZ= 10f
 //        cameraDistance = Float.MAX_VALUE
 //        scaleX = 0.8f
 
@@ -255,6 +260,11 @@ fun HomeScreen(
                 navigatorController.navigate("ImageViewer")
             }) {
                 Text(text = "大图查看器")
+            }
+            FilledTonalButton(onClick = {
+                navigatorController.navigate("ViewPagerScreenDemo")
+            }) {
+                Text(text = "PagerDemo")
             }
         }
     }
