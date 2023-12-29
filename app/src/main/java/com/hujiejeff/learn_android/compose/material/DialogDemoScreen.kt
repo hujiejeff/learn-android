@@ -653,12 +653,12 @@ fun ImageViewerDialog(
         }*/
 
         //0 -> crop 1 -> fill_width 2->fill_height
-        val ivContentScale by remember(dialogState.isShow) {
+        val ivContentScale by remember(width.value, height.value) {
             derivedStateOf {
-                if (!dialogState.isShow) {
-                    ContentScale.Crop
-                } else {
+                if (width.value == showWidth && height.value == showHeight) {
                     if (useFillHeight) ContentScale.FillHeight else ContentScale.FillWidth
+                } else {
+                    ContentScale.Crop
                 }
             }
         }
