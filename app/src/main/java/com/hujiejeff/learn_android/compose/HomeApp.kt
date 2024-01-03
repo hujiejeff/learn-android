@@ -42,6 +42,7 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.hujiejeff.learn_android.compose.component.ColiImageLoadScreen
 import com.hujiejeff.learn_android.compose.component.ImageViewerDemoScreen
 import com.hujiejeff.learn_android.compose.component.PullToRefresh
 import com.hujiejeff.learn_android.compose.component.SwipeRefreshDemo
@@ -164,6 +165,10 @@ fun HomeApp(
             composable("ViewPagerScreenDemo") {
                 ViewPagerScreenDemo()
             }
+
+            composable("ColiImageLoad") {
+                ColiImageLoadScreen()
+            }
         }
     }
 
@@ -196,8 +201,8 @@ fun HomeScreen(
     Scaffold(modifier = modifier
         .fillMaxSize()
         .graphicsLayer {
-            translationY = 50f
-            rotationZ= 10f
+//            translationY = 50f
+//            rotationZ= 10f
 //        cameraDistance = Float.MAX_VALUE
 //        scaleX = 0.8f
 
@@ -265,6 +270,12 @@ fun HomeScreen(
                 navigatorController.navigate("ViewPagerScreenDemo")
             }) {
                 Text(text = "PagerDemo")
+            }
+
+            FilledTonalButton(onClick = {
+                navigatorController.navigate("ColiImageLoad")
+            }) {
+                Text(text = "Coli带进度加载图片")
             }
         }
     }
