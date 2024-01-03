@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -37,6 +38,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -60,6 +63,8 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -146,10 +151,10 @@ fun DialogDemo() {
         Text(text = "title = " + viewModel.title)
         Text(text = "title = " + viewModel.arg)
         Spacer(modifier = Modifier.height(16.dp))
-        Thumbnail(id = R.drawable.fc5_overwhelmed) { rect, size ->
+        Thumbnail(id = R.drawable.long_pic) { rect, size ->
             isShowBigImageDialog = true
             smallRect = rect
-            currentShowIamge = R.drawable.fc5_overwhelmed
+            currentShowIamge = R.drawable.long_pic
             currentShowIamgeContentSize = size
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -534,14 +539,20 @@ fun ImageViewerDialog(
     val screenHeight = remember {
         ScreenUtils.getScreenHeight().toFloat()
     }
-    val useFillHeight = (screenHeight / screenWidth) < (originalSize.height / originalSize.width)
-    val showHeight = if (useFillHeight) {
+    val originalRatio = originalSize.height / originalSize.width
+    val screenRatio = screenHeight / screenWidth
+    val initRatio = initRect.height / initRect.width
+
+    val useFillHeight = originalRatio > screenRatio
+    val isVeryLongPic = originalRatio >= 3
+
+    val showHeight = if (useFillHeight && !isVeryLongPic) {
         screenHeight
     } else {
         screenWidth * (originalSize.height / originalSize.width)
     }
 
-    val showWidth = if (!useFillHeight) {
+    val showWidth = if (!useFillHeight || isVeryLongPic) {
         screenWidth
     } else {
         screenHeight * (originalSize.width / originalSize.height)
@@ -653,21 +664,15 @@ fun ImageViewerDialog(
         }*/
 
         //0 -> crop 1 -> fill_width 2->fill_height
-        val ivContentScale by remember(width.value, height.value) {
-            derivedStateOf {
-                if (width.value == showWidth && height.value == showHeight) {
-                    if (useFillHeight) ContentScale.FillHeight else ContentScale.FillWidth
-                } else {
-                    ContentScale.Crop
-                }
-            }
-        }
-
-
         Box(modifier = Modifier
             .fillMaxSize()
             .drawBehind {
                 drawRect(bg)
+            }
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    dialogState.handleBackPress()
+                })
             }
             .pointerInput(Unit) {
                 detectDragGestures(
@@ -679,6 +684,7 @@ fun ImageViewerDialog(
                 }, onDragEnd = {
                     endDraggable = true
                 })
+
             }) {
             Image(
                 modifier = Modifier
@@ -694,7 +700,7 @@ fun ImageViewerDialog(
                     },
                 painter = painterResource(id = id),
                 contentDescription = null,
-                contentScale = ivContentScale
+                contentScale = ContentScale.Crop
             )
             Text(text = "origianSize: ${originalSize.width} x ${originalSize.height} screenSize: ${screenWidth}x${screenHeight} showSize:${showWidth}x${showHeight}")
         }
