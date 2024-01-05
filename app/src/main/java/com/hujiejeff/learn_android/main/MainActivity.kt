@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.window.layout.WindowInfoTracker
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.base.BaseActivity
@@ -53,6 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         //设置额外等待时间
         viewModel.initLoading()
+        BarUtils.setStatusBarLightMode(this, true)
         ToastUtils.showShort("正在初始化")
         val container = findViewById<View>(R.id.container)
         WindowCompat.setDecorFitsSystemWindows(window, true)
