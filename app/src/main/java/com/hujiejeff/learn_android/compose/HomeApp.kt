@@ -46,6 +46,8 @@ import com.hujiejeff.learn_android.compose.component.ColiImageLoadScreen
 import com.hujiejeff.learn_android.compose.component.ImageViewerDemoScreen
 import com.hujiejeff.learn_android.compose.component.PullToRefresh
 import com.hujiejeff.learn_android.compose.component.SwipeRefreshDemo
+import com.hujiejeff.learn_android.compose.component.navToPictureSelectorScreen
+import com.hujiejeff.learn_android.compose.component.pictureSelectorScreen
 import com.hujiejeff.learn_android.compose.material.DialogDemo
 import com.hujiejeff.learn_android.compose.material.ViewPagerScreenDemo
 import kotlin.math.PI
@@ -169,6 +171,8 @@ fun HomeApp(
             composable("ColiImageLoad") {
                 ColiImageLoadScreen()
             }
+
+            pictureSelectorScreen()
         }
     }
 
@@ -276,6 +280,12 @@ fun HomeScreen(
                 navigatorController.navigate("ColiImageLoad")
             }) {
                 Text(text = "Coli带进度加载图片")
+            }
+
+            FilledTonalButton(onClick = {
+                navigatorController.navToPictureSelectorScreen()
+            }) {
+                Text(text = "图片选择库")
             }
         }
     }
