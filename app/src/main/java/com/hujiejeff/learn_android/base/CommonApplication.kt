@@ -2,16 +2,17 @@ package com.hujiejeff.learn_android.base
 
 
 import android.app.Application
+import coil.ImageLoaderFactory
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.Utils
-import com.hujiejeff.learn_android.R
+import com.hujiejeff.learn_android.compose.ColiLoaderFactoryImpl
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.calligraphy3.R as FontR
 import io.github.inflationx.viewpump.ViewPump
 
 
-class CommonApplication : Application() {
+class CommonApplication : Application(), ImageLoaderFactory by ColiLoaderFactoryImpl()  {
      var font = "fonts/fz.ttf"
     private val font_FZ = "fonts/fz.ttf"
     private val fontReboto = "fonts/RobotoCondensed-Regular.ttf"
