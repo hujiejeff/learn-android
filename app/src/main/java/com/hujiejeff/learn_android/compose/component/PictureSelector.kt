@@ -57,6 +57,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,6 +69,7 @@ import com.hujiejeff.learn_android.R
 import com.hujiejeff.learn_android.compose.LocalNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 
@@ -128,7 +130,16 @@ fun PictureSelectorScreen(
                 items(
                     items = currentBucket.list,
                     key = { item: PictureData -> item.id }) { itemData ->
-                    val selectedIndex = selectedList.indexOf(itemData) + 1
+                    val selectedIndex by remember {
+                        derivedStateOf {
+                            selectedList.indexOf(itemData) + 1
+                        }
+                    }
+                    val canSelected by remember {
+                        derivedStateOf {
+                            selectedIndex > 0 || inLimit
+                        }
+                    }
                     SelectablePicture(
                         key = 0,
                         selectedIndex = selectedIndex,
@@ -142,7 +153,7 @@ fun PictureSelectorScreen(
                                 selectedList.remove(itemData)
                             }
                         },
-                        canSelected = selectedIndex > 0 || inLimit
+                        canSelected = canSelected
                     )
                 }
                 /*                items(100, key = { index -> index }) { index ->
@@ -291,6 +302,13 @@ fun SelectablePicture(
     var selected by remember {
         mutableStateOf(selectedIndex > 0)
     }
+
+    val context = LocalContext.current
+    val model = remember(data) {
+        ImageRequest.Builder(context)
+            .data(data.contentUri)
+            .setParameter("isThumb", true).build()
+    }
     Box(
         modifier
             .fillMaxWidth()
@@ -301,7 +319,7 @@ fun SelectablePicture(
             }) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
-            model = data.contentUri,
+            model = model,
             contentDescription = null,
             contentScale = ContentScale.Crop
         )

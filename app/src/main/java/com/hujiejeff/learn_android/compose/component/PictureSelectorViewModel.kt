@@ -8,31 +8,52 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hujiejeff.learn_android.base.CommonApplication
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class PictureSelectorViewModel : ViewModel() {
-    private val loadPicturesEvent = MutableStateFlow("")
+    private val loadPicturesEvent = MutableSharedFlow<String>()
 
-    val picturesStateFlow: StateFlow<List<PictureBucket>> = loadPicturesEvent.transform {
-        if (it.isNotEmpty()) {
-            emit(providePictures().also { list ->
-                currentBucketStateFlow.update {
-                    list.first()
-                }
-            })
-        }
+    /*val picturesStateFlow: StateFlow<List<PictureBucket>> = loadPicturesEvent.transform {
+        emit(providePictures().also { list ->
+            currentBucketStateFlow.update {
+                list.first()
+            }
+        })
     }.flowOn(Dispatchers.IO).stateIn(
         scope = viewModelScope,
         initialValue = emptyList(),
         started = SharingStarted.WhileSubscribed(5_000)
-    )
+    )*/
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val picturesStateFlow: StateFlow<List<PictureBucket>> =
+        flow {
+            delay(500)
+            emit(Unit)
+        }.flatMapConcat { providePicturesFlow() }.onEach { list ->
+            currentBucketStateFlow.update {
+                list.first()
+            }
+        }.flowOn(Dispatchers.IO).stateIn(
+            scope = viewModelScope,
+            initialValue = emptyList(),
+            started = SharingStarted.WhileSubscribed(5_000)
+        )
 
     val currentBucketStateFlow = MutableStateFlow(PictureBucket("all", "最近项目", emptyList()))
 
@@ -91,7 +112,7 @@ class PictureSelectorViewModel : ViewModel() {
                     displayName,
                     contentUri,
                     bucketId,
-                    bucketName
+                    bucketName ?: ""
                 )  // 自定义的数据类，用于保存图片信息
                 imageList.add(imageData)
             }
@@ -105,6 +126,12 @@ class PictureSelectorViewModel : ViewModel() {
         }
         bucketList.addAll(categoryBucketList)
         return bucketList
+    }
+
+    private fun providePicturesFlow(): Flow<List<PictureBucket>> {
+        return flow {
+            emit(providePictures())
+        }.flowOn(Dispatchers.IO)
     }
 }
 
